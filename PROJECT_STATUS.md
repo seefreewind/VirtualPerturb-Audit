@@ -25,6 +25,7 @@
 - FP-1 perturbation-blind mean-effect and FP-3 label-shuffled mean-effect pilot probes completed for L1/L2.
 - Perturbation-centroid retrieval and identity-confusion rows are generated for baseline and falsification-probe pseudobulk outputs; zero-vector predictions are marked `UNINFORMATIVE_PREDICTION`.
 - GEO cell-identity metadata link audit completed: 88,843/91,205 GEARS cells matched, unordered perturbation concordance 0.9916, and `gemgroup` provides a partial batch-like field for sensitivity/null-envelope work.
+- Gemgroup-aware control-control null-envelope sensitivity completed for L1/L2 baselines and FP-1/FP-3 probes in `results/pilot/null_envelope_sensitivity.csv`.
 - Norman acquisition report created at `reports/NORMAN_ACQUISITION_REPORT.md`.
 
 ## Key results
@@ -61,6 +62,6 @@ Pilot status: PROVISIONAL_GO_FOR_BASELINE_AUDIT; GEARS_FULL_EVALUATION_PENDING.
 
 ## Next 3 actions
 
-1. Implement gemgroup-aware control/null-envelope sensitivity while keeping replicate-derived BNS marked unverified.
-2. Run GEARS L1/L2 pilot on adequate compute and append comparable rows to `results/pilot/pilot_summary.csv`.
-3. Extend perturbation retrieval/confusion export to full GEARS prediction summaries after adequate model runs are available.
+1. Run GEARS L1/L2 pilot on adequate compute and append comparable rows to `results/pilot/pilot_summary.csv`.
+2. Extend gemgroup-aware null-envelope sensitivity to full GEARS prediction summaries after adequate model runs are available.
+3. Continue searching for true replicate labels; keep replicate-derived BNS marked unverified unless found.

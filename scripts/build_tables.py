@@ -52,6 +52,9 @@ def main():
             "sign_flip_rate",
         ]
         write_table(df[[c for c in cols if c in df.columns]], "table5_primary_pilot_metrics")
+    null_sensitivity = Path("results/pilot/null_envelope_sensitivity.csv")
+    if null_sensitivity.exists():
+        write_table(pd.read_csv(null_sensitivity), "table6_null_envelope_sensitivity")
 
 
 if __name__ == "__main__":

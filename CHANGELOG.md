@@ -19,3 +19,4 @@
 - Added FP-1 perturbation-blind and FP-3 label-shuffled falsification probe pilot outputs for L1/L2.
 - Added perturbation-centroid retrieval and identity-confusion export for baseline and falsification-probe pilot rows.
 - Added Norman GEO cell-identity metadata link audit with `gemgroup` batch-like coverage and condition concordance checks.
+- Added gemgroup-aware control-control null-envelope sensitivity table for baseline and falsification-probe pilot rows.
