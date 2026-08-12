@@ -1,0 +1,6 @@
+model	control_expression	perturbation_identity	gene_prior	PPI	pretrained_embeddings	cell_type	cell_line	batch	external_annotation	status
+GEARS	yes	yes	yes	UNVERIFIED	no	yes	yes	UNVERIFIED	GO/coexpression_UNVERIFIED	REGISTERED_PENDING_AUDIT
+No-change	yes	no	no	no	no	optional	optional	no	no	IMPLEMENTED
+Context mean	no	no	no	no	no	yes	yes	no	no	IMPLEMENTED
+PCA/Ridge	yes	yes_optional	no	no	no	yes_optional	yes_optional	no	no	IMPLEMENTED
+

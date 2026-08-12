@@ -1,0 +1,8 @@
+dataset,model,split,status,pearson_delta,bns,UER_at_50,sign_flip_rate,notes
+Norman2019,GEARS,L0,BLOCKED_PENDING_DATA_AND_MODEL,,,,,No verified local run yet
+Norman2019,GEARS,L1,BLOCKED_PENDING_DATA_AND_MODEL,,,,,No verified local run yet
+Norman2019,GEARS,L2,BLOCKED_PENDING_DATA_AND_MODEL,,,,,No verified local run yet
+Norman2019,No-change,L0,BLOCKED_PENDING_DATA,,,,,Baseline implemented; no real data run yet
+Norman2019,Context mean,L1,BLOCKED_PENDING_DATA,,,,,Baseline implemented; no real data run yet
+Norman2019,PCA/Ridge,L2,BLOCKED_PENDING_DATA,,,,,Baseline implemented; no real data run yet
+

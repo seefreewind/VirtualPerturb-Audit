@@ -1,0 +1,5 @@
+| dataset                 | status                   | role   |
+|:------------------------|:-------------------------|:-------|
+| Norman2019 K562 CRISPRa | BLOCKED_PENDING_DOWNLOAD | pilot  |
+| Replogle K562 CRISPRi   | REGISTERED_NOT_STARTED   | future |
+| Replogle RPE1 CRISPRi   | REGISTERED_NOT_STARTED   | future |

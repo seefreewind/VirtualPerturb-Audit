@@ -1,0 +1,25 @@
+{
+  "timestamp": "2026-08-12T13:31:55.490269+00:00",
+  "status": "BLOCKED",
+  "reason": "Dataset not found: data/raw/norman/perturb_processed.h5ad",
+  "config": {
+    "dataset": {
+      "name": "norman_gears_processed",
+      "path": "data/raw/norman/perturb_processed.h5ad"
+    },
+    "model": {
+      "name": "gears",
+      "mode": "official_reproduction"
+    },
+    "split": {
+      "level": "L1"
+    },
+    "seed": 1,
+    "metric_set": "pilot",
+    "preprocessing": {
+      "hvg": "training_only",
+      "scaler": "training_only"
+    },
+    "output_dir": "results/pilot"
+  }
+}

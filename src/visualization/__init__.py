@@ -1,0 +1,2 @@
+"""Publication-oriented plotting helpers."""
+

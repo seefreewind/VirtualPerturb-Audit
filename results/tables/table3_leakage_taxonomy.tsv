@@ -1,0 +1,4 @@
+code	name	pilot_status
+LKG-1	Cell leakage	CHECK_IMPLEMENTED
+LKG-2	Perturbation leakage	CHECK_IMPLEMENTED_L1_L2
+LKG-4	Preprocessing leakage	TRAINING_ONLY_SCALER_IMPLEMENTED

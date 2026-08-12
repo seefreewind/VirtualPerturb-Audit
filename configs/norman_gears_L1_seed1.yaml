@@ -1,0 +1,15 @@
+dataset:
+  name: norman_gears_processed
+  path: data/raw/norman/perturb_processed.h5ad
+model:
+  name: gears
+  mode: official_reproduction
+split:
+  level: L1
+seed: 1
+metric_set: pilot
+preprocessing:
+  hvg: training_only
+  scaler: training_only
+output_dir: results/pilot
+

@@ -1,0 +1,57 @@
+version: 0.1.0
+lock_date: 2026-08-12
+status: PRE_DATA_LOCK
+scope: Norman_GEARS_baseline_pilot
+primary_endpoint:
+  name: bound_normalized_perturbation_specific_agreement
+  splits: [L1, L2]
+  unit: perturbation_context_pair
+co_primary_audit_endpoint:
+  name: UER@50
+  definition: predicted_top_50_effect_genes_with_true_effect_inside_replicate_or_control_null_envelope
+secondary_endpoints:
+  - perturbation_retrieval_MRR
+  - sign_flip_rate
+  - Pearson_delta
+  - RMSE_delta
+  - pathway_fidelity
+hypotheses:
+  H1_leakage_sensitivity:
+    statement: BNS_L0 will exceed BNS under stricter perturbation/context/dataset holdout in at least some models.
+    interpretation_limit: Performance drop is interpreted as performance inflation opportunity, not causal proof of leakage.
+  H2_metric_optimism:
+    statement: Global expression metrics may rate models more favorably than perturbation-specific metrics.
+  H3_hallucination_independence:
+    statement: High global fit does not necessarily imply low unsupported effect burden.
+    tests: [corr_global_fit_UER, corr_global_fit_pathway_hallucination]
+  H4_contamination_association:
+    statement: Model-dataset pairs with documented or probable overlap may show higher apparent performance.
+    interpretation_limit: Association only, not causal contamination claim.
+splits:
+  L0: random_cell_split_optimistic_reference_only
+  L1: perturbation_held_out
+  L2: component_held_out_for_combinatorial_perturbations
+  L3: functional_family_held_out_exploratory
+  L4: context_held_out
+  L5: dataset_held_out
+  L6: temporal_clean_evidence_based
+falsification_probes:
+  FP1: perturbation_blind_predictor
+  FP2: cell_state_blind_predictor
+  FP3:
+    name: label_shuffled_control
+    pilot_permutations: 20
+    main_permutations: 100
+uncertainty:
+  bootstrap_unit: perturbation_context_pair
+  main_bootstrap_resamples: 2000
+  pilot_bootstrap_resamples: 200
+multiplicity:
+  method: Benjamini-Hochberg FDR
+  applies_to: [gene, pathway, model_pair]
+revision_log:
+  - date: 2026-08-12
+    change: Initial pre-data analysis lock.
+    reason: Required before pilot execution.
+    fairness_impact: None.
+
