@@ -24,6 +24,7 @@
 - Pilot summary now reports perturbation-level bootstrap 95% CIs where enough perturbation units are available; single-unit GEARS smoke rows are marked `INSUFFICIENT_UNITS`.
 - FP-1 perturbation-blind mean-effect and FP-3 label-shuffled mean-effect pilot probes completed for L1/L2.
 - Perturbation-centroid retrieval and identity-confusion rows are generated for baseline and falsification-probe pseudobulk outputs; zero-vector predictions are marked `UNINFORMATIVE_PREDICTION`.
+- GEO cell-identity metadata link audit completed: 88,843/91,205 GEARS cells matched, unordered perturbation concordance 0.9916, and `gemgroup` provides a partial batch-like field for sensitivity/null-envelope work.
 - Norman acquisition report created at `reports/NORMAN_ACQUISITION_REPORT.md`.
 
 ## Key results
@@ -43,7 +44,7 @@ Norman baseline and falsification-probe audit outputs are available in `results/
 
 - GEARS/PyG dependencies require the isolated `environment/gears-venv` environment on this Mac.
 - GEARS processed Norman data are convenient for pilot but still require preprocessing provenance scrutiny.
-- Batch/replicate fields are missing or uninformative in the processed file, limiting BNS and leakage upper-bound interpretation.
+- Replicate fields remain missing; GEO-linked `gemgroup` is available for 97.4% of cells as a batch-like sensitivity field, but it is not a full replicate label.
 - GEARS full training is expensive on CPU; GPU or bounded smoke settings should be used for development checks.
 
 ## Scientific interpretation
@@ -60,6 +61,6 @@ Pilot status: PROVISIONAL_GO_FOR_BASELINE_AUDIT; GEARS_FULL_EVALUATION_PENDING.
 
 ## Next 3 actions
 
-1. Implement replicate/control null-envelope estimation or keep BNS/UER marked unverified.
+1. Implement gemgroup-aware control/null-envelope sensitivity while keeping replicate-derived BNS marked unverified.
 2. Run GEARS L1/L2 pilot on adequate compute and append comparable rows to `results/pilot/pilot_summary.csv`.
 3. Extend perturbation retrieval/confusion export to full GEARS prediction summaries after adequate model runs are available.

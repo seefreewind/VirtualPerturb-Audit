@@ -1,0 +1,18 @@
+{
+  "timestamp":"2026-08-12T15:44:18.544678+00:00",
+  "gears_h5ad":"data\/raw\/norman\/perturb_processed.h5ad",
+  "geo_identities":"data\/raw\/norman_geo\/GSE133344_filtered_cell_identities.csv.gz",
+  "geo_identities_sha256":"daf30337e7f6f07096d57e0d81db784bef00c87bd1fc927f018792c2f7af81e4",
+  "gears_cells":91205,
+  "geo_rows":111445,
+  "geo_unique_barcodes":111445,
+  "geo_duplicate_barcodes":0,
+  "matched_cells":88843,
+  "unmatched_gears_cells":2362,
+  "matched_fraction_of_gears":0.974102297,
+  "guide_identity_nunique":290,
+  "gemgroup_nunique":8,
+  "exact_condition_concordance":0.8287653501,
+  "unordered_condition_concordance":0.9915693977,
+  "status":"PARTIAL_LINK_PASS"
+}

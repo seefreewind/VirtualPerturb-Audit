@@ -14,6 +14,7 @@
 - Baseline rows include perturbation-level bootstrap 95% CIs; the bounded GEARS smoke row is marked `INSUFFICIENT_UNITS` because it evaluated only one perturbation.
 - FP-1 perturbation-blind and FP-3 label-shuffled pilot probes have completed for L1/L2.
 - Perturbation-centroid retrieval and identity-confusion outputs are generated at `results/pilot/perturbation_retrieval.csv`.
+- GEO metadata link audit provides `gemgroup` for 97.4% of GEARS cells, with unordered perturbation concordance 0.9916 among matched cells.
 
 ## Key results
 
@@ -33,7 +34,7 @@ Baseline and falsification-probe Norman pilot results are present in `results/pi
 
 - Pilot cannot be declared GO for GEARS until full training/evaluation or a documented prediction-only benchmark is complete.
 - Any GEARS dependency workaround must be documented as a model-adapter change if it alters official behavior.
-- Current UER@50 uses a provisional empirical threshold; replicate/control null envelopes remain unverified.
+- Current UER@50 uses a provisional empirical threshold; replicate/control null envelopes remain unverified. GEO-linked `gemgroup` can support a batch-like sensitivity null but not a true replicate upper bound.
 
 ## Scientific interpretation
 
@@ -62,5 +63,5 @@ Decision: PROVISIONAL_GO_FOR_BASELINE_AUDIT; NO_GO_FOR_GEARS_PERFORMANCE_CLAIMS.
 ## Next 3 actions
 
 1. Add GEARS prediction export and metric integration.
-2. Replace provisional UER/BNS thresholds with verified replicate/control null envelopes when source metadata permit.
+2. Add gemgroup-aware null-envelope sensitivity and keep replicate-derived BNS marked unverified unless true replicate metadata are found.
 3. Extend retrieval/confusion outputs to full GEARS prediction summaries after adequate model runs are available.
