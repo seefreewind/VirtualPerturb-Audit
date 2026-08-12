@@ -1,0 +1,14 @@
+.pytest_cache/
+__pycache__/
+*.pyc
+
+environment/gears-venv/
+data/raw/
+data/interim/
+data/processed/
+data/go_essential_*.csv
+logs/
+results/pilot/gears_*/model/
+
+*.aria2
+.DS_Store

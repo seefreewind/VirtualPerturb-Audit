@@ -1,16 +1,17 @@
 # Split Integrity Report
 
-Status: **PASS_ON_TOY_TESTS; BLOCKED_PENDING_REAL_DATA**
+Status: **PASS**
 
-Implemented checks:
+Audit timestamp UTC: 2026-08-12T15:20:13.009140+00:00
+Dataset SHA256: `23ffb0fac6a847ff927cf7509d80d85052bfefbfb97610786a2dafaaefa0b6a0`
 
-- `assert no_exact_cell_overlap`
-- `assert no_forbidden_perturbation_overlap`
-- `assert no_group_overlap`
-- `assert training_only_scaler`
-
-The checks pass on toy unit tests (`4 passed`, 2026-08-12). They have not yet been run on the real Norman AnnData file.
-
-## CLI Smoke Test
-
-`python3 -m src.run --config configs/norman_gears_L1_seed1.yaml` correctly failed loud because `data/raw/norman/perturb_processed.h5ad` is absent, and wrote blocked run metadata under `results/pilot/`.
+| split   | check                             | status   | message                                                              | split_hash       |
+|:--------|:----------------------------------|:---------|:---------------------------------------------------------------------|:-----------------|
+| L0      | no_exact_cell_overlap             | PASS     | obs_names are unique.                                                | c23715b8e21fd38f |
+| L0      | no_forbidden_perturbation_overlap | PASS     | L0 has no perturbation-forbidden rule implemented.                   | c23715b8e21fd38f |
+| L1      | no_exact_cell_overlap             | PASS     | obs_names are unique.                                                | 684138a59131ff4b |
+| L1      | no_forbidden_perturbation_overlap | PASS     | L1 exact perturbation overlap: []                                    | 684138a59131ff4b |
+| L1      | no_group_overlap_replicate        | PASS     | replicate unavailable or uninformative; group overlap check skipped. | 684138a59131ff4b |
+| L2      | no_exact_cell_overlap             | PASS     | obs_names are unique.                                                | 842eb5562637cd90 |
+| L2      | no_forbidden_perturbation_overlap | PASS     | L2 component overlap: []                                             | 842eb5562637cd90 |
+| L2      | no_group_overlap_replicate        | PASS     | replicate unavailable or uninformative; group overlap check skipped. | 842eb5562637cd90 |

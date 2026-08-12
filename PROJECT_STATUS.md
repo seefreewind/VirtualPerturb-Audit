@@ -1,4 +1,4 @@
-# Phase 0-1 Status
+# Phase 0-2 Status
 
 ## Completed
 
@@ -11,39 +11,53 @@
 - Baseline, perturbation-specific, empirical-bound, and hallucination metric modules added.
 - Unit tests passed on toy split/metric fixtures (`4 passed`).
 - CLI blocked-run metadata behavior verified for missing Norman data.
+- Isolated GEARS environment created at `environment/gears-venv`.
+- `cell-gears==0.1.2` and `torch-geometric==2.6.1` installed in the isolated GEARS environment.
+- GEARS import verified; first import takes about 35 seconds on this Mac.
+- Corrected GEARS Norman official datafile URL to `https://dataverse.harvard.edu/api/access/datafile/6154020`.
+- Norman GEARS-format AnnData downloaded from a public LUH Seafile mirror after official Dataverse command-line access returned WAF challenge.
+- Norman local checksum recorded: `23ffb0fac6a847ff927cf7509d80d85052bfefbfb97610786a2dafaaefa0b6a0`.
+- Real-data QC completed: 91,205 cells, 5,045 genes, 284 perturbations, 7,353 controls.
+- L0/L1/L2 split integrity checks completed and passed; replicate/batch group overlap remains unverified because the processed file does not expose an informative replicate field.
+- Baseline pilot completed for B0 no-change and B5 mean-effect baselines on L0/L1/L2.
+- GEARS L1 batch smoke completed with official package training path, filtered GO tensor injection, strict JSON metadata, and model checkpoint written to `results/pilot/gears_20260812T152223Z/`.
+- Pilot summary now reports perturbation-level bootstrap 95% CIs where enough perturbation units are available; single-unit GEARS smoke rows are marked `INSUFFICIENT_UNITS`.
+- Norman acquisition report created at `reports/NORMAN_ACQUISITION_REPORT.md`.
 
 ## Key results
 
-No verified Norman/GEARS biological pilot results yet. Current outputs are framework and reproducibility infrastructure.
+Norman baseline audit outputs are available in `results/pilot/pilot_summary.csv`. These are baseline-only and should not be interpreted as GEARS model performance. The current UER@50 values use a provisional empirical threshold because replicate/control null envelopes are not yet verified.
 
 ## Failed
 
 - `python` executable is missing; `python3` is available.
-- Norman data not yet downloaded into `data/raw/norman/perturb_processed.h5ad`.
-- GEARS official reproduction not yet executed.
+- Full GEARS training/evaluation reproduction is not complete.
+- A full CPU 1-epoch GEARS run was intentionally interrupted after the training loop had progressed beyond 1,600 batches because it was too slow for a smoke test; no performance conclusion was drawn from that interrupted run.
 - The GEARS Dataverse datafile endpoint returned an AWS WAF challenge to a command-line HEAD request.
+- The default GEARS GO graph tarball endpoint also returned an unusable WAF/empty-file response; the current smoke uses a documented filtered GO tensor generated from local GEARS prior files.
 - `pertpy` is unavailable in the current environment.
 
 ## Risks
 
-- GEARS/PyG dependencies may need an isolated environment on Apple Silicon.
-- GEARS processed Norman data are convenient for pilot but require preprocessing provenance scrutiny.
-- Batch/replicate fields may be missing or incomplete in the processed file.
+- GEARS/PyG dependencies require the isolated `environment/gears-venv` environment on this Mac.
+- GEARS processed Norman data are convenient for pilot but still require preprocessing provenance scrutiny.
+- Batch/replicate fields are missing or uninformative in the processed file, limiting BNS and leakage upper-bound interpretation.
+- GEARS full training is expensive on CPU; GPU or bounded smoke settings should be used for development checks.
 
 ## Scientific interpretation
 
-None. No empirical model-performance conclusion is available yet.
+No GEARS biological or model-performance interpretation is available yet. Baseline-only metrics are descriptive sanity checks.
 
 ## Files generated
 
-See `CHANGELOG.md`. Key generated outputs include `environment/environment_report.md`, pilot figure placeholders in `figures/main/`, manuscript skeletons, provenance registries, and table exports in `results/tables/`.
+See `CHANGELOG.md`. Key generated outputs include `environment/environment_report.md`, `environment/gears_pip_freeze.txt`, real-data QC/split reports, baseline pilot outputs with uncertainty columns, pilot figures, provenance registries, and the GEARS batch-smoke checkpoint metadata.
 
 ## GO / NO-GO
 
-Pilot status: BLOCKED_PENDING_DATA_AND_GEARS_REPRODUCTION.
+Pilot status: PROVISIONAL_GO_FOR_BASELINE_AUDIT; GEARS_FULL_EVALUATION_PENDING.
 
 ## Next 3 actions
 
-1. Download and checksum the official GEARS Norman processed data.
-2. Create an isolated GEARS environment or document installation blocker.
-3. Run L0/L1/L2 split integrity checks on the real Norman AnnData.
+1. Add a bounded GEARS evaluation/export path that records model predictions without requiring a full CPU epoch.
+2. Implement replicate/control null-envelope estimation or keep BNS/UER marked unverified.
+3. Run GEARS L1/L2 pilot on adequate compute and append comparable rows to `results/pilot/pilot_summary.csv`.

@@ -54,4 +54,15 @@ revision_log:
     change: Initial pre-data analysis lock.
     reason: Required before pilot execution.
     fairness_impact: None.
-
+  - date: 2026-08-12
+    change: GEARS runner restricted custom audit splits to L1/L2 because GEARS custom split API is condition-level.
+    reason: Avoid modifying official GEARS dataloader for L0 random-cell behavior.
+    fairness_impact: L0 GEARS requires either official simulation reference or a documented adapter; L1/L2 remain condition-level and compatible with GEARS custom splits.
+  - date: 2026-08-12
+    change: GEARS runner added filtered GO tensor injection for non-default perturbation graph modes after Dataverse default GO graph tarball failed and cached dynamic GO edges exceeded the active perturbation node map.
+    reason: Keep the official GEARS package unmodified while making the local smoke path reproducible under command-line Dataverse access limitations.
+    fairness_impact: GEARS prior graph may differ from the official precomputed default graph; all GEARS results must record `pert_graph`, filtered edge count, filtered node count, and whether training was batch-smoke or full evaluation.
+  - date: 2026-08-12
+    change: GEARS batch-smoke mode added with bounded train batches.
+    reason: Full CPU epoch exceeded practical smoke-test runtime; a bounded smoke verifies initialization, dataloading, forward/backward pass, checkpoint save, and metadata without claiming model performance.
+    fairness_impact: Batch-smoke outputs are executable-chain evidence only and must not be interpreted as performance results.

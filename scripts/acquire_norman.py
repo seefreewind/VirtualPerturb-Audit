@@ -5,7 +5,11 @@ import hashlib
 import urllib.request
 from pathlib import Path
 
-GEARS_NORMAN_URL = "https://dataverse.harvard.edu/api/access/datafile/7458694"
+GEARS_NORMAN_OFFICIAL_URL = "https://dataverse.harvard.edu/api/access/datafile/6154020"
+GEARS_NORMAN_MIRROR_URL = (
+    "https://seafile.cloud.uni-hannover.de/d/5d6029c6eaaf410c8b01/files/"
+    "?p=%2Fperturbation_data_analysis%2Fnorman%2Fperturb_processed.h5ad&dl=1"
+)
 
 
 def sha256(path: Path) -> str:
@@ -18,8 +22,9 @@ def sha256(path: Path) -> str:
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument("--out", default="data/raw/gears_norman.zip")
-    parser.add_argument("--url", default=GEARS_NORMAN_URL)
+    parser.add_argument("--out", default="data/raw/norman/perturb_processed.h5ad")
+    parser.add_argument("--url", default=GEARS_NORMAN_MIRROR_URL)
+    parser.add_argument("--official-url", default=GEARS_NORMAN_OFFICIAL_URL)
     args = parser.parse_args()
     out = Path(args.out)
     out.parent.mkdir(parents=True, exist_ok=True)
@@ -30,4 +35,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-

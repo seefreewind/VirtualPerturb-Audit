@@ -6,7 +6,9 @@ import pandas as pd
 from src.hallucination.metrics import sign_flip_rate, unsupported_effect_rate_at_k
 from src.leakage.checks import run_split_integrity_checks
 from src.metrics.bounds import bound_normalized_score
+from src.statistics.bootstrap import bootstrap_mean_ci
 from src.splits.builders import assign_l1_perturbation_holdout, assign_l2_component_holdout
+from scripts.run_baseline_pilot import evaluate_split
 
 
 class ToyAnnData:
@@ -54,3 +56,27 @@ def test_hallucination_metrics_are_defined():
     assert sfr["n_supported_genes"] == 2
     assert sfr["sign_flip_rate"] == 0.5
 
+
+def test_baseline_rows_are_identifiable_for_summary_merge():
+    adata = toy()
+    adata.X = np.array([
+        [1.0, 1.0, 1.0],
+        [1.0, 1.0, 1.0],
+        [2.0, 1.0, 1.0],
+        [2.0, 1.0, 1.0],
+        [1.0, 2.0, 1.0],
+        [1.0, 2.0, 1.0],
+        [2.0, 2.0, 1.0],
+        [2.0, 2.0, 1.0],
+        [1.0, 1.0, 2.0],
+        [1.0, 1.0, 2.0],
+    ])
+    adata.obs["split_group"] = ["train", "train", "train", "test", "train", "test", "train", "test", "train", "test"]
+    rows = evaluate_split(adata, "L1")
+    assert {row["model"] for row in rows} == {"B0_no_change", "B5_mean_effect"}
+
+
+def test_bootstrap_mean_ci_marks_single_unit_uninformative():
+    ci = bootstrap_mean_ci([0.5], n_resamples=10)
+    assert ci["mean"] == 0.5
+    assert ci["ci_status"] == "INSUFFICIENT_UNITS"

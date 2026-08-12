@@ -32,8 +32,21 @@ def blocked_metric_figure(stem: str, title: str):
     fig, ax = plt.subplots(figsize=(4.5, 2.5))
     if summary.exists():
         df = pd.read_csv(summary)
-        ax.table(cellText=df.values, colLabels=df.columns, loc="center")
-        ax.axis("off")
+        value_cols = [c for c in ["pearson_delta", "bns", "UER_at_50", "sign_flip_rate"] if c in df]
+        numeric = df[value_cols].apply(pd.to_numeric, errors="coerce") if value_cols else pd.DataFrame()
+        if not numeric.empty and numeric.notna().any().any():
+            plot_col = "UER_at_50" if "hallucination" in stem else "pearson_delta"
+            for model, sub in df.groupby("model"):
+                sub = sub.copy()
+                sub[plot_col] = pd.to_numeric(sub[plot_col], errors="coerce")
+                ax.plot(sub["split"], sub[plot_col], marker="o", label=model)
+            ax.set_ylabel(plot_col)
+            ax.set_xlabel("Audit split")
+            ax.legend(frameon=False, fontsize=7)
+        else:
+            ax.table(cellText=df[["dataset", "model", "split", "status"]].values,
+                     colLabels=["dataset", "model", "split", "status"], loc="center")
+            ax.axis("off")
     else:
         ax.text(0.5, 0.5, "BLOCKED: no verified Norman/GEARS pilot results yet", ha="center", va="center")
         ax.axis("off")
@@ -50,4 +63,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-

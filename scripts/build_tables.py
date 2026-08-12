@@ -16,12 +16,12 @@ def write_table(df: pd.DataFrame, stem: str):
 
 def main():
     write_table(pd.DataFrame([
-        {"dataset": "Norman2019 K562 CRISPRa", "status": "BLOCKED_PENDING_DOWNLOAD", "role": "pilot"},
+        {"dataset": "Norman2019 K562 CRISPRa", "status": "LOCAL_QC_PASS_BASELINE_COMPLETE", "role": "pilot"},
         {"dataset": "Replogle K562 CRISPRi", "status": "REGISTERED_NOT_STARTED", "role": "future"},
         {"dataset": "Replogle RPE1 CRISPRi", "status": "REGISTERED_NOT_STARTED", "role": "future"},
     ]), "table1_datasets")
     write_table(pd.DataFrame([
-        {"model": "GEARS", "status": "REGISTERED_PENDING_REPRODUCTION", "role": "pilot"},
+        {"model": "GEARS", "status": "BATCH_SMOKE_VERIFIED_FULL_EVALUATION_PENDING", "role": "pilot"},
         {"model": "No-change", "status": "IMPLEMENTED", "role": "baseline"},
         {"model": "Context mean", "status": "IMPLEMENTED", "role": "baseline"},
         {"model": "PCA/Ridge", "status": "IMPLEMENTED", "role": "baseline"},
@@ -35,4 +35,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-

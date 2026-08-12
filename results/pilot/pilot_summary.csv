@@ -1,8 +1,8 @@
-dataset,model,split,status,pearson_delta,bns,UER_at_50,sign_flip_rate,notes
-Norman2019,GEARS,L0,BLOCKED_PENDING_DATA_AND_MODEL,,,,,No verified local run yet
-Norman2019,GEARS,L1,BLOCKED_PENDING_DATA_AND_MODEL,,,,,No verified local run yet
-Norman2019,GEARS,L2,BLOCKED_PENDING_DATA_AND_MODEL,,,,,No verified local run yet
-Norman2019,No-change,L0,BLOCKED_PENDING_DATA,,,,,Baseline implemented; no real data run yet
-Norman2019,Context mean,L1,BLOCKED_PENDING_DATA,,,,,Baseline implemented; no real data run yet
-Norman2019,PCA/Ridge,L2,BLOCKED_PENDING_DATA,,,,,Baseline implemented; no real data run yet
-
+dataset,model,split,status,n_test_perturbations,pearson_delta,pearson_delta_ci95_low,pearson_delta_ci95_high,bns,bns_status,UER_at_50,UER_at_50_ci95_low,UER_at_50_ci95_high,sign_flip_rate,sign_flip_rate_ci95_low,sign_flip_rate_ci95_high,uncertainty_status,notes
+Norman2019_GEARS_processed_mirror,B0_no_change,L0,COMPLETED_BASELINE_UNVERIFIED_UPPER_BOUND,283,,,,,UNVERIFIED,0.5035335689045937,0.5015547703180212,0.5054434628975266,1.0,1.0,1.0,NO_FINITE_VALUES,Baseline pseudobulk pilot; replicate upper bound not yet verified. Delta Pearson undefined for zero-vector prediction.
+Norman2019_GEARS_processed_mirror,B5_mean_effect,L0,COMPLETED_BASELINE_UNVERIFIED_UPPER_BOUND,283,0.457101894584543,0.4226836952296275,0.4852314432399396,,UNVERIFIED,0.0013427561837455,0.0007773851590106,0.0019805653710247,0.2268607103451165,0.2119498875682621,0.2481179904747273,BOOTSTRAP_PERTURBATION_LEVEL,Baseline pseudobulk pilot; replicate upper bound not yet verified. 
+Norman2019_GEARS_processed_mirror,B0_no_change,L1,COMPLETED_BASELINE_UNVERIFIED_UPPER_BOUND,57,,,,,UNVERIFIED,0.5273684210526316,0.5195964912280701,0.5361403508771929,1.0,1.0,1.0,NO_FINITE_VALUES,Baseline pseudobulk pilot; replicate upper bound not yet verified. Delta Pearson undefined for zero-vector prediction.
+Norman2019_GEARS_processed_mirror,B5_mean_effect,L1,COMPLETED_BASELINE_UNVERIFIED_UPPER_BOUND,57,0.5072577375702244,0.4344409903506998,0.5680716743662677,,UNVERIFIED,0.0007017543859649,0.0,0.0017543859649122,0.203869357187435,0.1720303723736218,0.2462207891269676,BOOTSTRAP_PERTURBATION_LEVEL,Baseline pseudobulk pilot; replicate upper bound not yet verified. 
+Norman2019_GEARS_processed_mirror,B0_no_change,L2,COMPLETED_BASELINE_UNVERIFIED_UPPER_BOUND,33,,,,,UNVERIFIED,0.5296969696969697,0.5193939393939394,0.5412272727272727,1.0,1.0,1.0,NO_FINITE_VALUES,Baseline pseudobulk pilot; replicate upper bound not yet verified. Delta Pearson undefined for zero-vector prediction.
+Norman2019_GEARS_processed_mirror,B5_mean_effect,L2,COMPLETED_BASELINE_UNVERIFIED_UPPER_BOUND,33,0.4343986194829497,0.3104033209926294,0.5168312562022686,,UNVERIFIED,0.0018181818181818,0.0,0.0036363636363636,0.220026350461133,0.1675380285064079,0.2915409031021679,BOOTSTRAP_PERTURBATION_LEVEL,Baseline pseudobulk pilot; replicate upper bound not yet verified. 
+Norman2019_GEARS_processed_mirror,GEARS_cell_gears_0.1.2,L1,COMPLETED_GEARS_BATCH_SMOKE_NOT_PERFORMANCE,1,0.9830088019371033,,,,UNVERIFIED,0.0,,,0.0,,,INSUFFICIENT_UNITS,GEARS bounded development run; not a full performance benchmark. train_batches=5; eval_batches=3; replicate upper bound not yet verified.

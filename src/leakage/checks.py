@@ -30,7 +30,11 @@ def no_group_overlap(adata, group_key: str = "replicate") -> tuple[bool, str]:
     obs = adata.obs
     if group_key not in obs:
         return True, f"{group_key} unavailable."
-    by_group = obs.groupby(group_key)["split_group"].nunique()
+    groups = obs[group_key].astype(str)
+    informative = ~groups.isin(["UNVERIFIED", "UNKNOWN", "NA", "nan", "not_applicable_cell_line"])
+    if informative.sum() == 0:
+        return True, f"{group_key} unavailable or uninformative; group overlap check skipped."
+    by_group = obs.loc[informative].groupby(group_key)["split_group"].nunique()
     bad = by_group[by_group > 1]
     if len(bad) == 0:
         return True, f"No {group_key} group crosses split."
@@ -48,4 +52,3 @@ def run_split_integrity_checks(adata, split: str) -> list[dict]:
         {"check": name, "status": "PASS" if ok else "FAIL", "message": message}
         for name, ok, message in checks
     ]
-
