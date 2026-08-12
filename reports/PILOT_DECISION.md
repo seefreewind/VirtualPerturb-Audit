@@ -12,10 +12,11 @@
 - Baseline pilot has completed for B0 no-change and B5 mean-effect baselines.
 - GEARS L1 batch-smoke training completed with the official `cell-gears==0.1.2` package and wrote a checkpoint plus strict JSON metadata to `results/pilot/gears_20260812T152223Z/`.
 - Baseline rows include perturbation-level bootstrap 95% CIs; the bounded GEARS smoke row is marked `INSUFFICIENT_UNITS` because it evaluated only one perturbation.
+- FP-1 perturbation-blind and FP-3 label-shuffled pilot probes have completed for L1/L2.
 
 ## Key results
 
-Baseline-only Norman pilot results are present in `results/pilot/pilot_summary.csv`. No full GEARS performance result is verified yet.
+Baseline and falsification-probe Norman pilot results are present in `results/pilot/pilot_summary.csv`. No full GEARS performance result is verified yet.
 
 ## Failed
 
@@ -60,5 +61,5 @@ Decision: PROVISIONAL_GO_FOR_BASELINE_AUDIT; NO_GO_FOR_GEARS_PERFORMANCE_CLAIMS.
 ## Next 3 actions
 
 1. Add GEARS prediction export and metric integration.
-2. Run GEARS L1/L2 on adequate compute or bounded development settings.
-3. Replace provisional UER/BNS thresholds with verified replicate/control null envelopes when source metadata permit.
+2. Replace provisional UER/BNS thresholds with verified replicate/control null envelopes when source metadata permit.
+3. Add perturbation-centroid retrieval/confusion outputs and compare probes against baselines.

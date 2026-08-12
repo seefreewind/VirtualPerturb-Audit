@@ -16,3 +16,4 @@
 - Completed baseline-only pilot for B0 no-change and B5 mean-effect baselines.
 - Added GEARS L1 batch-smoke runner with custom split export from GEARS-filtered AnnData, filtered GO tensor injection for non-default perturbation graphs, bounded training batches, model checkpoint save, and failure traceback metadata.
 - Added perturbation-level bootstrap CI columns to pilot summaries and strict JSON sanitization for GEARS run metadata.
+- Added FP-1 perturbation-blind and FP-3 label-shuffled falsification probe pilot outputs for L1/L2.

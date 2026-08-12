@@ -31,6 +31,11 @@ def main():
         {"code": "LKG-2", "name": "Perturbation leakage", "pilot_status": "CHECK_IMPLEMENTED_L1_L2"},
         {"code": "LKG-4", "name": "Preprocessing leakage", "pilot_status": "TRAINING_ONLY_SCALER_IMPLEMENTED"},
     ]), "table3_leakage_taxonomy")
+    write_table(pd.DataFrame([
+        {"probe": "FP-1", "name": "Perturbation-blind predictor", "pilot_status": "IMPLEMENTED_L1_L2"},
+        {"probe": "FP-2", "name": "Cell-state-blind predictor", "pilot_status": "PENDING"},
+        {"probe": "FP-3", "name": "Label-shuffled control", "pilot_status": "IMPLEMENTED_L1_L2_SINGLE_SEED"},
+    ]), "table4_falsification_probes")
 
 
 if __name__ == "__main__":

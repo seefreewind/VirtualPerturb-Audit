@@ -22,11 +22,12 @@
 - Baseline pilot completed for B0 no-change and B5 mean-effect baselines on L0/L1/L2.
 - GEARS L1 batch smoke completed with official package training path, filtered GO tensor injection, strict JSON metadata, and model checkpoint written to `results/pilot/gears_20260812T152223Z/`.
 - Pilot summary now reports perturbation-level bootstrap 95% CIs where enough perturbation units are available; single-unit GEARS smoke rows are marked `INSUFFICIENT_UNITS`.
+- FP-1 perturbation-blind mean-effect and FP-3 label-shuffled mean-effect pilot probes completed for L1/L2.
 - Norman acquisition report created at `reports/NORMAN_ACQUISITION_REPORT.md`.
 
 ## Key results
 
-Norman baseline audit outputs are available in `results/pilot/pilot_summary.csv`. These are baseline-only and should not be interpreted as GEARS model performance. The current UER@50 values use a provisional empirical threshold because replicate/control null envelopes are not yet verified.
+Norman baseline and falsification-probe audit outputs are available in `results/pilot/pilot_summary.csv`. These should not be interpreted as full GEARS model performance. The current UER@50 values use a provisional empirical threshold because replicate/control null envelopes are not yet verified.
 
 ## Failed
 
@@ -58,6 +59,6 @@ Pilot status: PROVISIONAL_GO_FOR_BASELINE_AUDIT; GEARS_FULL_EVALUATION_PENDING.
 
 ## Next 3 actions
 
-1. Add a bounded GEARS evaluation/export path that records model predictions without requiring a full CPU epoch.
-2. Implement replicate/control null-envelope estimation or keep BNS/UER marked unverified.
-3. Run GEARS L1/L2 pilot on adequate compute and append comparable rows to `results/pilot/pilot_summary.csv`.
+1. Implement replicate/control null-envelope estimation or keep BNS/UER marked unverified.
+2. Run GEARS L1/L2 pilot on adequate compute and append comparable rows to `results/pilot/pilot_summary.csv`.
+3. Add perturbation-centroid retrieval and confusion outputs for baseline, probe, and GEARS prediction summaries.

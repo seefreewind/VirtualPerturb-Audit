@@ -57,23 +57,31 @@ def split_half_upper(delta_true):
     return np.nan
 
 
-def evaluate_split(adata, split):
+def summarize_delta_models(
+    adata,
+    split,
+    model_preds: list[tuple[str, np.ndarray | dict[str, np.ndarray], str] | tuple[str, np.ndarray | dict[str, np.ndarray], str, str]],
+):
     true_deltas, _ = perturbation_deltas(adata, "test")
-    lower_pred = np.zeros(adata.n_vars)
-    mean_pred = train_mean_delta(adata)
     rows = []
-    for model_name, pred in [("B0_no_change", lower_pred), ("B5_mean_effect", mean_pred)]:
+    for entry in model_preds:
+        if len(entry) == 3:
+            model_name, pred, status = entry
+            note_prefix = "Baseline pseudobulk pilot"
+        else:
+            model_name, pred, status, note_prefix = entry
         perts = []
         pearsons = []
         uers = []
         sfrs = []
         for pert, true_delta in true_deltas.items():
-            m = expression_metrics(true_delta, pred)
-            halluc = sign_flip_rate(pred, true_delta, support_threshold=np.nanpercentile(np.abs(true_delta), 95))
+            pred_delta = pred.get(pert, np.zeros(adata.n_vars)) if isinstance(pred, dict) else pred
+            m = expression_metrics(true_delta, pred_delta)
+            halluc = sign_flip_rate(pred_delta, true_delta, support_threshold=np.nanpercentile(np.abs(true_delta), 95))
             null_threshold = np.nanpercentile(np.abs(true_delta), 50)
             perts.append(pert)
             pearsons.append(m["pearson"])
-            uers.append(unsupported_effect_rate_at_k(pred, true_delta, null_threshold, k=min(50, len(true_delta))))
+            uers.append(unsupported_effect_rate_at_k(pred_delta, true_delta, null_threshold, k=min(50, len(true_delta))))
             sfrs.append(halluc["sign_flip_rate"])
         pearson_ci = bootstrap_mean_ci(pearsons, seed=1)
         uer_ci = bootstrap_mean_ci(uers, seed=1)
@@ -87,7 +95,7 @@ def evaluate_split(adata, split):
             "dataset": "Norman2019_GEARS_processed_mirror",
             "model": model_name,
             "split": split,
-            "status": "COMPLETED_BASELINE_UNVERIFIED_UPPER_BOUND",
+            "status": status,
             "n_test_perturbations": len(perts),
             "pearson_delta": mean_pearson,
             "pearson_delta_ci95_low": pearson_ci["ci95_low"],
@@ -101,9 +109,22 @@ def evaluate_split(adata, split):
             "sign_flip_rate_ci95_low": sfr_ci["ci95_low"],
             "sign_flip_rate_ci95_high": sfr_ci["ci95_high"],
             "uncertainty_status": pearson_ci["ci_status"],
-            "notes": "Baseline pseudobulk pilot; replicate upper bound not yet verified. " + metric_note,
+            "notes": f"{note_prefix}; replicate upper bound not yet verified. " + metric_note,
         })
     return rows
+
+
+def evaluate_split(adata, split):
+    lower_pred = np.zeros(adata.n_vars)
+    mean_pred = train_mean_delta(adata)
+    return summarize_delta_models(
+        adata,
+        split,
+        [
+            ("B0_no_change", lower_pred, "COMPLETED_BASELINE_UNVERIFIED_UPPER_BOUND"),
+            ("B5_mean_effect", mean_pred, "COMPLETED_BASELINE_UNVERIFIED_UPPER_BOUND"),
+        ],
+    )
 
 
 def main():
