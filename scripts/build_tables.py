@@ -36,6 +36,22 @@ def main():
         {"probe": "FP-2", "name": "Cell-state-blind predictor", "pilot_status": "PENDING"},
         {"probe": "FP-3", "name": "Label-shuffled control", "pilot_status": "IMPLEMENTED_L1_L2_SINGLE_SEED"},
     ]), "table4_falsification_probes")
+    pilot_summary = Path("results/pilot/pilot_summary.csv")
+    if pilot_summary.exists():
+        df = pd.read_csv(pilot_summary)
+        cols = [
+            "dataset",
+            "model",
+            "split",
+            "status",
+            "pearson_delta",
+            "retrieval_top1_accuracy",
+            "retrieval_top5_accuracy",
+            "retrieval_mrr",
+            "UER_at_50",
+            "sign_flip_rate",
+        ]
+        write_table(df[[c for c in cols if c in df.columns]], "table5_primary_pilot_metrics")
 
 
 if __name__ == "__main__":

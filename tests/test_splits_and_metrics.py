@@ -6,6 +6,7 @@ import pandas as pd
 from src.hallucination.metrics import sign_flip_rate, unsupported_effect_rate_at_k
 from src.leakage.checks import run_split_integrity_checks
 from src.metrics.bounds import bound_normalized_score
+from src.metrics.retrieval import perturbation_centroid_retrieval, perturbation_retrieval_rows
 from src.statistics.bootstrap import bootstrap_mean_ci
 from src.splits.builders import assign_l1_perturbation_holdout, assign_l2_component_holdout
 from scripts.run_baseline_pilot import evaluate_split
@@ -80,3 +81,12 @@ def test_bootstrap_mean_ci_marks_single_unit_uninformative():
     ci = bootstrap_mean_ci([0.5], n_resamples=10)
     assert ci["mean"] == 0.5
     assert ci["ci_status"] == "INSUFFICIENT_UNITS"
+
+
+def test_retrieval_marks_zero_prediction_uninformative():
+    pred = {"A": np.array([0.0, 0.0]), "B": np.array([1.0, 0.0])}
+    true = {"A": np.array([1.0, 0.0]), "B": np.array([0.0, 1.0])}
+    rows = perturbation_retrieval_rows(pred, true)
+    assert rows[0]["top_match"] == "UNINFORMATIVE_PREDICTION"
+    metrics = perturbation_centroid_retrieval({"A": np.array([0.0, 0.0])}, {"A": np.array([1.0, 0.0])})
+    assert np.isnan(metrics["mrr"])

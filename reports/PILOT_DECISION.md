@@ -13,6 +13,7 @@
 - GEARS L1 batch-smoke training completed with the official `cell-gears==0.1.2` package and wrote a checkpoint plus strict JSON metadata to `results/pilot/gears_20260812T152223Z/`.
 - Baseline rows include perturbation-level bootstrap 95% CIs; the bounded GEARS smoke row is marked `INSUFFICIENT_UNITS` because it evaluated only one perturbation.
 - FP-1 perturbation-blind and FP-3 label-shuffled pilot probes have completed for L1/L2.
+- Perturbation-centroid retrieval and identity-confusion outputs are generated at `results/pilot/perturbation_retrieval.csv`.
 
 ## Key results
 
@@ -62,4 +63,4 @@ Decision: PROVISIONAL_GO_FOR_BASELINE_AUDIT; NO_GO_FOR_GEARS_PERFORMANCE_CLAIMS.
 
 1. Add GEARS prediction export and metric integration.
 2. Replace provisional UER/BNS thresholds with verified replicate/control null envelopes when source metadata permit.
-3. Add perturbation-centroid retrieval/confusion outputs and compare probes against baselines.
+3. Extend retrieval/confusion outputs to full GEARS prediction summaries after adequate model runs are available.

@@ -23,6 +23,7 @@
 - GEARS L1 batch smoke completed with official package training path, filtered GO tensor injection, strict JSON metadata, and model checkpoint written to `results/pilot/gears_20260812T152223Z/`.
 - Pilot summary now reports perturbation-level bootstrap 95% CIs where enough perturbation units are available; single-unit GEARS smoke rows are marked `INSUFFICIENT_UNITS`.
 - FP-1 perturbation-blind mean-effect and FP-3 label-shuffled mean-effect pilot probes completed for L1/L2.
+- Perturbation-centroid retrieval and identity-confusion rows are generated for baseline and falsification-probe pseudobulk outputs; zero-vector predictions are marked `UNINFORMATIVE_PREDICTION`.
 - Norman acquisition report created at `reports/NORMAN_ACQUISITION_REPORT.md`.
 
 ## Key results
@@ -61,4 +62,4 @@ Pilot status: PROVISIONAL_GO_FOR_BASELINE_AUDIT; GEARS_FULL_EVALUATION_PENDING.
 
 1. Implement replicate/control null-envelope estimation or keep BNS/UER marked unverified.
 2. Run GEARS L1/L2 pilot on adequate compute and append comparable rows to `results/pilot/pilot_summary.csv`.
-3. Add perturbation-centroid retrieval and confusion outputs for baseline, probe, and GEARS prediction summaries.
+3. Extend perturbation retrieval/confusion export to full GEARS prediction summaries after adequate model runs are available.

@@ -68,9 +68,12 @@ def main():
         raise FileNotFoundError(f"Norman file not found: {h5ad}")
     adata = normalize_norman_gears_schema(read_h5ad(h5ad))
     rows = []
+    retrieval_rows = []
     for split in ["L1", "L2"]:
         adata.obs["split_group"] = SPLITTERS[split](adata, seed=args.seed)
-        rows.extend(evaluate_falsification_split(adata, split, seed=args.seed))
+        split_rows, split_retrieval = evaluate_falsification_split(adata, split, seed=args.seed)
+        rows.extend(split_rows)
+        retrieval_rows.extend(split_retrieval)
     out = Path("results/pilot/pilot_summary.csv")
     falsification = pd.DataFrame(rows)
     if out.exists():
@@ -82,6 +85,17 @@ def main():
         ]
         falsification = pd.concat([existing, falsification], ignore_index=True)
     falsification.to_csv(out, index=False)
+    retrieval_out = Path("results/pilot/perturbation_retrieval.csv")
+    retrieval = pd.DataFrame(retrieval_rows)
+    if retrieval_out.exists():
+        existing_retrieval = pd.read_csv(retrieval_out)
+        existing_retrieval = existing_retrieval[
+            ~existing_retrieval["model"].astype(str).isin(
+                ["FP1_perturbation_blind_mean_effect", "FP3_label_shuffled_mean_effect"]
+            )
+        ]
+        retrieval = pd.concat([existing_retrieval, retrieval], ignore_index=True)
+    retrieval.to_csv(retrieval_out, index=False)
 
 
 if __name__ == "__main__":

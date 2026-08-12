@@ -11,6 +11,7 @@ from src.data.loaders import normalize_norman_gears_schema, read_h5ad
 from src.hallucination.metrics import sign_flip_rate, unsupported_effect_rate_at_k
 from src.metrics.bounds import bound_normalized_score
 from src.metrics.expression import expression_metrics
+from src.metrics.retrieval import perturbation_centroid_retrieval, perturbation_retrieval_rows
 from src.splits.builders import assign_l0_random_cells, assign_l1_perturbation_holdout, assign_l2_component_holdout
 from src.statistics.bootstrap import bootstrap_mean_ci
 
@@ -64,6 +65,7 @@ def summarize_delta_models(
 ):
     true_deltas, _ = perturbation_deltas(adata, "test")
     rows = []
+    retrieval_rows = []
     for entry in model_preds:
         if len(entry) == 3:
             model_name, pred, status = entry
@@ -74,8 +76,10 @@ def summarize_delta_models(
         pearsons = []
         uers = []
         sfrs = []
+        pred_deltas = {}
         for pert, true_delta in true_deltas.items():
             pred_delta = pred.get(pert, np.zeros(adata.n_vars)) if isinstance(pred, dict) else pred
+            pred_deltas[pert] = pred_delta
             m = expression_metrics(true_delta, pred_delta)
             halluc = sign_flip_rate(pred_delta, true_delta, support_threshold=np.nanpercentile(np.abs(true_delta), 95))
             null_threshold = np.nanpercentile(np.abs(true_delta), 50)
@@ -90,6 +94,14 @@ def summarize_delta_models(
         lower = mean_pearson if model_name == "B0_no_change" else np.nan
         upper = split_half_upper(true_deltas)
         bns, bns_status = bound_normalized_score(mean_pearson, lower, upper)
+        retrieval = perturbation_centroid_retrieval(pred_deltas, true_deltas)
+        for retrieval_row in perturbation_retrieval_rows(pred_deltas, true_deltas):
+            retrieval_rows.append({
+                "dataset": "Norman2019_GEARS_processed_mirror",
+                "model": model_name,
+                "split": split,
+                **retrieval_row,
+            })
         metric_note = "Delta Pearson undefined for zero-vector prediction." if not np.isfinite(mean_pearson) else ""
         rows.append({
             "dataset": "Norman2019_GEARS_processed_mirror",
@@ -108,16 +120,19 @@ def summarize_delta_models(
             "sign_flip_rate": np.nanmean(sfrs),
             "sign_flip_rate_ci95_low": sfr_ci["ci95_low"],
             "sign_flip_rate_ci95_high": sfr_ci["ci95_high"],
+            "retrieval_top1_accuracy": retrieval["top1_accuracy"],
+            "retrieval_top5_accuracy": retrieval["top5_accuracy"],
+            "retrieval_mrr": retrieval["mrr"],
             "uncertainty_status": pearson_ci["ci_status"],
             "notes": f"{note_prefix}; replicate upper bound not yet verified. " + metric_note,
         })
-    return rows
+    return rows, retrieval_rows
 
 
 def evaluate_split(adata, split):
     lower_pred = np.zeros(adata.n_vars)
     mean_pred = train_mean_delta(adata)
-    return summarize_delta_models(
+    rows, _ = summarize_delta_models(
         adata,
         split,
         [
@@ -125,6 +140,7 @@ def evaluate_split(adata, split):
             ("B5_mean_effect", mean_pred, "COMPLETED_BASELINE_UNVERIFIED_UPPER_BOUND"),
         ],
     )
+    return rows
 
 
 def main():
@@ -137,9 +153,19 @@ def main():
         raise FileNotFoundError(f"Norman file not found: {h5ad}")
     adata = normalize_norman_gears_schema(read_h5ad(h5ad))
     rows = []
+    retrieval_rows = []
     for split, fn in SPLITTERS.items():
         adata.obs["split_group"] = fn(adata, seed=args.seed)
-        rows.extend(evaluate_split(adata, split))
+        split_rows, split_retrieval = summarize_delta_models(
+            adata,
+            split,
+            [
+                ("B0_no_change", np.zeros(adata.n_vars), "COMPLETED_BASELINE_UNVERIFIED_UPPER_BOUND"),
+                ("B5_mean_effect", train_mean_delta(adata), "COMPLETED_BASELINE_UNVERIFIED_UPPER_BOUND"),
+            ],
+        )
+        rows.extend(split_rows)
+        retrieval_rows.extend(split_retrieval)
     out = Path("results/pilot/pilot_summary.csv")
     baseline = pd.DataFrame(rows)
     if out.exists():
@@ -147,6 +173,13 @@ def main():
         existing = existing[~existing["model"].astype(str).isin(["B0_no_change", "B5_mean_effect"])]
         baseline = pd.concat([baseline, existing], ignore_index=True)
     baseline.to_csv(out, index=False)
+    retrieval_out = Path("results/pilot/perturbation_retrieval.csv")
+    retrieval = pd.DataFrame(retrieval_rows)
+    if retrieval_out.exists():
+        existing_retrieval = pd.read_csv(retrieval_out)
+        existing_retrieval = existing_retrieval[~existing_retrieval["model"].astype(str).isin(["B0_no_change", "B5_mean_effect"])]
+        retrieval = pd.concat([existing_retrieval, retrieval], ignore_index=True)
+    retrieval.to_csv(retrieval_out, index=False)
 
 
 if __name__ == "__main__":
