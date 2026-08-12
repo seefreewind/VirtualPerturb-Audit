@@ -34,7 +34,7 @@ def main():
     write_table(pd.DataFrame([
         {"probe": "FP-1", "name": "Perturbation-blind predictor", "pilot_status": "IMPLEMENTED_L1_L2"},
         {"probe": "FP-2", "name": "Cell-state-blind predictor", "pilot_status": "PENDING"},
-        {"probe": "FP-3", "name": "Label-shuffled control", "pilot_status": "IMPLEMENTED_L1_L2_SINGLE_SEED"},
+        {"probe": "FP-3", "name": "Label-shuffled control", "pilot_status": "IMPLEMENTED_L1_L2_20_PERMUTATIONS"},
     ]), "table4_falsification_probes")
     pilot_summary = Path("results/pilot/pilot_summary.csv")
     if pilot_summary.exists():
@@ -55,6 +55,9 @@ def main():
     null_sensitivity = Path("results/pilot/null_envelope_sensitivity.csv")
     if null_sensitivity.exists():
         write_table(pd.read_csv(null_sensitivity), "table6_null_envelope_sensitivity")
+    fp3_permutations = Path("results/pilot/fp3_label_shuffle_permutation_summary.csv")
+    if fp3_permutations.exists():
+        write_table(pd.read_csv(fp3_permutations), "table7_fp3_permutation_summary")
 
 
 if __name__ == "__main__":

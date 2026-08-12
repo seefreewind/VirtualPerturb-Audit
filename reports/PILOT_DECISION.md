@@ -16,6 +16,7 @@
 - Perturbation-centroid retrieval and identity-confusion outputs are generated at `results/pilot/perturbation_retrieval.csv`.
 - GEO metadata link audit provides `gemgroup` for 97.4% of GEARS cells, with unordered perturbation concordance 0.9916 among matched cells.
 - Gemgroup-aware control-control null-envelope sensitivity is available in `results/pilot/null_envelope_sensitivity.csv`.
+- FP-3 label-shuffled pilot has completed the pre-registered 20 permutations for L1/L2.
 
 ## Key results
 
@@ -65,4 +66,4 @@ Decision: PROVISIONAL_GO_FOR_BASELINE_AUDIT; NO_GO_FOR_GEARS_PERFORMANCE_CLAIMS.
 
 1. Add GEARS prediction export and metric integration.
 2. Extend gemgroup-aware null-envelope sensitivity and retrieval/confusion outputs to full GEARS prediction summaries after adequate model runs are available.
-3. Continue true replicate metadata search; keep replicate-derived BNS marked unverified unless found.
+3. Add FP-2 cell-state-blind probe and seed robustness for non-shuffled baselines.
