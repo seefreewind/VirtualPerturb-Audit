@@ -9,7 +9,7 @@
 - Literature, dataset, and model provenance registries initialized with source-linked entries.
 - L0/L1/L2 split implementation and critical split tests added.
 - Baseline, perturbation-specific, empirical-bound, and hallucination metric modules added.
-- Unit tests passed on toy split/metric fixtures (`4 passed`).
+- Unit tests passed on toy split/metric fixtures (`8 passed`).
 - CLI blocked-run metadata behavior verified for missing Norman data.
 - Isolated GEARS environment created at `environment/gears-venv`.
 - `cell-gears==0.1.2` and `torch-geometric==2.6.1` installed in the isolated GEARS environment.
@@ -19,7 +19,7 @@
 - Norman local checksum recorded: `23ffb0fac6a847ff927cf7509d80d85052bfefbfb97610786a2dafaaefa0b6a0`.
 - Real-data QC completed: 91,205 cells, 5,045 genes, 284 perturbations, 7,353 controls.
 - L0/L1/L2 split integrity checks completed and passed; replicate/batch group overlap remains unverified because the processed file does not expose an informative replicate field.
-- Baseline pilot completed for B0 no-change, B3 additive seen-component, and B5 mean-effect baselines on L0/L1/L2.
+- Baseline pilot completed for B0 no-change, B1 global perturbed mean, B2 context-matched perturbed mean, B3 additive seen-component, B4 PCA/Ridge, and B5 mean-effect baselines on L0/L1/L2.
 - GEARS L1 batch smoke completed with official package training path, filtered GO tensor injection, strict JSON metadata, and model checkpoint written to `results/pilot/gears_20260812T152223Z/`.
 - Pilot summary now reports perturbation-level bootstrap 95% CIs where enough perturbation units are available; single-unit GEARS smoke rows are marked `INSUFFICIENT_UNITS`.
 - FP-1 perturbation-blind mean-effect, FP-2 cell-state-blind additive, and FP-3 label-shuffled mean-effect pilot probes completed for L1/L2.
@@ -27,11 +27,12 @@
 - GEO cell-identity metadata link audit completed: 88,843/91,205 GEARS cells matched, unordered perturbation concordance 0.9916, and `gemgroup` provides a partial batch-like field for sensitivity/null-envelope work.
 - Gemgroup-aware control-control null-envelope sensitivity completed for L1/L2 baselines and FP-1/FP-3 probes in `results/pilot/null_envelope_sensitivity.csv`.
 - FP-3 label-shuffled pilot now runs the pre-registered 20 permutations and writes `results/pilot/fp3_label_shuffle_permutation_summary.csv`.
+- Five-seed robustness summary completed for B0-B5 non-shuffled baselines and FP-1/FP-2 on L1/L2 in `results/pilot/seed_robustness_summary.csv`.
 - Norman acquisition report created at `reports/NORMAN_ACQUISITION_REPORT.md`.
 
 ## Key results
 
-Norman baseline and falsification-probe audit outputs are available in `results/pilot/pilot_summary.csv`. B3/FP-2 shows how much signal can be recovered from perturbation identity and seen single-component deltas without individual cell-state modeling. These outputs should not be interpreted as full GEARS model performance. The current UER@50 values use a provisional empirical threshold because replicate/control null envelopes are not yet verified.
+Norman baseline and falsification-probe audit outputs are available in `results/pilot/pilot_summary.csv`. B3/FP-2 shows how much signal can be recovered from perturbation identity and seen single-component deltas without individual cell-state modeling. B4 PCA/Ridge is now included as a perturbation-to-effect mapping baseline. B1/B2 match B5 in this pilot when no stronger biological context is available beyond the current metadata. These outputs should not be interpreted as full GEARS model performance. The current UER@50 values use a provisional empirical threshold because replicate/control null envelopes are not yet verified.
 
 ## Failed
 
@@ -65,4 +66,4 @@ Pilot status: PROVISIONAL_GO_FOR_BASELINE_AUDIT; GEARS_FULL_EVALUATION_PENDING.
 
 1. Run GEARS L1/L2 pilot on adequate compute and append comparable rows to `results/pilot/pilot_summary.csv`.
 2. Extend gemgroup-aware null-envelope sensitivity to full GEARS prediction summaries after adequate model runs are available.
-3. Add seed robustness for non-shuffled baselines and FP-2.
+3. Add pathway/gene-family annotations for L3 and confusion enrichment.

@@ -74,7 +74,14 @@ def test_baseline_rows_are_identifiable_for_summary_merge():
     ])
     adata.obs["split_group"] = ["train", "train", "train", "test", "train", "test", "train", "test", "train", "test"]
     rows = evaluate_split(adata, "L1")
-    assert {row["model"] for row in rows} == {"B0_no_change", "B3_additive_seen_component", "B5_mean_effect"}
+    assert {row["model"] for row in rows} == {
+        "B0_no_change",
+        "B1_global_perturbed_mean",
+        "B2_context_matched_perturbed_mean",
+        "B3_additive_seen_component",
+        "B4_pca_ridge",
+        "B5_mean_effect",
+    }
 
 
 def test_additive_delta_uses_seen_single_components():

@@ -9,7 +9,7 @@
 - GEARS package import is verified in `environment/gears-venv` after installing `cell-gears==0.1.2` and `torch-geometric==2.6.1`.
 - Norman GEARS-format data have been downloaded from the LUH Seafile mirror, checksumed, and audited locally.
 - Real-data QC and L0/L1/L2 split integrity reports pass, with replicate/batch overlap marked unverified because no informative replicate field is present.
-- Baseline pilot has completed for B0 no-change, B3 additive seen-component, and B5 mean-effect baselines.
+- Baseline pilot has completed for B0 no-change, B1 global perturbed mean, B2 context-matched perturbed mean, B3 additive seen-component, B4 PCA/Ridge, and B5 mean-effect baselines.
 - GEARS L1 batch-smoke training completed with the official `cell-gears==0.1.2` package and wrote a checkpoint plus strict JSON metadata to `results/pilot/gears_20260812T152223Z/`.
 - Baseline rows include perturbation-level bootstrap 95% CIs; the bounded GEARS smoke row is marked `INSUFFICIENT_UNITS` because it evaluated only one perturbation.
 - FP-1 perturbation-blind, FP-2 cell-state-blind additive, and FP-3 label-shuffled pilot probes have completed for L1/L2.
@@ -17,10 +17,11 @@
 - GEO metadata link audit provides `gemgroup` for 97.4% of GEARS cells, with unordered perturbation concordance 0.9916 among matched cells.
 - Gemgroup-aware control-control null-envelope sensitivity is available in `results/pilot/null_envelope_sensitivity.csv`.
 - FP-3 label-shuffled pilot has completed the pre-registered 20 permutations for L1/L2.
+- Five-seed robustness has completed for B0-B5 non-shuffled baselines and FP-1/FP-2 on L1/L2.
 
 ## Key results
 
-Baseline and falsification-probe Norman pilot results are present in `results/pilot/pilot_summary.csv`. No full GEARS performance result is verified yet.
+Baseline and falsification-probe Norman pilot results are present in `results/pilot/pilot_summary.csv`. B3/FP-2 remains a strong shortcut signal under L1, while B4 PCA/Ridge adds a perturbation-to-effect mapping baseline for separating expression correlation from retrieval specificity. No full GEARS performance result is verified yet.
 
 ## Failed
 
@@ -66,4 +67,4 @@ Decision: PROVISIONAL_GO_FOR_BASELINE_AUDIT; NO_GO_FOR_GEARS_PERFORMANCE_CLAIMS.
 
 1. Add GEARS prediction export and metric integration.
 2. Extend gemgroup-aware null-envelope sensitivity and retrieval/confusion outputs to full GEARS prediction summaries after adequate model runs are available.
-3. Add seed robustness for non-shuffled baselines and FP-2.
+3. Add pathway/gene-family annotations for L3 and confusion enrichment.

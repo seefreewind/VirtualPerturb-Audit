@@ -59,6 +59,9 @@ def main():
     fp3_permutations = Path("results/pilot/fp3_label_shuffle_permutation_summary.csv")
     if fp3_permutations.exists():
         write_table(pd.read_csv(fp3_permutations), "table7_fp3_permutation_summary")
+    seed_robustness = Path("results/pilot/seed_robustness_summary.csv")
+    if seed_robustness.exists():
+        write_table(pd.read_csv(seed_robustness), "table8_seed_robustness_summary")
 
 
 if __name__ == "__main__":

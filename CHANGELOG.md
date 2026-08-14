@@ -22,3 +22,9 @@
 - Added gemgroup-aware control-control null-envelope sensitivity table for baseline and falsification-probe pilot rows.
 - Added pre-registered 20-permutation FP-3 label-shuffle pilot summary.
 - Added B3 additive seen-component baseline and FP-2 cell-state-blind additive probe.
+
+## 2026-08-14
+
+- Integrated B1 global perturbed mean, B2 context-matched perturbed mean, and B4 PCA/Ridge into the Norman baseline pilot outputs.
+- Added five-seed robustness outputs for B0-B5 non-shuffled baselines and FP-1/FP-2.
+- Added table 8 exports for seed robustness summaries.
