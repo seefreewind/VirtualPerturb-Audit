@@ -28,11 +28,12 @@
 - Gemgroup-aware control-control null-envelope sensitivity completed for L1/L2 baselines and FP-1/FP-3 probes in `results/pilot/null_envelope_sensitivity.csv`.
 - FP-3 label-shuffled pilot now runs the pre-registered 20 permutations and writes `results/pilot/fp3_label_shuffle_permutation_summary.csv`.
 - Five-seed robustness summary completed for B0-B5 non-shuffled baselines and FP-1/FP-2 on L1/L2 in `results/pilot/seed_robustness_summary.csv`.
+- HGNC gene-group annotation completed for Norman perturbation genes, with family-aware retrieval-confusion summaries in `results/pilot/gene_family_confusion_summary.csv` and L3 gene-family holdout candidates in `results/pilot/l3_gene_family_holdout_candidates.csv`.
 - Norman acquisition report created at `reports/NORMAN_ACQUISITION_REPORT.md`.
 
 ## Key results
 
-Norman baseline and falsification-probe audit outputs are available in `results/pilot/pilot_summary.csv`. B3/FP-2 shows how much signal can be recovered from perturbation identity and seen single-component deltas without individual cell-state modeling. B4 PCA/Ridge is now included as a perturbation-to-effect mapping baseline. B1/B2 match B5 in this pilot when no stronger biological context is available beyond the current metadata. These outputs should not be interpreted as full GEARS model performance. The current UER@50 values use a provisional empirical threshold because replicate/control null envelopes are not yet verified.
+Norman baseline and falsification-probe audit outputs are available in `results/pilot/pilot_summary.csv`. B3/FP-2 shows how much signal can be recovered from perturbation identity and seen single-component deltas without individual cell-state modeling. B4 PCA/Ridge is now included as a perturbation-to-effect mapping baseline. B1/B2 match B5 in this pilot when no stronger biological context is available beyond the current metadata. HGNC family-confusion outputs show whether retrieval mistakes remain within related gene groups, which will support L3 split design. These outputs should not be interpreted as full GEARS model performance. The current UER@50 values use a provisional empirical threshold because replicate/control null envelopes are not yet verified.
 
 ## Failed
 
@@ -66,4 +67,4 @@ Pilot status: PROVISIONAL_GO_FOR_BASELINE_AUDIT; GEARS_FULL_EVALUATION_PENDING.
 
 1. Run GEARS L1/L2 pilot on adequate compute and append comparable rows to `results/pilot/pilot_summary.csv`.
 2. Extend gemgroup-aware null-envelope sensitivity to full GEARS prediction summaries after adequate model runs are available.
-3. Add pathway/gene-family annotations for L3 and confusion enrichment.
+3. Lock and implement formal L3 gene-family holdout using the HGNC candidate table.

@@ -3,5 +3,5 @@
 1. Run GEARS L1/L2 with adequate compute; use `--max-train-batches` only for development smoke checks.
 2. Extend gemgroup-aware null-envelope sensitivity and perturbation retrieval to full GEARS predictions.
 3. Continue searching for true replicate labels; keep replicate-derived BNS marked unverified unless found.
-4. Add pathway/gene-family annotations for L3 and confusion enrichment.
-5. Add formal L3 gene-family/pathway holdout after annotation support is available.
+4. Lock and implement formal L3 gene-family/pathway holdout using `results/pilot/l3_gene_family_holdout_candidates.csv`.
+5. Add pathway-level annotations later only if a redistributable source is available; MSigDB direct downloads require registration.

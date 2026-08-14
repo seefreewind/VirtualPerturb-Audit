@@ -1,0 +1,138 @@
+symbol,approved_name,hgnc_id,gene_group,gene_group_id,annotation_status
+AHR,aryl hydrocarbon receptor,HGNC:348,Basic helix-loop-helix proteins,420,ANNOTATED_HGNC_GROUP
+AHR,aryl hydrocarbon receptor,HGNC:348,PAS domain containing,2127,ANNOTATED_HGNC_GROUP
+ARID1A,AT-rich interaction domain 1A,HGNC:11110,AT-rich interaction domain containing,418,ANNOTATED_HGNC_GROUP
+ARID1A,AT-rich interaction domain 1A,HGNC:11110,Armadillo like helical domain containing,1492,ANNOTATED_HGNC_GROUP
+ARID1A,AT-rich interaction domain 1A,HGNC:11110,BAF complex subunits,1604,ANNOTATED_HGNC_GROUP
+ARRDC3,arrestin domain containing 3,HGNC:29263,Alpha arrestins,1311,ANNOTATED_HGNC_GROUP
+ATL1,atlastin GTPase 1,HGNC:11231,Atlastins,1887,ANNOTATED_HGNC_GROUP
+BAK1,BCL2 antagonist/killer 1,HGNC:949,BCL2 family,1057,ANNOTATED_HGNC_GROUP
+BCL2L11,BCL2 like 11,HGNC:994,BCL2 homology region 3 (BH3) only,1277,ANNOTATED_HGNC_GROUP
+BCORL1,BCL6 corepressor like 1,HGNC:25657,Ankyrin repeat domain containing,403,ANNOTATED_HGNC_GROUP
+BPGM,bisphosphoglycerate mutase,HGNC:1093,Bisphosphoglycerate phosphatases,1082,ANNOTATED_HGNC_GROUP
+BPGM,bisphosphoglycerate mutase,HGNC:1093,Phosphoglycerate mutases,1078,ANNOTATED_HGNC_GROUP
+C19orf26,,,NOT_FOUND_IN_HGNC,NOT_FOUND_IN_HGNC,NOT_FOUND_IN_HGNC
+C3orf72,,,NOT_FOUND_IN_HGNC,NOT_FOUND_IN_HGNC,NOT_FOUND_IN_HGNC
+CBFA2T3,CBFA2/RUNX1 partner transcriptional co-repressor 3,HGNC:1537,A-kinase anchoring proteins,396,ANNOTATED_HGNC_GROUP
+CBFA2T3,CBFA2/RUNX1 partner transcriptional co-repressor 3,HGNC:1537,Zinc fingers MYND-type,87,ANNOTATED_HGNC_GROUP
+CBL,Cbl proto-oncogene,HGNC:1541,Ring finger proteins,58,ANNOTATED_HGNC_GROUP
+CDKN1A,cyclin dependent kinase inhibitor 1A,HGNC:1784,Cyclin dependent kinase inhibitor 1 family,3920,ANNOTATED_HGNC_GROUP
+CDKN1B,cyclin dependent kinase inhibitor 1B,HGNC:1785,Cyclin dependent kinase inhibitor 1 family,3920,ANNOTATED_HGNC_GROUP
+CDKN1C,cyclin dependent kinase inhibitor 1C,HGNC:1786,Cyclin dependent kinase inhibitor 1 family,3920,ANNOTATED_HGNC_GROUP
+CEBPA,CCAAT enhancer binding protein alpha,HGNC:1833,CCAAT/enhancer binding proteins,1165,ANNOTATED_HGNC_GROUP
+CEBPB,CCAAT enhancer binding protein beta,HGNC:1834,CCAAT/enhancer binding proteins,1165,ANNOTATED_HGNC_GROUP
+CEBPE,CCAAT enhancer binding protein epsilon,HGNC:1836,CCAAT/enhancer binding proteins,1165,ANNOTATED_HGNC_GROUP
+CELF2,CUGBP Elav-like family member 2,HGNC:2550,RNA binding motif containing,725,ANNOTATED_HGNC_GROUP
+CITED1,Cbp/p300 interacting transactivator with ED-rich tail 1,HGNC:1986,CBP/p300-interacting transactivator with ED-rich tail family,3811,ANNOTATED_HGNC_GROUP
+CKS1B,CDC28 protein kinase regulatory subunit 1B,HGNC:19083,MicroRNA protein coding host genes,1691,ANNOTATED_HGNC_GROUP
+CLDN6,claudin 6,HGNC:2048,Claudins,488,ANNOTATED_HGNC_GROUP
+CNN1,calponin 1,HGNC:2155,Calponin family,3745,ANNOTATED_HGNC_GROUP
+CNNM4,cyclin and CBS domain divalent metal cation transport mediator 4,HGNC:105,MicroRNA protein coding host genes,1691,ANNOTATED_HGNC_GROUP
+CNNM4,cyclin and CBS domain divalent metal cation transport mediator 4,HGNC:105,"Solute carrier family 70, cyclin and CBS domain divalent metal cation transport mediators",1801,ANNOTATED_HGNC_GROUP
+COL1A1,collagen type I alpha 1 chain,HGNC:2197,Fibrillar collagens,2247,ANNOTATED_HGNC_GROUP
+COL2A1,collagen type II alpha 1 chain,HGNC:2200,Fibrillar collagens,2247,ANNOTATED_HGNC_GROUP
+CSRNP1,cysteine and serine rich nuclear protein 1,HGNC:14300,UNANNOTATED,UNANNOTATED,UNANNOTATED_HGNC_GROUP
+DLX2,distal-less homeobox 2,HGNC:2915,Distal-less homeobox family,3839,ANNOTATED_HGNC_GROUP
+DUSP9,dual specificity phosphatase 9,HGNC:3076,MAP kinase phosphatases,895,ANNOTATED_HGNC_GROUP
+EGR1,early growth response 1,HGNC:3238,Zinc fingers C2H2-type,28,ANNOTATED_HGNC_GROUP
+ELMSAN1,,,NOT_FOUND_IN_HGNC,NOT_FOUND_IN_HGNC,NOT_FOUND_IN_HGNC
+ETS2,"ETS proto-oncogene 2, transcription factor",HGNC:3489,ETS transcription factor family,534,ANNOTATED_HGNC_GROUP
+FEV,"FEV transcription factor, ETS family member",HGNC:18562,ETS transcription factor family,534,ANNOTATED_HGNC_GROUP
+FOSB,"FosB proto-oncogene, AP-1 transcription factor subunit",HGNC:3797,Fos transcription factor family,1256,ANNOTATED_HGNC_GROUP
+FOXA1,forkhead box A1,HGNC:5021,Forkhead boxes,508,ANNOTATED_HGNC_GROUP
+FOXA3,forkhead box A3,HGNC:5023,Forkhead boxes,508,ANNOTATED_HGNC_GROUP
+FOXF1,forkhead box F1,HGNC:3809,Forkhead boxes,508,ANNOTATED_HGNC_GROUP
+FOXL2,forkhead box L2,HGNC:1092,Forkhead boxes,508,ANNOTATED_HGNC_GROUP
+FOXO4,forkhead box O4,HGNC:7139,Forkhead boxes,508,ANNOTATED_HGNC_GROUP
+GLB1L2,galactosidase beta 1 like 2,HGNC:25129,Galactosidases beta,1654,ANNOTATED_HGNC_GROUP
+HES7,hes family bHLH transcription factor 7,HGNC:15977,Basic helix-loop-helix proteins,420,ANNOTATED_HGNC_GROUP
+HK2,hexokinase 2,HGNC:4923,Hexokinase family,3429,ANNOTATED_HGNC_GROUP
+HNF4A,hepatocyte nuclear factor 4 alpha,HGNC:5024,Hepatocyte nuclear factor 4 family,2085,ANNOTATED_HGNC_GROUP
+HNF4A,hepatocyte nuclear factor 4 alpha,HGNC:5024,MicroRNA protein coding host genes,1691,ANNOTATED_HGNC_GROUP
+HOXA13,homeobox A13,HGNC:5102,HOXL subclass homeoboxes,518,ANNOTATED_HGNC_GROUP
+HOXB9,homeobox B9,HGNC:5120,HOXL subclass homeoboxes,518,ANNOTATED_HGNC_GROUP
+HOXC13,homeobox C13,HGNC:5125,HOXL subclass homeoboxes,518,ANNOTATED_HGNC_GROUP
+IER5L,immediate early response 5 like,HGNC:23679,UNANNOTATED,UNANNOTATED,UNANNOTATED_HGNC_GROUP
+IGDCC3,immunoglobulin superfamily DCC subclass member 3,HGNC:9700,Fibronectin type III domain containing,555,ANNOTATED_HGNC_GROUP
+IGDCC3,immunoglobulin superfamily DCC subclass member 3,HGNC:9700,I-set domain containing,593,ANNOTATED_HGNC_GROUP
+IKZF3,IKAROS family zinc finger 3,HGNC:13178,Zinc fingers C2H2-type,28,ANNOTATED_HGNC_GROUP
+IRF1,interferon regulatory factor 1,HGNC:6116,Interferon regulatory factors,1743,ANNOTATED_HGNC_GROUP
+ISL2,ISL LIM homeobox 2,HGNC:18524,LIM class homeoboxes,522,ANNOTATED_HGNC_GROUP
+JUN,"Jun proto-oncogene, AP-1 transcription factor subunit",HGNC:6204,Jun transcription factor family,1257,ANNOTATED_HGNC_GROUP
+KIAA1804,,,NOT_FOUND_IN_HGNC,NOT_FOUND_IN_HGNC,NOT_FOUND_IN_HGNC
+KIF18B,kinesin family member 18B,HGNC:27102,Kinesins,622,ANNOTATED_HGNC_GROUP
+KIF18B,kinesin family member 18B,HGNC:27102,MicroRNA protein coding host genes,1691,ANNOTATED_HGNC_GROUP
+KIF2C,kinesin family member 2C,HGNC:6393,Kinesins,622,ANNOTATED_HGNC_GROUP
+KIF2C,kinesin family member 2C,HGNC:6393,Small nucleolar RNA protein coding host genes,1835,ANNOTATED_HGNC_GROUP
+KLF1,KLF transcription factor 1,HGNC:6345,KLF transcription factors,624,ANNOTATED_HGNC_GROUP
+KLF1,KLF transcription factor 1,HGNC:6345,Zinc fingers C2H2-type,28,ANNOTATED_HGNC_GROUP
+KMT2A,lysine methyltransferase 2A,HGNC:7132,Bromodomain containing,1232,ANNOTATED_HGNC_GROUP
+KMT2A,lysine methyltransferase 2A,HGNC:7132,Histone lysine methyltransferases,487,ANNOTATED_HGNC_GROUP
+KMT2A,lysine methyltransferase 2A,HGNC:7132,PHD finger proteins,88,ANNOTATED_HGNC_GROUP
+KMT2A,lysine methyltransferase 2A,HGNC:7132,SET domain containing,1399,ANNOTATED_HGNC_GROUP
+KMT2A,lysine methyltransferase 2A,HGNC:7132,Zinc fingers CXXC-type,136,ANNOTATED_HGNC_GROUP
+LHX1,LIM homeobox 1,HGNC:6593,LIM class homeoboxes,522,ANNOTATED_HGNC_GROUP
+LYL1,LYL1 basic helix-loop-helix family member,HGNC:6734,Basic helix-loop-helix proteins,420,ANNOTATED_HGNC_GROUP
+MAML2,mastermind like transcriptional coactivator 2,HGNC:16259,UNANNOTATED,UNANNOTATED,UNANNOTATED_HGNC_GROUP
+MAP2K3,mitogen-activated protein kinase kinase 3,HGNC:6843,Mitogen-activated protein kinase kinases,653,ANNOTATED_HGNC_GROUP
+MAP2K6,mitogen-activated protein kinase kinase 6,HGNC:6846,Mitogen-activated protein kinase kinases,653,ANNOTATED_HGNC_GROUP
+MAP4K3,mitogen-activated protein kinase kinase kinase kinase 3,HGNC:6865,MAP4K family (GCK-I subfamily),3776,ANNOTATED_HGNC_GROUP
+MAP4K5,mitogen-activated protein kinase kinase kinase kinase 5,HGNC:6867,MAP4K family (GCK-I subfamily),3776,ANNOTATED_HGNC_GROUP
+MAP7D1,MAP7 domain containing 1,HGNC:25514,Microtubule associated protein 7 family,4017,ANNOTATED_HGNC_GROUP
+MAPK1,mitogen-activated protein kinase 1,HGNC:6871,Mitogen-activated protein kinase 3 and 1 (ERK1/2) family,3765,ANNOTATED_HGNC_GROUP
+MEIS1,Meis homeobox 1,HGNC:7000,TALE class homeoboxes and pseudogenes,526,ANNOTATED_HGNC_GROUP
+MIDN,midnolin,HGNC:16298,UNANNOTATED,UNANNOTATED,UNANNOTATED_HGNC_GROUP
+NCL,,,NOT_FOUND_IN_HGNC,NOT_FOUND_IN_HGNC,NOT_FOUND_IN_HGNC
+NIT1,nitrilase 1,HGNC:7828,UNANNOTATED,UNANNOTATED,UNANNOTATED_HGNC_GROUP
+OSR2,odd-skipped related transciption factor 2,HGNC:15830,Zinc fingers C2H2-type,28,ANNOTATED_HGNC_GROUP
+PLK4,polo like kinase 4,HGNC:11397,Polo like kinase family,3414,ANNOTATED_HGNC_GROUP
+POU3F2,POU class 3 homeobox 2,HGNC:9215,POU class homeoboxes and pseudogenes,523,ANNOTATED_HGNC_GROUP
+PRDM1,PR/SET domain 1,HGNC:9346,PR/SET domain family,1197,ANNOTATED_HGNC_GROUP
+PRDM1,PR/SET domain 1,HGNC:9346,Putative lysine methyltransferases,3513,ANNOTATED_HGNC_GROUP
+PRDM1,PR/SET domain 1,HGNC:9346,Zinc fingers C2H2-type,28,ANNOTATED_HGNC_GROUP
+PRTG,protogenin,HGNC:26373,Fibronectin type III domain containing,555,ANNOTATED_HGNC_GROUP
+PRTG,protogenin,HGNC:26373,I-set domain containing,593,ANNOTATED_HGNC_GROUP
+PTPN1,protein tyrosine phosphatase non-receptor type 1,HGNC:9642,Protein tyrosine phosphatases non-receptor type,812,ANNOTATED_HGNC_GROUP
+PTPN12,protein tyrosine phosphatase non-receptor type 12,HGNC:9645,Protein tyrosine phosphatases non-receptor type,812,ANNOTATED_HGNC_GROUP
+PTPN13,protein tyrosine phosphatase non-receptor type 13,HGNC:9646,FERM domain containing,1293,ANNOTATED_HGNC_GROUP
+PTPN13,protein tyrosine phosphatase non-receptor type 13,HGNC:9646,KIND domain containing,3931,ANNOTATED_HGNC_GROUP
+PTPN13,protein tyrosine phosphatase non-receptor type 13,HGNC:9646,PDZ domain containing,1220,ANNOTATED_HGNC_GROUP
+PTPN13,protein tyrosine phosphatase non-receptor type 13,HGNC:9646,Protein tyrosine phosphatases non-receptor type,812,ANNOTATED_HGNC_GROUP
+PTPN9,protein tyrosine phosphatase non-receptor type 9,HGNC:9661,CRAL-TRIO lipid binding domain containing,3691,ANNOTATED_HGNC_GROUP
+PTPN9,protein tyrosine phosphatase non-receptor type 9,HGNC:9661,Protein tyrosine phosphatases non-receptor type,812,ANNOTATED_HGNC_GROUP
+RHOXF2BB,,,NOT_FOUND_IN_HGNC,NOT_FOUND_IN_HGNC,NOT_FOUND_IN_HGNC
+RREB1,ras responsive element binding protein 1,HGNC:10449,Zinc fingers C2H2-type,28,ANNOTATED_HGNC_GROUP
+RUNX1T1,RUNX1 partner transcriptional co-repressor 1,HGNC:1535,Zinc fingers MYND-type,87,ANNOTATED_HGNC_GROUP
+S1PR2,sphingosine-1-phosphate receptor 2,HGNC:3169,Sphingosine 1-phosphate receptors,206,ANNOTATED_HGNC_GROUP
+SAMD1,sterile alpha motif domain containing 1,HGNC:17958,Sterile alpha motif domain containing,760,ANNOTATED_HGNC_GROUP
+SET,SET nuclear proto-oncogene,HGNC:10760,INHAT complex,1658,ANNOTATED_HGNC_GROUP
+SET,SET nuclear proto-oncogene,HGNC:10760,Nucleosome assembly protein superfamily,2305,ANNOTATED_HGNC_GROUP
+SET,SET nuclear proto-oncogene,HGNC:10760,SET complex,1659,ANNOTATED_HGNC_GROUP
+SGK1,serum/glucocorticoid regulated kinase 1,HGNC:10810,Serum/glucocorticoid regulated kinase family,3485,ANNOTATED_HGNC_GROUP
+SLC38A2,solute carrier family 38 member 2,HGNC:13448,Solute carrier family 38,2188,ANNOTATED_HGNC_GROUP
+SLC4A1,solute carrier family 4 member 1 (Diego blood group),HGNC:11027,Blood group antigens,454,ANNOTATED_HGNC_GROUP
+SLC4A1,solute carrier family 4 member 1 (Diego blood group),HGNC:11027,CD molecules,471,ANNOTATED_HGNC_GROUP
+SLC4A1,solute carrier family 4 member 1 (Diego blood group),HGNC:11027,Solute carrier family 4,2157,ANNOTATED_HGNC_GROUP
+SLC6A9,solute carrier family 6 member 9,HGNC:11056,Solute carrier family 6,2159,ANNOTATED_HGNC_GROUP
+SNAI1,snail family transcriptional repressor 1,HGNC:11128,SNAG transcriptional repressors,1259,ANNOTATED_HGNC_GROUP
+SNAI1,snail family transcriptional repressor 1,HGNC:11128,Zinc fingers C2H2-type,28,ANNOTATED_HGNC_GROUP
+SPI1,Spi-1 proto-oncogene,HGNC:11241,ETS transcription factor family,534,ANNOTATED_HGNC_GROUP
+STIL,STIL centriolar assembly protein,HGNC:10879,UNANNOTATED,UNANNOTATED,UNANNOTATED_HGNC_GROUP
+TBX2,T-box transcription factor 2,HGNC:11597,T-box transcription factors,766,ANNOTATED_HGNC_GROUP
+TBX3,T-box transcription factor 3,HGNC:11602,T-box transcription factors,766,ANNOTATED_HGNC_GROUP
+TGFBR2,transforming growth factor beta receptor 2,HGNC:11773,Type 2 receptor serine/threonine kinases,346,ANNOTATED_HGNC_GROUP
+TMSB4X,thymosin beta 4 X-linked,HGNC:11881,Thymosin beta family,3784,ANNOTATED_HGNC_GROUP
+TP73,tumor protein p73,HGNC:12003,UNANNOTATED,UNANNOTATED,UNANNOTATED_HGNC_GROUP
+TSC22D1,TSC22 domain family member 1,HGNC:16826,TSC22 domain family,3721,ANNOTATED_HGNC_GROUP
+UBASH3A,ubiquitin associated and SH3 domain containing A,HGNC:12462,UNANNOTATED,UNANNOTATED,UNANNOTATED_HGNC_GROUP
+UBASH3B,ubiquitin associated and SH3 domain containing B,HGNC:29884,Protein phosphatases,703,ANNOTATED_HGNC_GROUP
+ZBTB1,zinc finger and BTB domain containing 1,HGNC:20259,BTB domain containing,861,ANNOTATED_HGNC_GROUP
+ZBTB1,zinc finger and BTB domain containing 1,HGNC:20259,Zinc fingers C2H2-type,28,ANNOTATED_HGNC_GROUP
+ZBTB10,zinc finger and BTB domain containing 10,HGNC:30953,BTB domain containing,861,ANNOTATED_HGNC_GROUP
+ZBTB10,zinc finger and BTB domain containing 10,HGNC:30953,Zinc fingers C2H2-type,28,ANNOTATED_HGNC_GROUP
+ZBTB25,zinc finger and BTB domain containing 25,HGNC:13112,BTB domain containing,861,ANNOTATED_HGNC_GROUP
+ZBTB25,zinc finger and BTB domain containing 25,HGNC:13112,Zinc fingers C2H2-type,28,ANNOTATED_HGNC_GROUP
+ZC3HAV1,"zinc finger CCCH-type containing, antiviral 1",HGNC:23721,Poly(ADP-ribose) polymerases,684,ANNOTATED_HGNC_GROUP
+ZC3HAV1,"zinc finger CCCH-type containing, antiviral 1",HGNC:23721,Zinc fingers CCCH-type,73,ANNOTATED_HGNC_GROUP
+ZNF318,zinc finger protein 318,HGNC:13578,Zinc fingers C2H2-type,28,ANNOTATED_HGNC_GROUP
+ZNF318,zinc finger protein 318,HGNC:13578,Zinc fingers matrin-type,84,ANNOTATED_HGNC_GROUP

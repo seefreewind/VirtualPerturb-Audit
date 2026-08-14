@@ -1,0 +1,20 @@
+gene_group_id,gene_group,n_norman_perturbation_genes,norman_perturbation_genes,candidate_use,status
+28,Zinc fingers C2H2-type,11,EGR1|IKZF3|KLF1|OSR2|PRDM1|RREB1|SNAI1|ZBTB1|ZBTB10|ZBTB25|ZNF318,L3 gene-family/pathway holdout,CANDIDATE_REQUIRES_SPLIT_LOCK
+508,Forkhead boxes,5,FOXA1|FOXA3|FOXF1|FOXL2|FOXO4,L3 gene-family/pathway holdout,CANDIDATE_REQUIRES_SPLIT_LOCK
+1691,MicroRNA protein coding host genes,4,CKS1B|CNNM4|HNF4A|KIF18B,L3 gene-family/pathway holdout,CANDIDATE_REQUIRES_SPLIT_LOCK
+812,Protein tyrosine phosphatases non-receptor type,4,PTPN1|PTPN12|PTPN13|PTPN9,L3 gene-family/pathway holdout,CANDIDATE_REQUIRES_SPLIT_LOCK
+861,BTB domain containing,3,ZBTB1|ZBTB10|ZBTB25,L3 gene-family/pathway holdout,CANDIDATE_REQUIRES_SPLIT_LOCK
+420,Basic helix-loop-helix proteins,3,AHR|HES7|LYL1,L3 gene-family/pathway holdout,CANDIDATE_REQUIRES_SPLIT_LOCK
+1165,CCAAT/enhancer binding proteins,3,CEBPA|CEBPB|CEBPE,L3 gene-family/pathway holdout,CANDIDATE_REQUIRES_SPLIT_LOCK
+3920,Cyclin dependent kinase inhibitor 1 family,3,CDKN1A|CDKN1B|CDKN1C,L3 gene-family/pathway holdout,CANDIDATE_REQUIRES_SPLIT_LOCK
+534,ETS transcription factor family,3,ETS2|FEV|SPI1,L3 gene-family/pathway holdout,CANDIDATE_REQUIRES_SPLIT_LOCK
+518,HOXL subclass homeoboxes,3,HOXA13|HOXB9|HOXC13,L3 gene-family/pathway holdout,CANDIDATE_REQUIRES_SPLIT_LOCK
+2247,Fibrillar collagens,2,COL1A1|COL2A1,L3 gene-family/pathway holdout,CANDIDATE_REQUIRES_SPLIT_LOCK
+555,Fibronectin type III domain containing,2,IGDCC3|PRTG,L3 gene-family/pathway holdout,CANDIDATE_REQUIRES_SPLIT_LOCK
+593,I-set domain containing,2,IGDCC3|PRTG,L3 gene-family/pathway holdout,CANDIDATE_REQUIRES_SPLIT_LOCK
+622,Kinesins,2,KIF18B|KIF2C,L3 gene-family/pathway holdout,CANDIDATE_REQUIRES_SPLIT_LOCK
+522,LIM class homeoboxes,2,ISL2|LHX1,L3 gene-family/pathway holdout,CANDIDATE_REQUIRES_SPLIT_LOCK
+3776,MAP4K family (GCK-I subfamily),2,MAP4K3|MAP4K5,L3 gene-family/pathway holdout,CANDIDATE_REQUIRES_SPLIT_LOCK
+653,Mitogen-activated protein kinase kinases,2,MAP2K3|MAP2K6,L3 gene-family/pathway holdout,CANDIDATE_REQUIRES_SPLIT_LOCK
+766,T-box transcription factors,2,TBX2|TBX3,L3 gene-family/pathway holdout,CANDIDATE_REQUIRES_SPLIT_LOCK
+87,Zinc fingers MYND-type,2,CBFA2T3|RUNX1T1,L3 gene-family/pathway holdout,CANDIDATE_REQUIRES_SPLIT_LOCK

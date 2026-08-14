@@ -12,6 +12,7 @@ def main():
     subprocess.run([sys.executable, "scripts/run_fp3_permutations.py"], check=True)
     subprocess.run([sys.executable, "scripts/run_null_envelope_sensitivity.py"], check=True)
     subprocess.run([sys.executable, "scripts/run_seed_robustness.py"], check=True)
+    subprocess.run([sys.executable, "scripts/build_gene_family_confusion.py"], check=True)
     subprocess.run([sys.executable, "scripts/build_figures.py"], check=True)
     subprocess.run([sys.executable, "scripts/build_tables.py"], check=True)
 

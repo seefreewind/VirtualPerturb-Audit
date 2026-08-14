@@ -28,3 +28,4 @@
 - Integrated B1 global perturbed mean, B2 context-matched perturbed mean, and B4 PCA/Ridge into the Norman baseline pilot outputs.
 - Added five-seed robustness outputs for B0-B5 non-shuffled baselines and FP-1/FP-2.
 - Added table 8 exports for seed robustness summaries.
+- Added HGNC gene-group mapping for Norman perturbation genes, family-aware retrieval-confusion summaries, and L3 gene-family holdout candidate tables.

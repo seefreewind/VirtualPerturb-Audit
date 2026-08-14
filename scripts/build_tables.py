@@ -62,6 +62,12 @@ def main():
     seed_robustness = Path("results/pilot/seed_robustness_summary.csv")
     if seed_robustness.exists():
         write_table(pd.read_csv(seed_robustness), "table8_seed_robustness_summary")
+    gene_family_confusion = Path("results/pilot/gene_family_confusion_summary.csv")
+    if gene_family_confusion.exists():
+        write_table(pd.read_csv(gene_family_confusion), "table9_gene_family_confusion_summary")
+    l3_candidates = Path("results/pilot/l3_gene_family_holdout_candidates.csv")
+    if l3_candidates.exists():
+        write_table(pd.read_csv(l3_candidates), "table10_l3_gene_family_holdout_candidates")
 
 
 if __name__ == "__main__":
