@@ -16,6 +16,7 @@ from src.splits.builders import (
     assign_l0_random_cells,
     assign_l1_perturbation_holdout,
     assign_l2_component_holdout,
+    assign_l3_gene_family_holdout,
     split_hash,
 )
 
@@ -24,6 +25,7 @@ SPLITTERS = {
     "L0": assign_l0_random_cells,
     "L1": assign_l1_perturbation_holdout,
     "L2": assign_l2_component_holdout,
+    "L3": assign_l3_gene_family_holdout,
 }
 
 
@@ -91,4 +93,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-

@@ -8,7 +8,7 @@ from src.leakage.checks import run_split_integrity_checks
 from src.metrics.bounds import bound_normalized_score
 from src.metrics.retrieval import perturbation_centroid_retrieval, perturbation_retrieval_rows
 from src.statistics.bootstrap import bootstrap_mean_ci
-from src.splits.builders import assign_l1_perturbation_holdout, assign_l2_component_holdout
+from src.splits.builders import assign_l1_perturbation_holdout, assign_l2_component_holdout, assign_l3_gene_family_holdout
 from scripts.run_baseline_pilot import additive_delta_map, evaluate_split
 
 
@@ -41,6 +41,31 @@ def test_l2_has_no_component_overlap():
     adata.obs["split_group"] = assign_l2_component_holdout(adata, seed=4, test_fraction=0.4)
     checks = run_split_integrity_checks(adata, "L2")
     assert all(c["status"] == "PASS" for c in checks), checks
+
+
+def test_l3_family_holdout_excludes_mixed_family_overlap(tmp_path):
+    obs = pd.DataFrame({
+        "perturbation": ["ctrl", "ctrl", "A", "A+B", "A+C", "C", "D"],
+        "control_status": ["control", "control"] + ["perturbed"] * 5,
+    })
+    adata = ToyAnnData(obs)
+    candidates = tmp_path / "l3_candidates.csv"
+    pd.DataFrame(
+        [
+            {
+                "gene_group_id": "G1",
+                "gene_group": "family_1",
+                "n_norman_perturbation_genes": 2,
+                "norman_perturbation_genes": "A|B",
+            }
+        ]
+    ).to_csv(candidates, index=False)
+    labels = assign_l3_gene_family_holdout(adata, seed=1, test_fraction=1.0, val_fraction=0.0, candidates_path=candidates)
+    by_pert = dict(zip(obs["perturbation"], labels))
+    assert by_pert["A"] == "test"
+    assert by_pert["A+B"] == "test"
+    assert by_pert["A+C"] == "exclude_gene_family_overlap"
+    assert by_pert["C"] == "train"
 
 
 def test_bns_marks_uninformative_assay():

@@ -65,7 +65,7 @@ def main():
     adata = normalize_norman_gears_schema(read_h5ad(h5ad))
     rows = []
     retrieval_rows = []
-    for split in ["L1", "L2"]:
+    for split in ["L1", "L2", "L3"]:
         adata.obs["split_group"] = SPLITTERS[split](adata, seed=args.seed)
         split_rows, split_retrieval = evaluate_falsification_split(adata, split, seed=args.seed)
         rows.extend(split_rows)

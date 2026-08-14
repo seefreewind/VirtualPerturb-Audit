@@ -7,7 +7,15 @@ import numpy as np
 import pandas as pd
 
 from scripts.audit_norman_geo_metadata import canonical_condition, parse_guide_identity
-from scripts.run_baseline_pilot import SPLITTERS, additive_delta_map, mean_expr, train_mean_delta
+from scripts.run_baseline_pilot import (
+    SPLITTERS,
+    additive_delta_map,
+    context_matched_delta_map,
+    mean_expr,
+    pca_ridge_delta_map,
+    train_global_perturbed_mean_delta,
+    train_mean_delta,
+)
 from scripts.run_falsification_pilot import shuffled_delta_map
 from src.data.loaders import normalize_norman_gears_schema, read_h5ad
 from src.hallucination.metrics import unsupported_effect_rate_at_k
@@ -92,25 +100,41 @@ def main():
     adata = normalize_norman_gears_schema(read_h5ad(Path(args.h5ad)))
     adata = attach_geo_metadata(adata, Path(args.geo_identities))
     rows = []
-    for split in ["L1", "L2"]:
+    for split in ["L1", "L2", "L3"]:
         adata.obs["split_group"] = SPLITTERS[split](adata, seed=args.seed)
+        mean_delta = train_mean_delta(adata)
         threshold = control_gemgroup_null_thresholds(adata)
         model_preds = [
             ("B0_no_change", np.zeros(adata.n_vars), "COMPLETED_BASELINE_UNVERIFIED_UPPER_BOUND"),
             (
-                "B3_additive_seen_component",
-                additive_delta_map(adata, fallback=train_mean_delta(adata)),
+                "B1_global_perturbed_mean",
+                train_global_perturbed_mean_delta(adata),
                 "COMPLETED_BASELINE_UNVERIFIED_UPPER_BOUND",
             ),
-            ("B5_mean_effect", train_mean_delta(adata), "COMPLETED_BASELINE_UNVERIFIED_UPPER_BOUND"),
+            (
+                "B2_context_matched_perturbed_mean",
+                context_matched_delta_map(adata, fallback=mean_delta),
+                "COMPLETED_BASELINE_UNVERIFIED_UPPER_BOUND",
+            ),
+            (
+                "B3_additive_seen_component",
+                additive_delta_map(adata, fallback=mean_delta),
+                "COMPLETED_BASELINE_UNVERIFIED_UPPER_BOUND",
+            ),
+            (
+                "B4_pca_ridge",
+                pca_ridge_delta_map(adata, fallback=mean_delta),
+                "COMPLETED_BASELINE_UNVERIFIED_UPPER_BOUND",
+            ),
+            ("B5_mean_effect", mean_delta, "COMPLETED_BASELINE_UNVERIFIED_UPPER_BOUND"),
             (
                 "FP1_perturbation_blind_mean_effect",
-                train_mean_delta(adata),
+                mean_delta,
                 "COMPLETED_FALSIFICATION_PROBE",
             ),
             (
                 "FP2_cell_state_blind_additive",
-                additive_delta_map(adata, fallback=train_mean_delta(adata)),
+                additive_delta_map(adata, fallback=mean_delta),
                 "COMPLETED_FALSIFICATION_PROBE",
             ),
             (

@@ -7,3 +7,6 @@ L1	no_group_overlap_replicate	PASS	replicate unavailable or uninformative; group
 L2	no_exact_cell_overlap	PASS	obs_names are unique.	842eb5562637cd90
 L2	no_forbidden_perturbation_overlap	PASS	L2 component overlap: []	842eb5562637cd90
 L2	no_group_overlap_replicate	PASS	replicate unavailable or uninformative; group overlap check skipped.	842eb5562637cd90
+L3	no_exact_cell_overlap	PASS	obs_names are unique.	2f51c764d2446d95
+L3	no_forbidden_perturbation_overlap	PASS	L3 gene-family overlap: []	2f51c764d2446d95
+L3	no_group_overlap_replicate	PASS	replicate unavailable or uninformative; group overlap check skipped.	2f51c764d2446d95

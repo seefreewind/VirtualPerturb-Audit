@@ -30,12 +30,13 @@ def main():
     write_table(pd.DataFrame([
         {"code": "LKG-1", "name": "Cell leakage", "pilot_status": "CHECK_IMPLEMENTED"},
         {"code": "LKG-2", "name": "Perturbation leakage", "pilot_status": "CHECK_IMPLEMENTED_L1_L2"},
+        {"code": "LKG-3", "name": "Gene-family leakage", "pilot_status": "CHECK_IMPLEMENTED_L3_HGNC"},
         {"code": "LKG-4", "name": "Preprocessing leakage", "pilot_status": "TRAINING_ONLY_SCALER_IMPLEMENTED"},
     ]), "table3_leakage_taxonomy")
     write_table(pd.DataFrame([
-        {"probe": "FP-1", "name": "Perturbation-blind predictor", "pilot_status": "IMPLEMENTED_L1_L2"},
-        {"probe": "FP-2", "name": "Cell-state-blind predictor", "pilot_status": "IMPLEMENTED_L1_L2_ADDITIVE"},
-        {"probe": "FP-3", "name": "Label-shuffled control", "pilot_status": "IMPLEMENTED_L1_L2_20_PERMUTATIONS"},
+        {"probe": "FP-1", "name": "Perturbation-blind predictor", "pilot_status": "IMPLEMENTED_L1_L2_L3"},
+        {"probe": "FP-2", "name": "Cell-state-blind predictor", "pilot_status": "IMPLEMENTED_L1_L2_L3_ADDITIVE"},
+        {"probe": "FP-3", "name": "Label-shuffled control", "pilot_status": "IMPLEMENTED_L1_L2_L3_20_PERMUTATIONS"},
     ]), "table4_falsification_probes")
     pilot_summary = Path("results/pilot/pilot_summary.csv")
     if pilot_summary.exists():

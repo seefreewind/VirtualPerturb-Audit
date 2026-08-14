@@ -19,10 +19,11 @@
 - FP-3 label-shuffled pilot has completed the pre-registered 20 permutations for L1/L2.
 - Five-seed robustness has completed for B0-B5 non-shuffled baselines and FP-1/FP-2 on L1/L2.
 - HGNC gene-group annotation has completed for Norman perturbation genes; family-aware confusion summaries and L3 candidate gene groups are available.
+- Formal L3 HGNC gene-family holdout has completed split integrity and baseline/falsification pilot integration.
 
 ## Key results
 
-Baseline and falsification-probe Norman pilot results are present in `results/pilot/pilot_summary.csv`. B3/FP-2 remains a strong shortcut signal under L1, while B4 PCA/Ridge adds a perturbation-to-effect mapping baseline for separating expression correlation from retrieval specificity. HGNC family-confusion summaries now distinguish exact retrieval mistakes from biologically related gene-group mistakes. No full GEARS performance result is verified yet.
+Baseline and falsification-probe Norman pilot results are present in `results/pilot/pilot_summary.csv`. B3/FP-2 remains a strong shortcut signal under L1, while B4 PCA/Ridge adds a perturbation-to-effect mapping baseline for separating expression correlation from retrieval specificity. HGNC family-confusion summaries now distinguish exact retrieval mistakes from biologically related gene-group mistakes, and L3 directly evaluates held-out gene-family behavior. No full GEARS performance result is verified yet.
 
 ## Failed
 
@@ -68,4 +69,4 @@ Decision: PROVISIONAL_GO_FOR_BASELINE_AUDIT; NO_GO_FOR_GEARS_PERFORMANCE_CLAIMS.
 
 1. Add GEARS prediction export and metric integration.
 2. Extend gemgroup-aware null-envelope sensitivity and retrieval/confusion outputs to full GEARS prediction summaries after adequate model runs are available.
-3. Lock and implement formal L3 gene-family holdout using the HGNC candidate table.
+3. Add seed robustness for L3 or run GEARS L3 after adequate compute is available.

@@ -19,7 +19,7 @@ def main():
 
     adata = normalize_norman_gears_schema(read_h5ad(Path(args.h5ad)))
     rows = []
-    for split in ["L1", "L2"]:
+    for split in ["L1", "L2", "L3"]:
         adata.obs["split_group"] = SPLITTERS[split](adata, seed=args.split_seed)
         for perm_seed in range(1, args.permutations + 1):
             shuffled = shuffled_delta_map(adata, seed=perm_seed)

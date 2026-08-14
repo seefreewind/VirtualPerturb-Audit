@@ -13,7 +13,12 @@ from src.metrics.bounds import bound_normalized_score
 from src.metrics.expression import expression_metrics
 from src.metrics.retrieval import perturbation_centroid_retrieval, perturbation_retrieval_rows
 from src.models.baselines import PCARidgeBaseline
-from src.splits.builders import assign_l0_random_cells, assign_l1_perturbation_holdout, assign_l2_component_holdout
+from src.splits.builders import (
+    assign_l0_random_cells,
+    assign_l1_perturbation_holdout,
+    assign_l2_component_holdout,
+    assign_l3_gene_family_holdout,
+)
 from src.statistics.bootstrap import bootstrap_mean_ci
 
 
@@ -21,6 +26,7 @@ SPLITTERS = {
     "L0": assign_l0_random_cells,
     "L1": assign_l1_perturbation_holdout,
     "L2": assign_l2_component_holdout,
+    "L3": assign_l3_gene_family_holdout,
 }
 
 
