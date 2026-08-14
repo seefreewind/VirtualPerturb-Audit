@@ -7,7 +7,7 @@ import numpy as np
 import pandas as pd
 
 from scripts.audit_norman_geo_metadata import canonical_condition, parse_guide_identity
-from scripts.run_baseline_pilot import SPLITTERS, mean_expr, train_mean_delta
+from scripts.run_baseline_pilot import SPLITTERS, additive_delta_map, mean_expr, train_mean_delta
 from scripts.run_falsification_pilot import shuffled_delta_map
 from src.data.loaders import normalize_norman_gears_schema, read_h5ad
 from src.hallucination.metrics import unsupported_effect_rate_at_k
@@ -97,10 +97,20 @@ def main():
         threshold = control_gemgroup_null_thresholds(adata)
         model_preds = [
             ("B0_no_change", np.zeros(adata.n_vars), "COMPLETED_BASELINE_UNVERIFIED_UPPER_BOUND"),
+            (
+                "B3_additive_seen_component",
+                additive_delta_map(adata, fallback=train_mean_delta(adata)),
+                "COMPLETED_BASELINE_UNVERIFIED_UPPER_BOUND",
+            ),
             ("B5_mean_effect", train_mean_delta(adata), "COMPLETED_BASELINE_UNVERIFIED_UPPER_BOUND"),
             (
                 "FP1_perturbation_blind_mean_effect",
                 train_mean_delta(adata),
+                "COMPLETED_FALSIFICATION_PROBE",
+            ),
+            (
+                "FP2_cell_state_blind_additive",
+                additive_delta_map(adata, fallback=train_mean_delta(adata)),
                 "COMPLETED_FALSIFICATION_PROBE",
             ),
             (

@@ -23,6 +23,7 @@ def main():
     write_table(pd.DataFrame([
         {"model": "GEARS", "status": "BATCH_SMOKE_VERIFIED_FULL_EVALUATION_PENDING", "role": "pilot"},
         {"model": "No-change", "status": "IMPLEMENTED", "role": "baseline"},
+        {"model": "Additive seen-component", "status": "IMPLEMENTED", "role": "baseline"},
         {"model": "Context mean", "status": "IMPLEMENTED", "role": "baseline"},
         {"model": "PCA/Ridge", "status": "IMPLEMENTED", "role": "baseline"},
     ]), "table2_models")
@@ -33,7 +34,7 @@ def main():
     ]), "table3_leakage_taxonomy")
     write_table(pd.DataFrame([
         {"probe": "FP-1", "name": "Perturbation-blind predictor", "pilot_status": "IMPLEMENTED_L1_L2"},
-        {"probe": "FP-2", "name": "Cell-state-blind predictor", "pilot_status": "PENDING"},
+        {"probe": "FP-2", "name": "Cell-state-blind predictor", "pilot_status": "IMPLEMENTED_L1_L2_ADDITIVE"},
         {"probe": "FP-3", "name": "Label-shuffled control", "pilot_status": "IMPLEMENTED_L1_L2_20_PERMUTATIONS"},
     ]), "table4_falsification_probes")
     pilot_summary = Path("results/pilot/pilot_summary.csv")

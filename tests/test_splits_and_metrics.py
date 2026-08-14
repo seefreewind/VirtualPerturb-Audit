@@ -9,7 +9,7 @@ from src.metrics.bounds import bound_normalized_score
 from src.metrics.retrieval import perturbation_centroid_retrieval, perturbation_retrieval_rows
 from src.statistics.bootstrap import bootstrap_mean_ci
 from src.splits.builders import assign_l1_perturbation_holdout, assign_l2_component_holdout
-from scripts.run_baseline_pilot import evaluate_split
+from scripts.run_baseline_pilot import additive_delta_map, evaluate_split
 
 
 class ToyAnnData:
@@ -74,7 +74,26 @@ def test_baseline_rows_are_identifiable_for_summary_merge():
     ])
     adata.obs["split_group"] = ["train", "train", "train", "test", "train", "test", "train", "test", "train", "test"]
     rows = evaluate_split(adata, "L1")
-    assert {row["model"] for row in rows} == {"B0_no_change", "B5_mean_effect"}
+    assert {row["model"] for row in rows} == {"B0_no_change", "B3_additive_seen_component", "B5_mean_effect"}
+
+
+def test_additive_delta_uses_seen_single_components():
+    adata = toy()
+    adata.X = np.array([
+        [1.0, 1.0, 1.0],
+        [1.0, 1.0, 1.0],
+        [2.0, 1.0, 1.0],
+        [2.0, 1.0, 1.0],
+        [1.0, 3.0, 1.0],
+        [1.0, 3.0, 1.0],
+        [2.0, 3.0, 1.0],
+        [2.0, 3.0, 1.0],
+        [1.0, 1.0, 2.0],
+        [1.0, 1.0, 2.0],
+    ])
+    adata.obs["split_group"] = ["train", "train", "train", "train", "train", "train", "test", "test", "train", "train"]
+    pred = additive_delta_map(adata)
+    np.testing.assert_allclose(pred["A+B"], np.array([1.0, 2.0, 0.0]))
 
 
 def test_bootstrap_mean_ci_marks_single_unit_uninformative():

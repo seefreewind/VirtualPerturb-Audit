@@ -3,26 +3,15 @@ from __future__ import annotations
 import argparse
 from pathlib import Path
 
-import numpy as np
 import pandas as pd
 
-from scripts.run_baseline_pilot import SPLITTERS, mean_expr, summarize_delta_models, train_mean_delta
+from scripts.run_baseline_pilot import SPLITTERS, additive_delta_map, summarize_delta_models, train_mean_delta, train_perturbation_deltas
 from src.data.loaders import normalize_norman_gears_schema, read_h5ad
 
 
-def train_perturbation_deltas(adata) -> dict[str, np.ndarray]:
-    obs = adata.obs
-    control_mask = obs["control_status"].astype(str).eq("control")
-    ctrl = mean_expr(adata, control_mask)
-    out = {}
-    train_perts = sorted(obs.loc[(obs["split_group"] == "train") & ~control_mask, "perturbation"].astype(str).unique())
-    for pert in train_perts:
-        mask = (obs["split_group"] == "train") & obs["perturbation"].astype(str).eq(pert)
-        out[pert] = mean_expr(adata, mask) - ctrl
-    return out
-
-
 def shuffled_delta_map(adata, seed: int) -> dict[str, np.ndarray]:
+    import numpy as np
+
     rng = np.random.default_rng(seed)
     obs = adata.obs
     control_mask = obs["control_status"].astype(str).eq("control")
@@ -37,6 +26,7 @@ def shuffled_delta_map(adata, seed: int) -> dict[str, np.ndarray]:
 
 def evaluate_falsification_split(adata, split: str, seed: int):
     blind_delta = train_mean_delta(adata)
+    cell_state_blind_delta = additive_delta_map(adata, fallback=blind_delta)
     shuffled_delta = shuffled_delta_map(adata, seed=seed)
     return summarize_delta_models(
         adata,
@@ -47,6 +37,12 @@ def evaluate_falsification_split(adata, split: str, seed: int):
                 blind_delta,
                 "COMPLETED_FALSIFICATION_PROBE",
                 "Perturbation-blind mean-effect shortcut probe; intentionally identical to B5 under one-context Norman pilot",
+            ),
+            (
+                "FP2_cell_state_blind_additive",
+                cell_state_blind_delta,
+                "COMPLETED_FALSIFICATION_PROBE",
+                "Cell-state-blind additive perturbation identity probe; uses training-set single-component deltas when seen, otherwise mean-effect fallback",
             ),
             (
                 "FP3_label_shuffled_mean_effect",
@@ -80,7 +76,7 @@ def main():
         existing = pd.read_csv(out)
         existing = existing[
             ~existing["model"].astype(str).isin(
-                ["FP1_perturbation_blind_mean_effect", "FP3_label_shuffled_mean_effect"]
+                ["FP1_perturbation_blind_mean_effect", "FP2_cell_state_blind_additive", "FP3_label_shuffled_mean_effect"]
             )
         ]
         falsification = pd.concat([existing, falsification], ignore_index=True)
@@ -91,7 +87,7 @@ def main():
         existing_retrieval = pd.read_csv(retrieval_out)
         existing_retrieval = existing_retrieval[
             ~existing_retrieval["model"].astype(str).isin(
-                ["FP1_perturbation_blind_mean_effect", "FP3_label_shuffled_mean_effect"]
+                ["FP1_perturbation_blind_mean_effect", "FP2_cell_state_blind_additive", "FP3_label_shuffled_mean_effect"]
             )
         ]
         retrieval = pd.concat([existing_retrieval, retrieval], ignore_index=True)

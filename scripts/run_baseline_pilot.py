@@ -53,6 +53,48 @@ def train_mean_delta(adata):
     return mean_expr(adata, train_mask) - ctrl
 
 
+def train_perturbation_deltas(adata) -> dict[str, np.ndarray]:
+    obs = adata.obs
+    control_mask = obs["control_status"].astype(str).eq("control")
+    ctrl = mean_expr(adata, control_mask)
+    out = {}
+    train_perts = sorted(obs.loc[(obs["split_group"] == "train") & ~control_mask, "perturbation"].astype(str).unique())
+    for pert in train_perts:
+        mask = (obs["split_group"] == "train") & obs["perturbation"].astype(str).eq(pert)
+        out[pert] = mean_expr(adata, mask) - ctrl
+    return out
+
+
+def perturbation_components(perturbation: str) -> list[str]:
+    if perturbation == "ctrl":
+        return []
+    return [part for part in str(perturbation).split("+") if part != "ctrl"]
+
+
+def additive_delta_map(adata, fallback: np.ndarray | None = None) -> dict[str, np.ndarray]:
+    obs = adata.obs
+    control_mask = obs["control_status"].astype(str).eq("control")
+    test_perts = sorted(obs.loc[(obs["split_group"] == "test") & ~control_mask, "perturbation"].astype(str).unique())
+    train_deltas = train_perturbation_deltas(adata)
+    fallback_delta = train_mean_delta(adata) if fallback is None else fallback
+    out = {}
+    for pert in test_perts:
+        components = perturbation_components(pert)
+        component_deltas = []
+        for gene in components:
+            exact = train_deltas.get(gene)
+            direct = train_deltas.get(f"{gene}+ctrl")
+            reverse = train_deltas.get(f"ctrl+{gene}")
+            if exact is not None:
+                component_deltas.append(exact)
+            elif direct is not None:
+                component_deltas.append(direct)
+            elif reverse is not None:
+                component_deltas.append(reverse)
+        out[pert] = np.sum(component_deltas, axis=0) if component_deltas else fallback_delta
+    return out
+
+
 def split_half_upper(delta_true):
     # Placeholder until replicate labels are verified; this keeps BNS uninterpreted.
     return np.nan
@@ -132,11 +174,13 @@ def summarize_delta_models(
 def evaluate_split(adata, split):
     lower_pred = np.zeros(adata.n_vars)
     mean_pred = train_mean_delta(adata)
+    additive_pred = additive_delta_map(adata, fallback=mean_pred)
     rows, _ = summarize_delta_models(
         adata,
         split,
         [
             ("B0_no_change", lower_pred, "COMPLETED_BASELINE_UNVERIFIED_UPPER_BOUND"),
+            ("B3_additive_seen_component", additive_pred, "COMPLETED_BASELINE_UNVERIFIED_UPPER_BOUND"),
             ("B5_mean_effect", mean_pred, "COMPLETED_BASELINE_UNVERIFIED_UPPER_BOUND"),
         ],
     )
@@ -161,6 +205,11 @@ def main():
             split,
             [
                 ("B0_no_change", np.zeros(adata.n_vars), "COMPLETED_BASELINE_UNVERIFIED_UPPER_BOUND"),
+                (
+                    "B3_additive_seen_component",
+                    additive_delta_map(adata, fallback=train_mean_delta(adata)),
+                    "COMPLETED_BASELINE_UNVERIFIED_UPPER_BOUND",
+                ),
                 ("B5_mean_effect", train_mean_delta(adata), "COMPLETED_BASELINE_UNVERIFIED_UPPER_BOUND"),
             ],
         )
@@ -170,14 +219,14 @@ def main():
     baseline = pd.DataFrame(rows)
     if out.exists():
         existing = pd.read_csv(out)
-        existing = existing[~existing["model"].astype(str).isin(["B0_no_change", "B5_mean_effect"])]
+        existing = existing[~existing["model"].astype(str).isin(["B0_no_change", "B3_additive_seen_component", "B5_mean_effect"])]
         baseline = pd.concat([baseline, existing], ignore_index=True)
     baseline.to_csv(out, index=False)
     retrieval_out = Path("results/pilot/perturbation_retrieval.csv")
     retrieval = pd.DataFrame(retrieval_rows)
     if retrieval_out.exists():
         existing_retrieval = pd.read_csv(retrieval_out)
-        existing_retrieval = existing_retrieval[~existing_retrieval["model"].astype(str).isin(["B0_no_change", "B5_mean_effect"])]
+        existing_retrieval = existing_retrieval[~existing_retrieval["model"].astype(str).isin(["B0_no_change", "B3_additive_seen_component", "B5_mean_effect"])]
         retrieval = pd.concat([existing_retrieval, retrieval], ignore_index=True)
     retrieval.to_csv(retrieval_out, index=False)
 

@@ -21,3 +21,4 @@
 - Added Norman GEO cell-identity metadata link audit with `gemgroup` batch-like coverage and condition concordance checks.
 - Added gemgroup-aware control-control null-envelope sensitivity table for baseline and falsification-probe pilot rows.
 - Added pre-registered 20-permutation FP-3 label-shuffle pilot summary.
+- Added B3 additive seen-component baseline and FP-2 cell-state-blind additive probe.
