@@ -52,7 +52,7 @@ def main():
     adata = normalize_norman_gears_schema(read_h5ad(Path(args.h5ad)))
     rows = []
     for seed in args.seeds:
-        for split in ["L1", "L2"]:
+        for split in ["L1", "L2", "L3"]:
             adata.obs["split_group"] = SPLITTERS[split](adata, seed=seed)
             split_rows, _ = summarize_delta_models(adata, split, model_set(adata))
             for row in split_rows:

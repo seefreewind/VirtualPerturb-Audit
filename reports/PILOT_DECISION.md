@@ -17,7 +17,7 @@
 - GEO metadata link audit provides `gemgroup` for 97.4% of GEARS cells, with unordered perturbation concordance 0.9916 among matched cells.
 - Gemgroup-aware control-control null-envelope sensitivity is available in `results/pilot/null_envelope_sensitivity.csv`.
 - FP-3 label-shuffled pilot has completed the pre-registered 20 permutations for L1/L2.
-- Five-seed robustness has completed for B0-B5 non-shuffled baselines and FP-1/FP-2 on L1/L2.
+- Five-seed robustness has completed for B0-B5 non-shuffled baselines and FP-1/FP-2 on L1/L2/L3.
 - HGNC gene-group annotation has completed for Norman perturbation genes; family-aware confusion summaries and L3 candidate gene groups are available.
 - Formal L3 HGNC gene-family holdout has completed split integrity and baseline/falsification pilot integration.
 
@@ -69,4 +69,4 @@ Decision: PROVISIONAL_GO_FOR_BASELINE_AUDIT; NO_GO_FOR_GEARS_PERFORMANCE_CLAIMS.
 
 1. Add GEARS prediction export and metric integration.
 2. Extend gemgroup-aware null-envelope sensitivity and retrieval/confusion outputs to full GEARS prediction summaries after adequate model runs are available.
-3. Add seed robustness for L3 or run GEARS L3 after adequate compute is available.
+3. Run GEARS L3 after adequate compute is available.

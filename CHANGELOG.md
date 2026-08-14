@@ -30,3 +30,4 @@
 - Added table 8 exports for seed robustness summaries.
 - Added HGNC gene-group mapping for Norman perturbation genes, family-aware retrieval-confusion summaries, and L3 gene-family holdout candidate tables.
 - Implemented formal L3 HGNC gene-family holdout and integrated it into split integrity, baseline, falsification, FP3 permutation, null-envelope sensitivity, retrieval, and primary metric outputs.
+- Extended five-seed robustness summaries to L3.

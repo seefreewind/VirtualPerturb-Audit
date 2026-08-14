@@ -27,7 +27,7 @@
 - GEO cell-identity metadata link audit completed: 88,843/91,205 GEARS cells matched, unordered perturbation concordance 0.9916, and `gemgroup` provides a partial batch-like field for sensitivity/null-envelope work.
 - Gemgroup-aware control-control null-envelope sensitivity completed for L1/L2 baselines and FP-1/FP-3 probes in `results/pilot/null_envelope_sensitivity.csv`.
 - FP-3 label-shuffled pilot now runs the pre-registered 20 permutations and writes `results/pilot/fp3_label_shuffle_permutation_summary.csv`.
-- Five-seed robustness summary completed for B0-B5 non-shuffled baselines and FP-1/FP-2 on L1/L2 in `results/pilot/seed_robustness_summary.csv`.
+- Five-seed robustness summary completed for B0-B5 non-shuffled baselines and FP-1/FP-2 on L1/L2/L3 in `results/pilot/seed_robustness_summary.csv`.
 - HGNC gene-group annotation completed for Norman perturbation genes, with family-aware retrieval-confusion summaries in `results/pilot/gene_family_confusion_summary.csv` and L3 gene-family holdout candidates in `results/pilot/l3_gene_family_holdout_candidates.csv`.
 - Formal L3 HGNC gene-family holdout implemented and integrated into split integrity, baseline, falsification, FP3 permutation, null-envelope sensitivity, retrieval, and primary metric tables.
 - Norman acquisition report created at `reports/NORMAN_ACQUISITION_REPORT.md`.
@@ -68,4 +68,4 @@ Pilot status: PROVISIONAL_GO_FOR_BASELINE_AUDIT; GEARS_FULL_EVALUATION_PENDING.
 
 1. Run GEARS L1/L2 pilot on adequate compute and append comparable rows to `results/pilot/pilot_summary.csv`.
 2. Extend gemgroup-aware null-envelope sensitivity to full GEARS prediction summaries after adequate model runs are available.
-3. Add seed robustness for L3 or run GEARS L3 after adequate compute is available.
+3. Run GEARS L3 after adequate compute is available.
