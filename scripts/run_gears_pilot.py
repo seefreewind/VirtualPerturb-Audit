@@ -6,6 +6,7 @@ import math
 import os
 import pickle
 import shutil
+import time
 import traceback
 from datetime import datetime, timezone
 from pathlib import Path
@@ -313,6 +314,7 @@ def main():
         "max_eval_batches": args.max_eval_batches,
         "gears_env": os.environ.get("VIRTUAL_ENV", "UNVERIFIED"),
     }
+    run_started = time.perf_counter()
     try:
         model = GEARS(pert_data, device=args.device, weight_bias_track=False)
         if args.pert_graph == "default":
@@ -334,6 +336,8 @@ def main():
         model.save_model(str(outdir / "model"))
         if args.max_eval_batches != 0 or args.max_train_batches > 0:
             pred_mean, truth_mean = evaluate_gears_batches(model, args.max_eval_batches)
+            metadata["eval_predicted_perturbations"] = int(len(pred_mean))
+            metadata["eval_truth_perturbations"] = int(len(truth_mean))
             summary_row = append_gears_summary(
                 pred_mean,
                 truth_mean,
@@ -344,8 +348,10 @@ def main():
                 args.max_eval_batches,
             )
             metadata["summary_row"] = summary_row
+        metadata["elapsed_seconds"] = round(time.perf_counter() - run_started, 3)
         (outdir / "metadata.json").write_text(json.dumps(json_safe(metadata), indent=2) + "\n")
     except Exception as exc:
+        metadata["elapsed_seconds"] = round(time.perf_counter() - run_started, 3)
         metadata["status"] = "FAILED_GEARS"
         metadata["error_type"] = type(exc).__name__
         metadata["error"] = str(exc)

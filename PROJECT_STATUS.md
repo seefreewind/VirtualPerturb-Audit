@@ -21,7 +21,7 @@
 - L0/L1/L2 split integrity checks completed and passed; replicate/batch group overlap remains unverified because the processed file does not expose an informative replicate field.
 - Baseline pilot completed for B0 no-change, B1 global perturbed mean, B2 context-matched perturbed mean, B3 additive seen-component, B4 PCA/Ridge, and B5 mean-effect baselines on L0/L1/L2.
 - GEARS L1 batch smoke completed with official package training path, filtered GO tensor injection, strict JSON metadata, and model checkpoint written to `results/pilot/gears_20260812T152223Z/`.
-- GEARS bounded smoke export path verified: per-perturbation metrics, delta centroids, and retrieval/confusion rows are written for development-smoke runs.
+- GEARS bounded smoke export path verified: per-perturbation metrics, delta centroids, retrieval/confusion rows, and runtime metadata are written for development-smoke runs.
 - Pilot summary now reports perturbation-level bootstrap 95% CIs where enough perturbation units are available; single-unit GEARS smoke rows are marked `INSUFFICIENT_UNITS`.
 - FP-1 perturbation-blind mean-effect, FP-2 cell-state-blind additive, and FP-3 label-shuffled mean-effect pilot probes completed for L1/L2.
 - Perturbation-centroid retrieval and identity-confusion rows are generated for baseline and falsification-probe pseudobulk outputs; zero-vector predictions are marked `UNINFORMATIVE_PREDICTION`.
@@ -52,7 +52,7 @@ Norman baseline and falsification-probe audit outputs are available in `results/
 - GEARS/PyG dependencies require the isolated `environment/gears-venv` environment on this Mac.
 - GEARS processed Norman data are convenient for pilot but still require preprocessing provenance scrutiny.
 - True replicate fields remain missing; GEO-linked `gemgroup` is available for 97.4% of cells as a batch-like sensitivity field, but it is not a full replicate label.
-- GEARS full training is expensive on CPU; GPU or bounded smoke settings should be used for development checks.
+- GEARS full training is expensive on CPU; GPU or bounded smoke settings should be used for development checks. A 5-train-batch/3-eval-batch L1 smoke completed, but it evaluated only one perturbation and is not interpretable as performance.
 
 ## Scientific interpretation
 

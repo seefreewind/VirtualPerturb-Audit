@@ -11,7 +11,7 @@
 - Real-data QC and L0/L1/L2 split integrity reports pass, with replicate/batch overlap marked unverified because no informative replicate field is present.
 - Baseline pilot has completed for B0 no-change, B1 global perturbed mean, B2 context-matched perturbed mean, B3 additive seen-component, B4 PCA/Ridge, and B5 mean-effect baselines.
 - GEARS L1 batch-smoke training completed with the official `cell-gears==0.1.2` package and wrote a checkpoint plus strict JSON metadata to `results/pilot/gears_20260812T152223Z/`.
-- GEARS bounded smoke export now writes per-perturbation metrics, delta centroids, and retrieval/confusion rows for software-integration checks.
+- GEARS bounded smoke export now writes per-perturbation metrics, delta centroids, retrieval/confusion rows, and runtime metadata for software-integration checks.
 - Baseline rows include perturbation-level bootstrap 95% CIs; the bounded GEARS smoke row is marked `INSUFFICIENT_UNITS` because it evaluated only one perturbation.
 - FP-1 perturbation-blind, FP-2 cell-state-blind additive, and FP-3 label-shuffled pilot probes have completed for L1/L2.
 - Perturbation-centroid retrieval and identity-confusion outputs are generated at `results/pilot/perturbation_retrieval.csv`.
@@ -40,6 +40,7 @@ Baseline and falsification-probe Norman pilot results are present in `results/pi
 ## Risks
 
 - Pilot cannot be declared GO for GEARS until full training/evaluation or a documented prediction-only benchmark is complete.
+- The latest bounded GEARS L1 smoke evaluated only one perturbation; its metric values are integration checks, not model-performance evidence.
 - Any GEARS dependency workaround must be documented as a model-adapter change if it alters official behavior.
 - Current UER@50 uses a provisional empirical threshold; replicate/control null envelopes remain unverified. GEO-linked `gemgroup` can support a batch-like sensitivity null but not a true replicate upper bound.
 
