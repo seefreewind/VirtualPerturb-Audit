@@ -30,6 +30,7 @@
 - Five-seed robustness summary completed for B0-B5 non-shuffled baselines and FP-1/FP-2 on L1/L2/L3 in `results/pilot/seed_robustness_summary.csv`.
 - HGNC gene-group annotation completed for Norman perturbation genes, with family-aware retrieval-confusion summaries in `results/pilot/gene_family_confusion_summary.csv` and L3 gene-family holdout candidates in `results/pilot/l3_gene_family_holdout_candidates.csv`.
 - Formal L3 HGNC gene-family holdout implemented and integrated into split integrity, baseline, falsification, FP3 permutation, null-envelope sensitivity, retrieval, and primary metric tables.
+- Replicate-label audit completed in `reports/replicate_label_audit.md`; no true biological replicate label was found, and GEO `gemgroup` remains batch-like sensitivity metadata only.
 - Norman acquisition report created at `reports/NORMAN_ACQUISITION_REPORT.md`.
 
 ## Key results
@@ -49,7 +50,7 @@ Norman baseline and falsification-probe audit outputs are available in `results/
 
 - GEARS/PyG dependencies require the isolated `environment/gears-venv` environment on this Mac.
 - GEARS processed Norman data are convenient for pilot but still require preprocessing provenance scrutiny.
-- Replicate fields remain missing; GEO-linked `gemgroup` is available for 97.4% of cells as a batch-like sensitivity field, but it is not a full replicate label.
+- True replicate fields remain missing; GEO-linked `gemgroup` is available for 97.4% of cells as a batch-like sensitivity field, but it is not a full replicate label.
 - GEARS full training is expensive on CPU; GPU or bounded smoke settings should be used for development checks.
 
 ## Scientific interpretation

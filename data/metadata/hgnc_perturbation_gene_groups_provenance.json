@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-08-14T07:26:18.022938+00:00",
+  "timestamp": "2026-08-14T07:34:25.105365+00:00",
   "source": "HGNC complete approved dataset",
   "source_url": "https://storage.googleapis.com/public-download-files/hgnc/tsv/tsv/hgnc_complete_set.txt",
   "local_interim_file": "data/interim/hgnc_complete_set.txt",

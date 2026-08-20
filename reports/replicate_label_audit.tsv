@@ -1,0 +1,5 @@
+source	column	n_rows	n_unique	top_values	has_multiple_informative_values	interpretation
+GEARS_AnnData_obs	donor	91205	1	not_applicable_cell_line:91205	False	TRUE_REPLICATE_UNVERIFIED
+GEARS_AnnData_obs	batch	91205	1	UNVERIFIED:91205	False	TRUE_REPLICATE_UNVERIFIED
+GEARS_AnnData_obs	replicate	91205	1	UNVERIFIED:91205	False	TRUE_REPLICATE_UNVERIFIED
+GEO_cell_identities	gemgroup	111445	8	1:15033;8:14266;3:14246;7:14137;6:13792;2:13787;5:13101;4:13083	True	BATCH_LIKE_CANDIDATE

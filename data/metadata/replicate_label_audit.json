@@ -1,0 +1,45 @@
+{
+  "timestamp": "2026-08-14T07:31:38.308221+00:00",
+  "status": "TRUE_REPLICATE_NOT_FOUND",
+  "h5ad": "data/raw/norman/perturb_processed.h5ad",
+  "geo_identities": "data/raw/norman_geo/GSE133344_filtered_cell_identities.csv.gz",
+  "candidate_columns": [
+    {
+      "source": "GEARS_AnnData_obs",
+      "column": "donor",
+      "n_rows": 91205,
+      "n_unique": 1,
+      "top_values": "not_applicable_cell_line:91205",
+      "has_multiple_informative_values": false,
+      "interpretation": "TRUE_REPLICATE_UNVERIFIED"
+    },
+    {
+      "source": "GEARS_AnnData_obs",
+      "column": "batch",
+      "n_rows": 91205,
+      "n_unique": 1,
+      "top_values": "UNVERIFIED:91205",
+      "has_multiple_informative_values": false,
+      "interpretation": "TRUE_REPLICATE_UNVERIFIED"
+    },
+    {
+      "source": "GEARS_AnnData_obs",
+      "column": "replicate",
+      "n_rows": 91205,
+      "n_unique": 1,
+      "top_values": "UNVERIFIED:91205",
+      "has_multiple_informative_values": false,
+      "interpretation": "TRUE_REPLICATE_UNVERIFIED"
+    },
+    {
+      "source": "GEO_cell_identities",
+      "column": "gemgroup",
+      "n_rows": 111445,
+      "n_unique": 8,
+      "top_values": "1:15033;8:14266;3:14246;7:14137;6:13792;2:13787;5:13101;4:13083",
+      "has_multiple_informative_values": true,
+      "interpretation": "BATCH_LIKE_CANDIDATE"
+    }
+  ],
+  "interpretation": "GEO gemgroup is retained as batch-like sensitivity metadata only; no true biological replicate label is verified."
+}

@@ -31,3 +31,4 @@
 - Added HGNC gene-group mapping for Norman perturbation genes, family-aware retrieval-confusion summaries, and L3 gene-family holdout candidate tables.
 - Implemented formal L3 HGNC gene-family holdout and integrated it into split integrity, baseline, falsification, FP3 permutation, null-envelope sensitivity, retrieval, and primary metric outputs.
 - Extended five-seed robustness summaries to L3.
+- Added a replicate-label audit report documenting that no verified biological replicate field is available in the local GEARS AnnData or GEO identities file.

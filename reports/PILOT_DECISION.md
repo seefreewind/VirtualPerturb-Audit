@@ -20,6 +20,7 @@
 - Five-seed robustness has completed for B0-B5 non-shuffled baselines and FP-1/FP-2 on L1/L2/L3.
 - HGNC gene-group annotation has completed for Norman perturbation genes; family-aware confusion summaries and L3 candidate gene groups are available.
 - Formal L3 HGNC gene-family holdout has completed split integrity and baseline/falsification pilot integration.
+- Replicate-label audit found no verified biological replicate field; GEO `gemgroup` remains batch-like sensitivity metadata only.
 
 ## Key results
 
