@@ -32,3 +32,4 @@
 - Implemented formal L3 HGNC gene-family holdout and integrated it into split integrity, baseline, falsification, FP3 permutation, null-envelope sensitivity, retrieval, and primary metric outputs.
 - Extended five-seed robustness summaries to L3.
 - Added a replicate-label audit report documenting that no verified biological replicate field is available in the local GEARS AnnData or GEO identities file.
+- Added GEARS bounded-smoke export for delta centroids and perturbation retrieval/confusion rows, and verified it with a one-batch CPU smoke run.

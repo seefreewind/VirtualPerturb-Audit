@@ -17,12 +17,13 @@ import torch.optim as optim
 from src.hallucination.metrics import sign_flip_rate, unsupported_effect_rate_at_k
 from src.metrics.bounds import bound_normalized_score
 from src.metrics.expression import expression_metrics
+from src.metrics.retrieval import perturbation_centroid_retrieval, perturbation_retrieval_rows
 from src.statistics.bootstrap import bootstrap_mean_ci
 from src.data.loaders import normalize_norman_gears_schema, read_h5ad
-from src.splits.builders import assign_l1_perturbation_holdout, assign_l2_component_holdout
+from src.splits.builders import assign_l1_perturbation_holdout, assign_l2_component_holdout, assign_l3_gene_family_holdout
 
 
-SPLITTERS = {"L1": assign_l1_perturbation_holdout, "L2": assign_l2_component_holdout}
+SPLITTERS = {"L1": assign_l1_perturbation_holdout, "L2": assign_l2_component_holdout, "L3": assign_l3_gene_family_holdout}
 
 
 def write_gears_custom_split(dataset_dir: Path, level: str, seed: int, adata=None) -> Path:
@@ -134,6 +135,8 @@ def append_gears_summary(
     uers = []
     sfrs = []
     metric_rows = []
+    pred_deltas = {}
+    truth_deltas = {}
     ctrl_pred = pred_mean.get("ctrl")
     ctrl_truth = truth_mean.get("ctrl")
     for pert in shared:
@@ -141,6 +144,8 @@ def append_gears_summary(
         truth = truth_mean[pert]
         pred_delta = pred - ctrl_pred if ctrl_pred is not None else pred
         truth_delta = truth - ctrl_truth if ctrl_truth is not None else truth
+        pred_deltas[pert] = pred_delta
+        truth_deltas[pert] = truth_delta
         expr = expression_metrics(truth_delta, pred_delta)
         null_threshold = float(pd.Series(abs(truth_delta)).quantile(0.50))
         support_threshold = float(pd.Series(abs(truth_delta)).quantile(0.95))
@@ -157,11 +162,30 @@ def append_gears_summary(
             "sign_flip_rate": halluc["sign_flip_rate"],
         })
     pd.DataFrame(metric_rows).to_csv(outdir / "gears_metrics.csv", index=False)
+    if shared:
+        torch.save(
+            {
+                "perturbations": shared,
+                "pred_delta": {pert: torch.as_tensor(pred_deltas[pert]) for pert in shared},
+                "truth_delta": {pert: torch.as_tensor(truth_deltas[pert]) for pert in shared},
+            },
+            outdir / "gears_delta_centroids.pt",
+        )
     pearson_ci = bootstrap_mean_ci(pearsons, seed=1)
     uer_ci = bootstrap_mean_ci(uers, seed=1)
     sfr_ci = bootstrap_mean_ci(sfrs, seed=1)
     mean_pearson = pearson_ci["mean"]
     bns, bns_status = bound_normalized_score(mean_pearson, float("nan"), float("nan"))
+    retrieval = perturbation_centroid_retrieval(pred_deltas, truth_deltas)
+    retrieval_rows = []
+    for retrieval_row in perturbation_retrieval_rows(pred_deltas, truth_deltas):
+        retrieval_rows.append({
+            "dataset": "Norman2019_GEARS_processed_mirror",
+            "model": "GEARS_cell_gears_0.1.2",
+            "split": split,
+            **retrieval_row,
+        })
+    pd.DataFrame(retrieval_rows).to_csv(outdir / "gears_perturbation_retrieval.csv", index=False)
     row = {
         "dataset": "Norman2019_GEARS_processed_mirror",
         "model": "GEARS_cell_gears_0.1.2",
@@ -179,6 +203,9 @@ def append_gears_summary(
         "sign_flip_rate": sfr_ci["mean"],
         "sign_flip_rate_ci95_low": sfr_ci["ci95_low"],
         "sign_flip_rate_ci95_high": sfr_ci["ci95_high"],
+        "retrieval_top1_accuracy": retrieval["top1_accuracy"],
+        "retrieval_top5_accuracy": retrieval["top5_accuracy"],
+        "retrieval_mrr": retrieval["mrr"],
         "uncertainty_status": pearson_ci["ci_status"],
         "notes": (
             "GEARS bounded development run; not a full performance benchmark. "
@@ -200,6 +227,19 @@ def append_gears_summary(
     else:
         summary = pd.DataFrame([row])
     summary.to_csv(summary_path, index=False)
+    retrieval_path = Path("results/pilot/perturbation_retrieval.csv")
+    retrieval_df = pd.DataFrame(retrieval_rows)
+    if retrieval_path.exists():
+        existing = pd.read_csv(retrieval_path)
+        existing = existing[
+            ~(
+                existing["model"].eq(row["model"])
+                & existing["split"].eq(row["split"])
+                & existing["perturbation"].isin(retrieval_df["perturbation"] if not retrieval_df.empty else [])
+            )
+        ]
+        retrieval_df = pd.concat([existing, retrieval_df], ignore_index=True)
+    retrieval_df.to_csv(retrieval_path, index=False)
     return row
 
 
@@ -222,7 +262,7 @@ def main():
     parser.add_argument("--test-batch-size", type=int, default=16)
     parser.add_argument("--device", default="cpu")
     parser.add_argument("--seed", type=int, default=1)
-    parser.add_argument("--audit-split", choices=["official_simulation", "L1", "L2"], default="L1")
+    parser.add_argument("--audit-split", choices=["official_simulation", "L1", "L2", "L3"], default="L1")
     parser.add_argument("--pert-graph", choices=["default", "essential", "dynamic"], default="essential")
     parser.add_argument("--max-train-batches", type=int, default=0)
     parser.add_argument("--max-eval-batches", type=int, default=0)

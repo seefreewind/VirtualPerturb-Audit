@@ -141,3 +141,27 @@ def test_retrieval_marks_zero_prediction_uninformative():
     assert rows[0]["top_match"] == "UNINFORMATIVE_PREDICTION"
     metrics = perturbation_centroid_retrieval({"A": np.array([0.0, 0.0])}, {"A": np.array([1.0, 0.0])})
     assert np.isnan(metrics["mrr"])
+
+
+def test_gears_summary_exports_retrieval_and_centroids(tmp_path, monkeypatch):
+    from scripts.run_gears_pilot import append_gears_summary
+
+    monkeypatch.chdir(tmp_path)
+    outdir = tmp_path / "results" / "pilot" / "gears_smoke"
+    outdir.mkdir(parents=True)
+    (tmp_path / "results" / "pilot").mkdir(exist_ok=True)
+    pred = {"A": np.array([1.0, 0.0]), "B": np.array([0.0, 1.0])}
+    truth = {"A": np.array([1.0, 0.0]), "B": np.array([0.0, 1.0])}
+    row = append_gears_summary(
+        pred,
+        truth,
+        outdir,
+        "L1",
+        "COMPLETED_GEARS_BATCH_SMOKE_NOT_PERFORMANCE",
+        max_train_batches=1,
+        max_eval_batches=1,
+    )
+    assert row["retrieval_top1_accuracy"] == 1.0
+    assert (outdir / "gears_delta_centroids.pt").exists()
+    assert (outdir / "gears_perturbation_retrieval.csv").exists()
+    assert (tmp_path / "results" / "pilot" / "perturbation_retrieval.csv").exists()

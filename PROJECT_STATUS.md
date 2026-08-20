@@ -21,6 +21,7 @@
 - L0/L1/L2 split integrity checks completed and passed; replicate/batch group overlap remains unverified because the processed file does not expose an informative replicate field.
 - Baseline pilot completed for B0 no-change, B1 global perturbed mean, B2 context-matched perturbed mean, B3 additive seen-component, B4 PCA/Ridge, and B5 mean-effect baselines on L0/L1/L2.
 - GEARS L1 batch smoke completed with official package training path, filtered GO tensor injection, strict JSON metadata, and model checkpoint written to `results/pilot/gears_20260812T152223Z/`.
+- GEARS bounded smoke export path verified: per-perturbation metrics, delta centroids, and retrieval/confusion rows are written for development-smoke runs.
 - Pilot summary now reports perturbation-level bootstrap 95% CIs where enough perturbation units are available; single-unit GEARS smoke rows are marked `INSUFFICIENT_UNITS`.
 - FP-1 perturbation-blind mean-effect, FP-2 cell-state-blind additive, and FP-3 label-shuffled mean-effect pilot probes completed for L1/L2.
 - Perturbation-centroid retrieval and identity-confusion rows are generated for baseline and falsification-probe pseudobulk outputs; zero-vector predictions are marked `UNINFORMATIVE_PREDICTION`.
@@ -40,7 +41,7 @@ Norman baseline and falsification-probe audit outputs are available in `results/
 ## Failed
 
 - `python` executable is missing; `python3` is available.
-- Full GEARS training/evaluation reproduction is not complete.
+- Full GEARS training/evaluation reproduction is not complete; only bounded development smoke rows are present.
 - A full CPU 1-epoch GEARS run was intentionally interrupted after the training loop had progressed beyond 1,600 batches because it was too slow for a smoke test; no performance conclusion was drawn from that interrupted run.
 - The GEARS Dataverse datafile endpoint returned an AWS WAF challenge to a command-line HEAD request.
 - The default GEARS GO graph tarball endpoint also returned an unusable WAF/empty-file response; the current smoke uses a documented filtered GO tensor generated from local GEARS prior files.
@@ -55,7 +56,7 @@ Norman baseline and falsification-probe audit outputs are available in `results/
 
 ## Scientific interpretation
 
-No GEARS biological or model-performance interpretation is available yet. Baseline-only metrics are descriptive sanity checks.
+No GEARS biological or model-performance interpretation is available yet. GEARS smoke rows verify software integration only; baseline and falsification metrics are descriptive audit checks.
 
 ## Files generated
 
@@ -67,6 +68,6 @@ Pilot status: PROVISIONAL_GO_FOR_BASELINE_AUDIT; GEARS_FULL_EVALUATION_PENDING.
 
 ## Next 3 actions
 
-1. Run GEARS L1/L2 pilot on adequate compute and append comparable rows to `results/pilot/pilot_summary.csv`.
-2. Extend gemgroup-aware null-envelope sensitivity to full GEARS prediction summaries after adequate model runs are available.
+1. Run full GEARS L1/L2 pilot on adequate compute and append comparable rows to `results/pilot/pilot_summary.csv`.
+2. Extend gemgroup-aware null-envelope sensitivity to full GEARS prediction summaries after full model runs are available.
 3. Run GEARS L3 after adequate compute is available.
