@@ -34,3 +34,4 @@
 - Added a replicate-label audit report documenting that no verified biological replicate field is available in the local GEARS AnnData or GEO identities file.
 - Added GEARS bounded-smoke export for delta centroids and perturbation retrieval/confusion rows, and verified it with a one-batch CPU smoke run.
 - Added runtime and evaluated-perturbation metadata to GEARS bounded-smoke runs and verified a 5-train-batch/3-eval-batch CPU smoke.
+- Added `scripts/run_gears_full_audit.sh` and `reports/GEARS_FULL_RUN_HANDOFF.md` for GPU/CPU full-run handoff.

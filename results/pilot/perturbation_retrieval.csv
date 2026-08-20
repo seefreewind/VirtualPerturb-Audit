@@ -2732,4 +2732,4 @@ Norman2019_GEARS_processed_mirror,FP3_label_shuffled_mean_effect,L3,ctrl+FOXF1,1
 Norman2019_GEARS_processed_mirror,FP3_label_shuffled_mean_effect,L3,ctrl+FOXL2,6.0,FOXF1+FOXL2,0.5998883247375488,0.5012227296829224,True
 Norman2019_GEARS_processed_mirror,FP3_label_shuffled_mean_effect,L3,ctrl+MAP2K6,25.0,FOXO4+ctrl,0.6184070110321045,-0.4507742524147033,True
 Norman2019_GEARS_processed_mirror,FP3_label_shuffled_mean_effect,L3,ctrl+RUNX1T1,20.0,FOXA1+FOXF1,0.6071312427520752,0.0972155779600143,True
-Norman2019_GEARS_processed_mirror,GEARS_cell_gears_0.1.2,L1,AHR+KLF1,1.0,AHR+KLF1,0.9840738773345947,0.9840738773345947,False
+Norman2019_GEARS_processed_mirror,GEARS_cell_gears_0.1.2,L1,AHR+KLF1,1.0,AHR+KLF1,0.9589297771453857,0.9589297771453857,False

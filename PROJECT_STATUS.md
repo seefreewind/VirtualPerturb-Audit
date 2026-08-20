@@ -22,6 +22,7 @@
 - Baseline pilot completed for B0 no-change, B1 global perturbed mean, B2 context-matched perturbed mean, B3 additive seen-component, B4 PCA/Ridge, and B5 mean-effect baselines on L0/L1/L2.
 - GEARS L1 batch smoke completed with official package training path, filtered GO tensor injection, strict JSON metadata, and model checkpoint written to `results/pilot/gears_20260812T152223Z/`.
 - GEARS bounded smoke export path verified: per-perturbation metrics, delta centroids, retrieval/confusion rows, and runtime metadata are written for development-smoke runs.
+- Full GEARS execution handoff created at `reports/GEARS_FULL_RUN_HANDOFF.md` with GPU/CPU commands and interpretation guardrails.
 - Pilot summary now reports perturbation-level bootstrap 95% CIs where enough perturbation units are available; single-unit GEARS smoke rows are marked `INSUFFICIENT_UNITS`.
 - FP-1 perturbation-blind mean-effect, FP-2 cell-state-blind additive, and FP-3 label-shuffled mean-effect pilot probes completed for L1/L2.
 - Perturbation-centroid retrieval and identity-confusion rows are generated for baseline and falsification-probe pseudobulk outputs; zero-vector predictions are marked `UNINFORMATIVE_PREDICTION`.
@@ -68,6 +69,6 @@ Pilot status: PROVISIONAL_GO_FOR_BASELINE_AUDIT; GEARS_FULL_EVALUATION_PENDING.
 
 ## Next 3 actions
 
-1. Run full GEARS L1/L2 pilot on adequate compute and append comparable rows to `results/pilot/pilot_summary.csv`.
+1. Run full GEARS L1/L2 pilot on adequate compute using `scripts/run_gears_full_audit.sh`.
 2. Extend gemgroup-aware null-envelope sensitivity to full GEARS prediction summaries after full model runs are available.
 3. Run GEARS L3 after adequate compute is available.

@@ -334,20 +334,25 @@ def main():
             model.train(epochs=args.epochs)
             metadata["status"] = "COMPLETED_GEARS_SMOKE" if args.epochs <= 1 else "COMPLETED_GEARS"
         model.save_model(str(outdir / "model"))
-        if args.max_eval_batches != 0 or args.max_train_batches > 0:
-            pred_mean, truth_mean = evaluate_gears_batches(model, args.max_eval_batches)
-            metadata["eval_predicted_perturbations"] = int(len(pred_mean))
-            metadata["eval_truth_perturbations"] = int(len(truth_mean))
-            summary_row = append_gears_summary(
-                pred_mean,
-                truth_mean,
-                outdir,
-                args.audit_split,
-                "COMPLETED_GEARS_BATCH_SMOKE_NOT_PERFORMANCE",
-                args.max_train_batches,
-                args.max_eval_batches,
-            )
-            metadata["summary_row"] = summary_row
+        pred_mean, truth_mean = evaluate_gears_batches(model, args.max_eval_batches)
+        metadata["eval_predicted_perturbations"] = int(len(pred_mean))
+        metadata["eval_truth_perturbations"] = int(len(truth_mean))
+        metadata["evaluation_scope"] = "all_test_batches" if args.max_eval_batches == 0 else f"first_{args.max_eval_batches}_test_batches"
+        summary_status = (
+            "COMPLETED_GEARS_BATCH_SMOKE_NOT_PERFORMANCE"
+            if args.max_train_batches > 0
+            else "COMPLETED_GEARS_EVALUATION"
+        )
+        summary_row = append_gears_summary(
+            pred_mean,
+            truth_mean,
+            outdir,
+            args.audit_split,
+            summary_status,
+            args.max_train_batches,
+            args.max_eval_batches,
+        )
+        metadata["summary_row"] = summary_row
         metadata["elapsed_seconds"] = round(time.perf_counter() - run_started, 3)
         (outdir / "metadata.json").write_text(json.dumps(json_safe(metadata), indent=2) + "\n")
     except Exception as exc:
