@@ -1,5 +1,17 @@
 # Changelog
 
+## 2026-08-23
+
+- Completed full GEARS evaluations on this Mac CPU for L1, L2, and L3 (20 epochs, seed 1, `essential` perturbation graph), with per-run `gears_metrics.csv`, `gears_delta_centroids.pt`, `gears_perturbation_retrieval.csv`, and strict `metadata.json`:
+  - L1: `results/pilot/gears_20260822T065552Z/` (55 test perturbations, 18,284 s)
+  - L2: `results/pilot/gears_20260822T122126Z/` (40 test perturbations, 17,987 s)
+  - L3: `results/pilot/gears_20260822T172146Z/` (25 test perturbations, 21,057 s)
+- Preserved the failed first L2 attempt as explicit provenance: `results/pilot/gears_20260822T120129Z/` has `status: FAILED_GEARS` with `BrokenPipeError` traceback.
+- Extended gemgroup-aware control-control null-envelope sensitivity (`scripts/run_null_envelope_sensitivity.py`) to completed GEARS rows by canonicalizing condition names and converting GEARS raw predictions to audit-delta space; GEARS rows now appear in `results/pilot/null_envelope_sensitivity.csv` and table 6.
+- Rebuilt tables and figures (`scripts/build_tables.py`, `scripts/build_figures.py`): table 2 GEARS status updated to full evaluation, GEARS full rows in table 5, smoke rows excluded from performance figures.
+- Updated `reports/PILOT_DECISION.md`, `PROJECT_STATUS.md`, `NEXT_ACTIONS.md`, and this changelog to reflect the completed GEARS full runs while keeping BNS `UNVERIFIED`.
+- Added `reports/FINAL_PILOT_RESULT_REPORT.md`.
+
 ## 2026-08-12
 
 - Created project scaffold.

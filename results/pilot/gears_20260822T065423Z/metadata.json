@@ -1,0 +1,17 @@
+{
+  "timestamp": "2026-08-22T06:54:34.714142+00:00",
+  "status": "FAILED_GEARS",
+  "epochs": 20,
+  "batch_size": 16,
+  "test_batch_size": 16,
+  "device": "cuda",
+  "seed": 1,
+  "audit_split": "L1",
+  "pert_graph": "essential",
+  "max_train_batches": 0,
+  "max_eval_batches": 0,
+  "gears_env": "UNVERIFIED",
+  "elapsed_seconds": 0.143,
+  "error_type": "AssertionError",
+  "error": "Torch not compiled with CUDA enabled"
+}

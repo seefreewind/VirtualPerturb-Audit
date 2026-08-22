@@ -36,6 +36,7 @@ def blocked_metric_figure(stem: str, title: str):
         numeric = df[value_cols].apply(pd.to_numeric, errors="coerce") if value_cols else pd.DataFrame()
         if not numeric.empty and numeric.notna().any().any():
             plot_col = "UER_at_50" if "hallucination" in stem else "pearson_delta"
+            df = df[~df["status"].astype(str).str.contains("SMOKE", case=False, na=False)]
             for model, sub in df.groupby("model"):
                 sub = sub.copy()
                 sub[plot_col] = pd.to_numeric(sub[plot_col], errors="coerce")

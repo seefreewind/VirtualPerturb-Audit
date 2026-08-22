@@ -1,5 +1,5 @@
 model,status,role
-GEARS,BATCH_SMOKE_VERIFIED_FULL_EVALUATION_PENDING,pilot
+GEARS,FULL_EVALUATION_COMPLETED_L1_L2_L3_PILOT,pilot
 No-change,IMPLEMENTED,baseline
 Additive seen-component,IMPLEMENTED,baseline
 Context mean,IMPLEMENTED,baseline

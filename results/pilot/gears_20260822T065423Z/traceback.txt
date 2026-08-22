@@ -1,0 +1,8 @@
+Traceback (most recent call last):
+  File "/Users/zy/Documents/ChatGPT/VirtualPerturb-Audit 方案设计/VirtualPerturb-Audit/scripts/run_gears_pilot.py", line 319, in main
+    model = GEARS(pert_data, device=args.device, weight_bias_track=False)
+  File "/Users/zy/Documents/ChatGPT/VirtualPerturb-Audit 方案设计/VirtualPerturb-Audit/environment/gears-venv/lib/python3.9/site-packages/gears/gears.py", line 86, in __init__
+    self.ctrl_expression = torch.tensor(
+  File "/Users/zy/Documents/ChatGPT/VirtualPerturb-Audit 方案设计/VirtualPerturb-Audit/environment/gears-venv/lib/python3.9/site-packages/torch/cuda/__init__.py", line 403, in _lazy_init
+    raise AssertionError("Torch not compiled with CUDA enabled")
+AssertionError: Torch not compiled with CUDA enabled

@@ -21,7 +21,7 @@ def main():
         {"dataset": "Replogle RPE1 CRISPRi", "status": "REGISTERED_NOT_STARTED", "role": "future"},
     ]), "table1_datasets")
     write_table(pd.DataFrame([
-        {"model": "GEARS", "status": "BATCH_SMOKE_VERIFIED_FULL_EVALUATION_PENDING", "role": "pilot"},
+        {"model": "GEARS", "status": "FULL_EVALUATION_COMPLETED_L1_L2_L3_PILOT", "role": "pilot"},
         {"model": "No-change", "status": "IMPLEMENTED", "role": "baseline"},
         {"model": "Additive seen-component", "status": "IMPLEMENTED", "role": "baseline"},
         {"model": "Context mean", "status": "IMPLEMENTED", "role": "baseline"},

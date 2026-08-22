@@ -34,30 +34,38 @@
 - Formal L3 HGNC gene-family holdout implemented and integrated into split integrity, baseline, falsification, FP3 permutation, null-envelope sensitivity, retrieval, and primary metric tables.
 - Replicate-label audit completed in `reports/replicate_label_audit.md`; no true biological replicate label was found, and GEO `gemgroup` remains batch-like sensitivity metadata only.
 - Norman acquisition report created at `reports/NORMAN_ACQUISITION_REPORT.md`.
+- Full GEARS evaluations completed on this Mac CPU for L1, L2, and L3 (20 epochs, seed 1, `essential` perturbation graph), writing `gears_metrics.csv`, `gears_delta_centroids.pt`, `gears_perturbation_retrieval.csv`, and strict `metadata.json` per run:
+  - `results/pilot/gears_20260822T065552Z/` (L1, 55 test perturbations, 18,284 s)
+  - `results/pilot/gears_20260822T122126Z/` (L2, 40 test perturbations, 17,987 s)
+  - `results/pilot/gears_20260822T172146Z/` (L3, 25 test perturbations, 21,057 s)
+- A first L2 attempt failed with `BrokenPipeError` after 825 s and is preserved as `results/pilot/gears_20260822T120129Z/` with explicit `FAILED_GEARS` status; the rerun completed.
+- Gemgroup-aware null-envelope sensitivity extended with `COMPLETED_GEARS_EVALUATION` rows for L1/L2/L3 in `results/pilot/null_envelope_sensitivity.csv` and table 6.
+- Figure and table outputs rebuilt with GEARS full rows; smoke rows are excluded from performance figures; `pytest` passes 10/10.
+- Added `reports/FINAL_PILOT_RESULT_REPORT.md` summarizing the executed GEARS full evaluation and rebuilt downstream outputs.
 
 ## Key results
 
-Norman baseline and falsification-probe audit outputs are available in `results/pilot/pilot_summary.csv`. B3/FP-2 shows how much signal can be recovered from perturbation identity and seen single-component deltas without individual cell-state modeling. B4 PCA/Ridge is now included as a perturbation-to-effect mapping baseline. B1/B2 match B5 in this pilot when no stronger biological context is available beyond the current metadata. HGNC family-confusion outputs show whether retrieval mistakes remain within related gene groups, and L3 now tests gene-family holdout behavior directly. These outputs should not be interpreted as full GEARS model performance. The current UER@50 values use a provisional empirical threshold because replicate/control null envelopes are not yet verified.
+Norman baseline and falsification-probe audit outputs are available in `results/pilot/pilot_summary.csv`. B3/FP-2 shows how much signal can be recovered from perturbation identity and seen single-component deltas without individual cell-state modeling. B4 PCA/Ridge is now included as a perturbation-to-effect mapping baseline. B1/B2 match B5 in this pilot when no stronger biological context is available beyond the current metadata. HGNC family-confusion outputs show whether retrieval mistakes remain within related gene groups, and L3 now tests gene-family holdout behavior directly. Completed GEARS full rows (L1/L2/L3) show delta-Pearson 0.9887/0.9838/0.9843 with perturbation-level bootstrap CIs, UER@50 and sign-flip rate at 0 under the provisional threshold, and retrieval top-1 accuracy 0.20/0.075/0.08 and MRR 0.328/0.147/0.207. The retrieval collapse under stricter holdouts with stable correlation is the key shortcut/leakage signal from the GEARS pilot rows. All GEARS rows keep `bns_status: UNVERIFIED` because replicate/control null envelopes are not yet verified; the gemgroup null-envelope sensitivity (UER 0.172/0.262/0.235 for L1/L2/L3) is a batch-like sensitivity check only.
 
 ## Failed
 
 - `python` executable is missing; `python3` is available.
-- Full GEARS training/evaluation reproduction is not complete; only bounded development smoke rows are present.
-- A full CPU 1-epoch GEARS run was intentionally interrupted after the training loop had progressed beyond 1,600 batches because it was too slow for a smoke test; no performance conclusion was drawn from that interrupted run.
 - The GEARS Dataverse datafile endpoint returned an AWS WAF challenge to a command-line HEAD request.
-- The default GEARS GO graph tarball endpoint also returned an unusable WAF/empty-file response; the current smoke uses a documented filtered GO tensor generated from local GEARS prior files.
+- The default GEARS GO graph tarball endpoint also returned an unusable WAF/empty-file response; the current runs use a documented filtered GO tensor generated from local GEARS prior files.
 - `pertpy` is unavailable in the current environment.
+- A second L2 full-run attempt failed with `BrokenPipeError` (stdout pipe interruption) after 825 s; a subsequent foreground rerun completed successfully. The failure is documented in `results/pilot/gears_20260822T120129Z/` and must not be mistaken for a completed result.
 
 ## Risks
 
 - GEARS/PyG dependencies require the isolated `environment/gears-venv` environment on this Mac.
 - GEARS processed Norman data are convenient for pilot but still require preprocessing provenance scrutiny.
-- True replicate fields remain missing; GEO-linked `gemgroup` is available for 97.4% of cells as a batch-like sensitivity field, but it is not a full replicate label.
-- GEARS full training is expensive on CPU; GPU or bounded smoke settings should be used for development checks. A 5-train-batch/3-eval-batch L1 smoke completed, but it evaluated only one perturbation and is not interpretable as performance.
+- True replicate fields remain missing; GEO-linked `gemgroup` is available for 97.4% of cells as a batch-like sensitivity field, but it is not a full replicate label. All BNS values remain `UNVERIFIED`.
+- GEARS full training is expensive on CPU (about 5-6 hours per split on this Mac) and terminal-lifetime sensitive; background pipe failures are a known risk.
+- GEARS evaluation uses a GEARS-internal condition vocabulary whose test set composition overlaps but does not exactly match the audit splitter's test sets (e.g., `ctrl+X` vs `X+ctrl` orderings); metrics are computed inside the GEARS-run vocabulary.
 
 ## Scientific interpretation
 
-No GEARS biological or model-performance interpretation is available yet. GEARS smoke rows verify software integration only; baseline and falsification metrics are descriptive audit checks.
+GEARS rows marked `COMPLETED_GEARS_EVALUATION` are eligible for model-pilot interpretation inside the GEARS-run vocabulary, always alongside `bns_status: UNVERIFIED`. Bounded smoke rows verify software integration only; baseline and falsification metrics are descriptive audit checks. The dissociation between stable delta-Pearson (≈0.98 across splits) and collapsing retrieval (0.20/0.075/0.08 top-1) is the main shortcut/leakage signal to carry into the manuscript.
 
 ## Files generated
 
@@ -65,10 +73,10 @@ See `CHANGELOG.md`. Key generated outputs include `environment/environment_repor
 
 ## GO / NO-GO
 
-Pilot status: PROVISIONAL_GO_FOR_BASELINE_AUDIT; GEARS_FULL_EVALUATION_PENDING.
+Pilot status: PROVISIONAL_GO_FOR_BASELINE_AUDIT; GEARS_FULL_EVALUATION_COMPLETED_PILOT (BNS unverified).
 
 ## Next 3 actions
 
-1. Run full GEARS L1/L2 pilot on adequate compute using `scripts/run_gears_full_audit.sh`.
-2. Extend gemgroup-aware null-envelope sensitivity to full GEARS prediction summaries after full model runs are available.
-3. Run GEARS L3 after adequate compute is available.
+1. Carry the L1-retrievable / L2-L3-collapsing retrieval pattern into the manuscript as the headline shortcut-audit finding from completed GEARS rows.
+2. Keep BNS upper bounds unverified; extend gemgroup sensitivity only where the batch-like null is clearly labeled as sensitivity, not performance.
+3. Plan a GPU or prediction-only GEARS replication for any claim that depends on exact GEARS performance numbers.

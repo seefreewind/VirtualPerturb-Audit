@@ -3,8 +3,10 @@ from __future__ import annotations
 import argparse
 from pathlib import Path
 
+import json
 import numpy as np
 import pandas as pd
+import torch
 
 from scripts.audit_norman_geo_metadata import canonical_condition, parse_guide_identity
 from scripts.run_baseline_pilot import (
@@ -57,12 +59,25 @@ def control_gemgroup_null_thresholds(adata, quantile: float = 0.95) -> np.ndarra
 
 def sensitivity_rows(adata, split: str, model_preds, threshold: np.ndarray):
     true_deltas, _ = summarize_truth(adata)
+    canonical_truth = {canonical_condition(pert): pert for pert in true_deltas}
     rows = []
     for entry in model_preds:
         model_name, pred, status = entry[:3]
+        pred_lookup = None
+        if isinstance(pred, dict):
+            pred_lookup = {canonical_condition(k): v for k, v in pred.items()}
         uers = []
+        n_covered = 0
         for pert, true_delta in true_deltas.items():
-            pred_delta = pred.get(pert, np.zeros(adata.n_vars)) if isinstance(pred, dict) else pred
+            key = canonical_condition(pert)
+            if pred_lookup is not None:
+                if key not in pred_lookup:
+                    continue
+                pred_delta = pred_lookup[key]
+                n_covered += 1
+            else:
+                pred_delta = pred
+                n_covered += 1
             order = np.argsort(-np.abs(pred_delta))[: min(50, len(pred_delta))]
             unsupported = np.abs(true_delta[order]) <= threshold[order]
             uers.append(float(np.mean(unsupported)))
@@ -72,7 +87,7 @@ def sensitivity_rows(adata, split: str, model_preds, threshold: np.ndarray):
             "split": split,
             "sensitivity": "geo_gemgroup_control_null_q95",
             "status": "COMPLETED_SENSITIVITY_PARTIAL_GEO_LINK",
-            "n_test_perturbations": len(true_deltas),
+            "n_test_perturbations": n_covered,
             "UER_at_50_gemgroup_null_q95": float(np.nanmean(uers)) if uers else np.nan,
             "notes": "Control-control gemgroup null envelope; partial GEO metadata link, not replicate-derived BNS upper bound.",
         })
@@ -90,6 +105,58 @@ def summarize_truth(adata):
     return out, ctrl
 
 
+def completed_gears_pred_deltas(results_dir: Path = Path("results/pilot")) -> dict:
+    preds = {}
+    for run_dir in sorted(results_dir.glob("gears_*")):
+        meta_path = run_dir / "metadata.json"
+        if not meta_path.exists():
+            continue
+        meta = json.loads(meta_path.read_text())
+        summary_row = meta.get("summary_row") or {}
+        if summary_row.get("status") != "COMPLETED_GEARS_EVALUATION":
+            continue
+        split = meta.get("audit_split")
+        centroids_path = run_dir / "gears_delta_centroids.pt"
+        if not split or not centroids_path.exists():
+            continue
+        centroids = torch.load(centroids_path, map_location="cpu", weights_only=False)
+        preds[split] = {
+            "pred_delta": {
+                pert: vec.detach().cpu().numpy()
+                for pert, vec in centroids["pred_delta"].items()
+            },
+            "truth_delta": {
+                pert: vec.detach().cpu().numpy()
+                for pert, vec in centroids["truth_delta"].items()
+            },
+        }
+    return preds
+
+
+def gears_sensitivity_rows(adata, split: str, gears_deltas: dict, threshold: np.ndarray) -> list[dict]:
+    pred_raw = gears_deltas["pred_delta"]
+    truth_raw = gears_deltas["truth_delta"]
+    ctrl = mean_expr(adata, adata.obs["control_status"].astype(str).eq("control"))
+    shared = sorted(set(pred_raw) & set(truth_raw) - {"ctrl"})
+    uers = []
+    for pert in shared:
+        pred_delta = np.asarray(pred_raw[pert]) - ctrl
+        true_delta = np.asarray(truth_raw[pert]) - ctrl
+        order = np.argsort(-np.abs(pred_delta))[: min(50, len(pred_delta))]
+        unsupported = np.abs(true_delta[order]) <= threshold[order]
+        uers.append(float(np.mean(unsupported)))
+    return [{
+        "dataset": "Norman2019_GEARS_processed_mirror",
+        "model": "GEARS_cell_gears_0.1.2",
+        "split": split,
+        "sensitivity": "geo_gemgroup_control_null_q95",
+        "status": "COMPLETED_SENSITIVITY_GEARS_EVALUATION",
+        "n_test_perturbations": len(shared),
+        "UER_at_50_gemgroup_null_q95": float(np.nanmean(uers)) if uers else np.nan,
+        "notes": "Control-control gemgroup null envelope; GEARS raw predictions and truth converted to audit-delta space via audit control mean; GEARS-run test vocabulary; partial GEO metadata link, not replicate-derived BNS upper bound.",
+    }]
+
+
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--h5ad", default="data/raw/norman/perturb_processed.h5ad")
@@ -99,6 +166,7 @@ def main():
 
     adata = normalize_norman_gears_schema(read_h5ad(Path(args.h5ad)))
     adata = attach_geo_metadata(adata, Path(args.geo_identities))
+    gears_preds = completed_gears_pred_deltas()
     rows = []
     for split in ["L1", "L2", "L3"]:
         adata.obs["split_group"] = SPLITTERS[split](adata, seed=args.seed)
@@ -144,6 +212,8 @@ def main():
             ),
         ]
         rows.extend(sensitivity_rows(adata, split, model_preds, threshold))
+        if split in gears_preds:
+            rows.extend(gears_sensitivity_rows(adata, split, gears_preds[split], threshold))
     out = Path("results/pilot/null_envelope_sensitivity.csv")
     pd.DataFrame(rows).to_csv(out, index=False)
 

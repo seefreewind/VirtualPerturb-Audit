@@ -1,0 +1,8 @@
+Traceback (most recent call last):
+  File "/Users/zy/Documents/ChatGPT/VirtualPerturb-Audit 方案设计/VirtualPerturb-Audit/scripts/run_gears_pilot.py", line 334, in main
+    model.train(epochs=args.epochs)
+  File "/Users/zy/Documents/ChatGPT/VirtualPerturb-Audit 方案设计/VirtualPerturb-Audit/environment/gears-venv/lib/python3.9/site-packages/gears/gears.py", line 539, in train
+    print_sys(log.format(epoch + 1, step + 1, loss.item()))
+  File "/Users/zy/Documents/ChatGPT/VirtualPerturb-Audit 方案设计/VirtualPerturb-Audit/environment/gears-venv/lib/python3.9/site-packages/gears/utils.py", line 439, in print_sys
+    print(s, flush = True, file = sys.stderr)
+BrokenPipeError: [Errno 32] Broken pipe
