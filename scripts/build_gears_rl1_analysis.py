@@ -330,6 +330,61 @@ def stats_report(raw: dict, audit: dict) -> None:
         print(f"{label}: pearson {b['pearson']:.4f} ({b['pearson_ci_low']:.4f},{b['pearson_ci_high']:.4f}) mrr {b['mrr']:.4f} top1 {b['top1']:.4f} uer50 {b['uer50']:.4f}")
 
 
+def build_probe_comparison_table() -> None:
+    """GEARS vs baselines/probes in audit-delta space (read-only reuse of baseline outputs)."""
+    summary = pd.read_csv(REPL / "replogle_summary.csv")
+    rows = []
+    for key, cell_line, split in [("k562", "K562", "R-L1-K562"), ("rpe1", "RPE1", "R-L1-RPE1")]:
+        run, metrics, retrieval, summary_run, meta = load_run(key)
+        b = space_block(metrics, retrieval, "audit_delta")
+        base = summary[summary["split"].eq(split)]
+        for _, r in base.iterrows():
+            rows.append(
+                {
+                    "context": cell_line,
+                    "split": split,
+                    "model": r["model"],
+                    "run_status": r["run_status"],
+                    "metric_space": "audit_delta",
+                    "filtered_data": True,
+                    "pearson_delta": r["pearson_delta"],
+                    "pearson_ci_low": r["pearson_ci_low"],
+                    "pearson_ci_high": r["pearson_ci_high"],
+                    "retrieval_top1": r["retrieval_top1"],
+                    "retrieval_top5": r["retrieval_top5"],
+                    "retrieval_mrr": r["mrr"],
+                    "uer50": r["uer50"],
+                    "sign_flip_rate": r["sign_flip_rate"],
+                    "bns_status": "UNVERIFIED",
+                    "source": "replogle_summary.csv",
+                }
+            )
+        rows.append(
+            {
+                "context": cell_line,
+                "split": split,
+                "model": "GEARS_cell_gears_0.1.2",
+                "run_status": "COMPLETED_GEARS_EVALUATION",
+                "metric_space": "audit_delta",
+                "filtered_data": True,
+                "pearson_delta": b["pearson"],
+                "pearson_ci_low": b["pearson_ci_low"],
+                "pearson_ci_high": b["pearson_ci_high"],
+                "retrieval_top1": b["top1"],
+                "retrieval_top5": b["top5"],
+                "retrieval_mrr": b["mrr"],
+                "uer50": b["uer50"],
+                "sign_flip_rate": b["sign_flip"],
+                "bns_status": "UNVERIFIED",
+                "source": "gears_rl1_run",
+            }
+        )
+    df = pd.DataFrame(rows)
+    TABLES.mkdir(parents=True, exist_ok=True)
+    df.to_csv(TABLES / "replogle_gears_vs_probes.csv", index=False)
+    print(df.to_string(index=False))
+
+
 def main() -> None:
     raw = {}
     audit = {}
@@ -362,6 +417,7 @@ def main() -> None:
     fig1(figdf)
     build_norman_comparison()
     build_divergence_profile(audit, raw)
+    build_probe_comparison_table()
     fig2()
     stats_report(raw, audit)
 
