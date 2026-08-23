@@ -45,7 +45,7 @@ def load_run(key: str) -> tuple[Path, pd.DataFrame, pd.DataFrame, pd.DataFrame, 
         raise FileNotFoundError(f"no full run for {key}")
     run = runs[-1]
     meta = json.loads((run / "metadata.json").read_text())
-    if meta.get("run_status") != "COMPLETED_GEARS":
+    if meta.get("run_status") not in ("COMPLETED_GEARS", "COMPLETED_GEARS_EVALUATION"):
         raise SystemExit(f"latest run {run.name} not completed: {meta.get('run_status')}")
     metrics = pd.read_csv(run / "gears_metrics.csv")
     retrieval = pd.read_csv(run / "gears_perturbation_retrieval.csv")
@@ -316,16 +316,19 @@ def fig2() -> None:
 
 
 def stats_report(raw: dict, audit: dict) -> None:
-    print("\n== Within-Replogle K562 vs RPE1 (audit-delta space; perturbation-level bootstrap 95% CI) ==")
-    for metric, key in [("Pearson", "pearson"), ("MRR", "mrr"), ("UER50", "uer50")]:
-        a = audit["k562"]; b = audit["rpe1"]
-        print(f"{metric}: K562 {a[key]:.4f} [{a[key+'_ci_low']:.4f},{a[key+'_ci_high']:.4f}] | RPE1 {b[key]:.4f} [{b[key+'_ci_low']:.4f},{b[key+'_ci_high']:.4f}] | overlap=", end="")
-        overlap = not (a[key + "_ci_high"] < b[key + "_ci_low"] or b[key + "_ci_high"] < a[key + "_ci_low"])
-        print(overlap)
+    if "k562" in audit and "rpe1" in audit:
+        print("\n== Within-Replogle K562 vs RPE1 (audit-delta space; perturbation-level bootstrap 95% CI) ==")
+        for metric, key in [("Pearson", "pearson"), ("MRR", "mrr"), ("UER50", "uer50")]:
+            a = audit["k562"]; b = audit["rpe1"]
+            print(f"{metric}: K562 {a[key]:.4f} [{a[key+'_ci_low']:.4f},{a[key+'_ci_high']:.4f}] | RPE1 {b[key]:.4f} [{b[key+'_ci_low']:.4f},{b[key+'_ci_high']:.4f}] | overlap=", end="")
+            overlap = not (a[key + "_ci_high"] < b[key + "_ci_low"] or b[key + "_ci_high"] < a[key + "_ci_low"])
+            print(overlap)
     print("\n== Norman vs Replogle (gears_raw space) ==")
     for row in NORMAN_ROWS:
         print(f"{row['setting']}: pearson {row['pearson']:.4f} mrr {row['mrr']:.4f} uer50 {row['uer50']}")
     for key, label in [("k562", "Replogle K562"), ("rpe1", "Replogle RPE1")]:
+        if key not in raw:
+            continue
         b = raw[key]
         print(f"{label}: pearson {b['pearson']:.4f} ({b['pearson_ci_low']:.4f},{b['pearson_ci_high']:.4f}) mrr {b['mrr']:.4f} top1 {b['top1']:.4f} uer50 {b['uer50']:.4f}")
 
@@ -386,9 +389,17 @@ def build_probe_comparison_table() -> None:
 
 
 def main() -> None:
+    import argparse
+
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--only", choices=["k562", "rpe1"], default=None, help="analyze a single completed context")
+    args = parser.parse_args()
+    keys = [args.only] if args.only else ["k562", "rpe1"]
     raw = {}
     audit = {}
     for key, cell_line, split in [("k562", "K562", "R-L1-K562"), ("rpe1", "RPE1", "R-L1-RPE1")]:
+        if key not in keys:
+            continue
         run, metrics, retrieval, summary, meta = load_run(key)
         raw[key] = space_block(metrics, retrieval, "gears_raw")
         audit[key] = space_block(metrics, retrieval, "audit_delta")
@@ -399,12 +410,17 @@ def main() -> None:
         "Norman L1": ("Norman L1 GEARS", NORMAN_ROWS[0]),
         "Norman L2": ("Norman L2 GEARS", NORMAN_ROWS[1]),
         "Norman L3": ("Norman L3 GEARS", NORMAN_ROWS[2]),
-        "Replogle K562 L1": ("Replogle K562 R-L1 GEARS", raw["k562"]),
-        "Replogle RPE1 L1": ("Replogle RPE1 R-L1 GEARS", raw["rpe1"]),
+        "Replogle K562 L1": ("Replogle K562 R-L1 GEARS", raw.get("k562", {})),
+        "Replogle RPE1 L1": ("Replogle RPE1 R-L1 GEARS", raw.get("rpe1", {})),
     }
     fig_rows = []
     for short, (setting, src) in ordering.items():
-        if isinstance(src, dict):
+        if setting.startswith("Replogle") and all(k in src for k in ["pearson", "mrr"]):
+            fig_rows.append({"short": short, "pearson": src["pearson"], "pearson_ci_low": src["pearson_ci_low"],
+                             "pearson_ci_high": src["pearson_ci_high"], "mrr": src["mrr"], "mrr_ci_low": src["mrr_ci_low"],
+                             "mrr_ci_high": src["mrr_ci_high"], "uer50": src["uer50"], "uer50_ci_low": src["uer50_ci_low"],
+                             "uer50_ci_high": src["uer50_ci_high"]})
+        elif isinstance(src, dict):
             fig_rows.append({"short": short, "pearson": src["pearson"], "pearson_ci_low": src["pearson_ci_low"],
                              "pearson_ci_high": src["pearson_ci_high"], "mrr": src["mrr"], "mrr_ci_low": src["mrr_ci_low"],
                              "mrr_ci_high": src["mrr_ci_high"], "uer50": src["uer50"], "uer50_ci_low": src["uer50_ci_low"],
