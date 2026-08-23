@@ -114,13 +114,24 @@ def write_gears_custom_split(obs: pd.DataFrame, cell_line: str, outdir: Path, sp
     return path
 
 
-def rebuild_split_dict_gears_vocabulary(pert_data, split_path: Path, split_name: str, seed: int) -> Path:
-    obs = pert_data.adata.obs
+def rebuild_split_dict_gears_vocabulary(
+    pert_data, split_path: Path, split_name: str, seed: int, raw_conditions: dict[str, list[str]]
+) -> Path:
+    """Restrict the raw-obs split dict to the GEARS condition vocabulary.
+
+    PertData.load drops cells whose condition is not representable in the
+    perturbation graph (filter_pert_in_go). Conditions absent from
+    pert_data.adata would crash get_dataloader; each raw condition is kept
+    only if it exists in the GEARS-filtered obs. Per-cell labels are
+    unchanged; GEARS filtering is condition-wise, so this is equivalent to
+    per-cell alignment while avoiding AnnData view-mutation pitfalls.
+    """
+    valid = set(pert_data.adata.obs["condition"].astype(str))
     set2conditions = {}
     for split in ["train", "val", "test"]:
-        conditions = sorted(obs.loc[obs["vp_split_group"].eq(split), "condition"].astype(str).unique())
+        conditions = [c for c in raw_conditions.get(split, []) if c in valid]
         if split == "train" and "ctrl" not in conditions:
-            if "ctrl" not in set(obs["condition"].astype(str)):
+            if "ctrl" not in valid:
                 raise ValueError("ctrl missing from GEARS-filtered obs")
             conditions = ["ctrl"] + conditions
         if not conditions:
@@ -129,17 +140,54 @@ def rebuild_split_dict_gears_vocabulary(pert_data, split_path: Path, split_name:
     path = split_path
     with path.open("wb") as f:
         pickle.dump(set2conditions, f)
+    raw_counts = {s: len(c) for s, c in raw_conditions.items()}
+    kept_counts = {s: len(c) for s, c in set2conditions.items()}
     pd.DataFrame(
         [
             {
                 "split": s,
-                "n_conditions_gears_vocabulary": len(c),
-                "conditions_preview": ";".join(c[:8]),
+                "n_conditions_raw_obs": raw_counts.get(s),
+                "n_conditions_gears_vocabulary": kept_counts.get(s),
+                "conditions_preview": ";".join(set2conditions[s][:8]),
             }
-            for s, c in set2conditions.items()
+            for s in ["train", "val", "test"]
         ]
     ).to_csv(path.parent / (path.stem + "_gears_vocabulary.tsv"), sep="\t", index=False)
     return path
+
+
+def build_trimmed_go_tensors(data_root: Path, dataset_name: str, pert_data, k: int = 20) -> tuple[torch.Tensor, torch.Tensor]:
+    """GO similarity tensor with official-style top-k trimming per target.
+
+    The raw make_GO edge list can be extremely dense (Replogle essential:
+    ~12.1M edges within the 9,853-gene perturbation node map). Official GEARS
+    get_similarity_network keeps the top (k+1) neighbors per target
+    (num_similar_genes_go_graph). Without that trimming, the GO GNN message
+    passing cost grows ~90x versus the frozen Norman pilot and becomes the
+    dominant runtime term. This builder applies the same per-target top-k
+    trimming the official pipeline applies, keeping the perturbation node set
+    unchanged.
+    """
+    go_csv = Path("data") / f"go_essential_{dataset_name}.csv"
+    if not go_csv.exists():
+        from gears.utils import make_GO
+
+        make_GO(str(data_root), pert_data.pert_names, dataset_name)
+    df = pd.read_csv(go_csv)
+    node_map = pert_data.node_map_pert
+    df = df[df["source"].isin(node_map) & df["target"].isin(node_map)].copy()
+    n_before = len(df)
+    df = df.groupby("target").apply(lambda x: x.nlargest(k + 1, ["importance"])).reset_index(drop=True)
+    self_edges = pd.DataFrame(
+        {"source": list(node_map), "target": list(node_map), "importance": 1.0}
+    )
+    df = pd.concat([df, self_edges], ignore_index=True).drop_duplicates(["source", "target"])
+    edge_index = torch.tensor(
+        [(node_map[row.source], node_map[row.target]) for row in df.itertuples(index=False)],
+        dtype=torch.long,
+    ).T
+    edge_weight = torch.tensor(df["importance"].astype(float).to_numpy(), dtype=torch.float32)
+    return n_before, edge_index, edge_weight
 
 
 def audit_control_mean(pert_data) -> np.ndarray:
@@ -312,8 +360,11 @@ def main() -> None:
 
     cfg = DATASETS[args.dataset]
     dataset_dir = Path(cfg["source_h5ad"]).parent
-    data_root = Path("data/raw")
-    gene_set_path = str(data_root / "essential_all_data_pert_genes.pkl")
+    data_root = dataset_dir.parent
+    gene_set_path = str(Path("data/raw") / "essential_all_data_pert_genes.pkl")
+    gene2go_dst = data_root / "gene2go_all.pkl"
+    if not gene2go_dst.exists():
+        shutil.copy2(Path("data/raw/gene2go_all.pkl"), gene2go_dst)
     if not (data_root / "gene2go_all.pkl").exists():
         raise FileNotFoundError("gene2go_all.pkl not present under data/raw")
 
@@ -395,7 +446,8 @@ def main() -> None:
         split_dir.mkdir(parents=True, exist_ok=True)
         split_path = write_gears_custom_split(obs, cfg["cell_line"], split_dir, cfg["split"], args.seed)
         metadata["split_dict_path"] = str(split_path)
-        del labels, obs, adata
+        raw_conditions = pickle.loads(split_path.read_bytes())
+        del obs, adata, labels
 
         from gears import GEARS, PertData
 
@@ -407,14 +459,17 @@ def main() -> None:
         pert_data.load(data_path=str(dataset_dir))
         metadata["dataset_name_gears"] = pert_data.dataset_name
         metadata["gears_vocabulary_cells"] = int(pert_data.adata.n_obs)
-        split_path = rebuild_split_dict_gears_vocabulary(pert_data, split_path, cfg["split"], args.seed)
+        split_path = rebuild_split_dict_gears_vocabulary(pert_data, split_path, cfg["split"], args.seed, raw_conditions)
+        del raw_conditions
         metadata["split_dict_path_gears_vocabulary"] = str(split_path)
         pert_data.prepare_split(split="custom", seed=args.seed, split_dict_path=str(split_path))
         pert_data.get_dataloader(batch_size=args.batch_size, test_batch_size=args.test_batch_size)
 
         model = GEARS(pert_data, device=args.device, weight_bias_track=False)
-        G_go, G_go_weight = build_filtered_go_tensors(data_root, pert_data.dataset_name, pert_data)
-        metadata["filtered_go_edges"] = int(G_go.shape[1])
+        go_edges_before, G_go, G_go_weight = build_trimmed_go_tensors(data_root, pert_data.dataset_name, pert_data)
+        metadata["go_edges_before_trim"] = int(go_edges_before)
+        metadata["go_edges_after_trim"] = int(G_go.shape[1])
+        metadata["go_trim_k"] = 20
         metadata["filtered_go_nodes"] = int(len(pert_data.node_map_pert))
         model.model_initialize(G_go=G_go, G_go_weight=G_go_weight)
 

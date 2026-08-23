@@ -47,7 +47,7 @@ Files:
 | scheduler | StepLR | none |
 | hidden / layers / decoder | 64 / 3 / 3 / 128 | none |
 | pert_graph | essential | none |
-| GO graph | filtered GO tensor + self edges | none |
+| GO graph | filtered GO tensor with official-style top-k=20 per-target trimming + self edges (before trim ~12.1M edges; after trim ~207k) | **trim added**; see item 4 below |
 | co-expression graph | GEARS-inferred from train control cells | none |
 | split | R-L1 via `assign_replogle_l1_context_perturbation_holdout` seed 1, then rebuilt inside GEARS-filtered vocabulary | split-dict construction mirrors the Norman custom-split convention (split written from GEARS-filtered adata so no condition is lost to `filter_pert_in_go`); frozen split hashes verified (`e9fcaf7afdb972e4`, `288d45dbeb512ce5`) |
 | bootstrap | 2000 resamples, 95% CI, perturbation-level | **200 -> 2000**; this phase locks 2000 per the phase plan (section 17). Norman comparisons use already-frozen Norman rows; the difference in resample count does not change point estimates, only CI width. Documented for transparency; Norman rows are not recomputed. |
@@ -73,6 +73,12 @@ Files:
    - What: Replogle runs export both `gears_raw` (Norman convention) and `audit_delta` (baseline/probe convention) metric sets.
    - Why: `gears_raw` makes the Norman vs Replogle comparison measurement-identical; `audit_delta` makes the within-Replogle GEARS vs B0/B1/B2/B4/B5 and FP1/FP3 comparison measurement-identical (baselines are computed in audit-delta space with the same all-control mean).
    - Comparability impact: none on Norman; enables both required comparisons without redefinition.
+
+4. **GO graph top-k trimming (engineering fix, runtime).**
+   - Original behavior: the injected filtered GO tensor retained every GO edge inside the 9,853-gene perturbation node map. For Replogle essential data this produced ~12.1M edges, i.e. a ~90x denser GO GNN message-passing step than the frozen Norman runs (133,961 edges), making a 20-epoch CPU run infeasible (measured ~3 s/step with heavy swapping).
+   - Modified behavior: `run_gears_replogle_rl1.py` trims the GO tensor to the top k=20 edges per target (`num_similar_genes_go_graph=20`, the official default) plus self edges, which is exactly the trimming the official GEARS `get_similarity_network` applies (`groupby('target').nlargest(k+1)`). Node set unchanged (9,853).
+   - Reason: match official GEARS GO graph construction and restore Norman-comparable compute cost; without it the full run was not executable within this phase's budget.
+   - Fairness impact: edges removed are the lowest-importance GO similarities per target; perturbation node set is identical; the leaning of the perturbation graph definition is unchanged in spirit and now matches the official package more closely than the previous injection. Recorded per run as `go_edges_before_trim`, `go_edges_after_trim`, `go_trim_k`, `filtered_go_nodes`.
 
 ## Items NOT changed
 
