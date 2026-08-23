@@ -21,6 +21,9 @@ cellxgene_overlap: UNVERIFIED
 publication_overlap: documented model-paper benchmark overlap with Norman-style Perturb-seq datasets
 fine_tuning_overlap: model trained on pilot train split only if reproduced locally
 evidence_level: A for benchmark dataset use; not a foundation pretraining contamination claim
+phase2a_replogle_status: PREMODEL_GATE_CONDITIONAL_GO_ON_GEARS_FILTERED_ESSENTIAL_DATA; K562_R-L1_BOUNDED_SMOKE_COMPLETE_NOT_PERFORMANCE; GEARS_REPLOGLE_FULL_TRAINING_NOT_STARTED
+phase2a_allowed_order: source/provenance/metadata/replicate/QC/split/baseline before GEARS smoke or full training
+phase2a_required_caveat: Replogle GEARS runs must be labeled filtered essential-screen, not complete Figshare+ genome-scale; BNS remains UNVERIFIED.
 ```
 
 ## scGPT
@@ -34,4 +37,3 @@ Status: REGISTERED_NOT_STARTED.
 ## STATE
 
 Status: REGISTERED_NOT_STARTED.
-

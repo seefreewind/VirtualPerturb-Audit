@@ -7,8 +7,15 @@ from src.hallucination.metrics import sign_flip_rate, unsupported_effect_rate_at
 from src.leakage.checks import run_split_integrity_checks
 from src.metrics.bounds import bound_normalized_score
 from src.metrics.retrieval import perturbation_centroid_retrieval, perturbation_retrieval_rows
+from src.data.perturbations import normalize_condition, target_fields
 from src.statistics.bootstrap import bootstrap_mean_ci
-from src.splits.builders import assign_l1_perturbation_holdout, assign_l2_component_holdout, assign_l3_gene_family_holdout
+from src.splits.builders import (
+    assign_l1_perturbation_holdout,
+    assign_l2_component_holdout,
+    assign_l3_gene_family_holdout,
+    assign_replogle_l1_context_perturbation_holdout,
+    assign_replogle_l4_cross_context,
+)
 from scripts.run_baseline_pilot import additive_delta_map, evaluate_split
 
 
@@ -165,3 +172,42 @@ def test_gears_summary_exports_retrieval_and_centroids(tmp_path, monkeypatch):
     assert (outdir / "gears_delta_centroids.pt").exists()
     assert (outdir / "gears_perturbation_retrieval.csv").exists()
     assert (tmp_path / "results" / "pilot" / "perturbation_retrieval.csv").exists()
+
+
+def test_replogle_condition_normalization_canonicalizes_controls():
+    assert normalize_condition("ctrl+TP53") == "TP53"
+    assert normalize_condition("TP53+ctrl") == "TP53"
+    assert normalize_condition("brca1+TP53") == "BRCA1+TP53"
+    assert normalize_condition("non-targeting") == "ctrl"
+    assert target_fields("TP53+ctrl") == ("TP53", "NA")
+
+
+def test_replogle_l1_context_holdout_has_no_test_perturbation_in_train():
+    obs = pd.DataFrame({
+        "cell_line": ["K562"] * 8 + ["RPE1"] * 4,
+        "perturbation": ["ctrl", "ctrl", "A", "A", "B", "B", "C", "C", "ctrl", "D", "D", "E"],
+        "control_status": ["control", "control"] + ["perturbed"] * 6 + ["control"] + ["perturbed"] * 3,
+        "replicate": ["UNVERIFIED"] * 12,
+    })
+    adata = ToyAnnData(obs)
+    labels = assign_replogle_l1_context_perturbation_holdout(adata, "K562", seed=1, test_fraction=0.34, val_fraction=0.0)
+    adata.obs["split_group"] = labels
+    checks = run_split_integrity_checks(adata, "R-L1-K562")
+    assert all(c["status"] == "PASS" for c in checks), checks
+    assert set(adata.obs.loc[adata.obs["cell_line"].eq("RPE1"), "split_group"]) == {"exclude_other_context"}
+
+
+def test_replogle_l4_cross_context_keeps_contexts_separate():
+    obs = pd.DataFrame({
+        "cell_line": ["K562"] * 4 + ["RPE1"] * 4,
+        "perturbation": ["ctrl", "A", "B", "Z", "ctrl", "A", "B", "Y"],
+        "control_status": ["control", "perturbed", "perturbed", "perturbed"] * 2,
+        "replicate": ["UNVERIFIED"] * 8,
+    })
+    adata = ToyAnnData(obs)
+    labels = assign_replogle_l4_cross_context(adata, "K562", "RPE1", {"A", "B"})
+    adata.obs["split_group"] = labels
+    checks = run_split_integrity_checks(adata, "R-L4-K2R")
+    assert all(c["status"] == "PASS" for c in checks), checks
+    assert set(adata.obs.loc[adata.obs["split_group"].eq("train"), "cell_line"]) == {"K562"}
+    assert set(adata.obs.loc[adata.obs["split_group"].eq("test"), "cell_line"]) == {"RPE1"}

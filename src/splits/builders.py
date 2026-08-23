@@ -7,6 +7,8 @@ from pathlib import Path
 import numpy as np
 import pandas as pd
 
+from src.data.perturbations import normalize_condition
+
 
 def split_hash(labels: list[str]) -> str:
     payload = json.dumps(labels, sort_keys=False).encode()
@@ -14,13 +16,10 @@ def split_hash(labels: list[str]) -> str:
 
 
 def parse_components(perturbation: str) -> set[str]:
-    p = str(perturbation)
-    if p.lower() in {"ctrl", "control", "non-targeting", "ntc"}:
+    p = normalize_condition(str(perturbation))
+    if p == "ctrl" or p == "NA":
         return set()
-    for sep in ["+", "_", "|"]:
-        if sep in p:
-            return {x for x in p.split(sep) if x and x.lower() not in {"ctrl", "control"}}
-    return {p}
+    return {x for x in p.split("+") if x}
 
 
 def assign_l0_random_cells(adata, seed: int = 1, test_fraction: float = 0.2, val_fraction: float = 0.1):
@@ -125,4 +124,67 @@ def assign_l3_gene_family_holdout(
             labels.append("exclude_gene_family_overlap")
         else:
             labels.append("train")
+    return labels
+
+
+def assign_replogle_l1_context_perturbation_holdout(
+    adata,
+    cell_line: str,
+    seed: int = 1,
+    test_fraction: float = 0.2,
+    val_fraction: float = 0.1,
+):
+    obs = adata.obs
+    in_context = obs["cell_line"].astype(str).eq(cell_line)
+    perturbed = ~obs["control_status"].astype(str).str.lower().eq("control")
+    perturbs = np.array(sorted(obs.loc[in_context & perturbed, "perturbation"].astype(str).map(normalize_condition).unique()))
+    rng = np.random.default_rng(seed)
+    rng.shuffle(perturbs)
+    n_test = max(1, int(round(len(perturbs) * test_fraction))) if len(perturbs) else 0
+    n_val = max(1, int(round(len(perturbs) * val_fraction))) if len(perturbs) else 0
+    test_p = set(perturbs[:n_test])
+    val_p = set(perturbs[n_test : n_test + n_val])
+    labels = []
+    for context, perturbation, control_status in zip(
+        obs["cell_line"].astype(str),
+        obs["perturbation"].astype(str).map(normalize_condition),
+        obs["control_status"].astype(str).str.lower(),
+    ):
+        if context != cell_line:
+            labels.append("exclude_other_context")
+        elif control_status == "control":
+            labels.append("train")
+        elif perturbation in test_p:
+            labels.append("test")
+        elif perturbation in val_p:
+            labels.append("val")
+        else:
+            labels.append("train")
+    return labels
+
+
+def assign_replogle_l4_cross_context(
+    adata,
+    train_cell_line: str,
+    test_cell_line: str,
+    eligible_targets: set[str],
+):
+    if train_cell_line == test_cell_line:
+        raise ValueError("R-L4 requires different train and test cell lines.")
+    eligible = {normalize_condition(x) for x in eligible_targets}
+    labels = []
+    obs = adata.obs
+    for context, perturbation, control_status in zip(
+        obs["cell_line"].astype(str),
+        obs["perturbation"].astype(str).map(normalize_condition),
+        obs["control_status"].astype(str).str.lower(),
+    ):
+        if control_status == "control" and context in {train_cell_line, test_cell_line}:
+            labels.append("train" if context == train_cell_line else "test")
+        elif context == train_cell_line and perturbation in eligible:
+            labels.append("train")
+        elif context == test_cell_line and perturbation in eligible:
+            labels.append("test")
+        else:
+            labels.append("exclude_ineligible_context_or_target")
     return labels

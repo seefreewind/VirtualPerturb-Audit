@@ -1,0 +1,11 @@
+SampleName	library_modality	n_runs	n_experiments	n_libraries	n_lanes	n_sample_indices	n_biosamples	total_size_mb
+K562_day_6_essential_scale	UNKNOWN	48	48	48	1	1	1	475519
+K562_day_6_essential_scale	mRNA	384	384	384	48	72	1	685909
+K562_day_6_essential_scale	sgRNA	192	192	192	48	48	1	50124
+K562_day_8_genome_scale	UNKNOWN	273	273	273	1	1	1	2715794
+K562_day_8_genome_scale	mRNA	2296	2296	2296	1	96	1	4495797
+K562_day_8_genome_scale	sgRNA	2296	2296	2296	1	96	1	367595
+K562_day_8_ultima	UNKNOWN	546	546	546	1	2	1	9930775
+RPE1_day_7_essential_scale	UNKNOWN	56	56	56	1	1	1	517135
+RPE1_day_7_essential_scale	mRNA	896	896	896	1	112	1	724751
+RPE1_day_7_essential_scale	sgRNA	896	896	896	1	112	1	116870

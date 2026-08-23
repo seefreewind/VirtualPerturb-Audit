@@ -19,9 +19,9 @@ def no_forbidden_perturbation_overlap(adata, split: str) -> tuple[bool, str]:
     test_p = set(obs.loc[obs["split_group"].eq("test"), "perturbation"].astype(str))
     train_p.discard("ctrl")
     train_p.discard("control")
-    if split == "L1":
+    if split == "L1" or split in {"R-L1-K562", "R-L1-RPE1"}:
         overlap = sorted(train_p & test_p)
-        return (not overlap, f"L1 exact perturbation overlap: {overlap[:10]}")
+        return (not overlap, f"{split} exact perturbation overlap: {overlap[:10]}")
     if split == "L2":
         train_g = {g for p in train_p for g in parse_components(p)}
         test_g = {g for p in test_p for g in parse_components(p)}
@@ -58,6 +58,18 @@ def no_group_overlap(adata, group_key: str = "replicate") -> tuple[bool, str]:
     return False, f"{len(bad)} {group_key} groups cross split."
 
 
+def no_cross_context_train_test_mix(adata) -> tuple[bool, str]:
+    obs = adata.obs
+    if "cell_line" not in obs:
+        return False, "cell_line unavailable for cross-context integrity check."
+    train_contexts = set(obs.loc[obs["split_group"].eq("train"), "cell_line"].astype(str))
+    test_contexts = set(obs.loc[obs["split_group"].eq("test"), "cell_line"].astype(str))
+    overlap = sorted(train_contexts & test_contexts)
+    if overlap:
+        return False, f"Train/test cell_line overlap: {overlap}"
+    return True, f"Train contexts {sorted(train_contexts)}; test contexts {sorted(test_contexts)}."
+
+
 def run_split_integrity_checks(adata, split: str) -> list[dict]:
     checks = [
         ("no_exact_cell_overlap", *no_exact_cell_overlap(adata)),
@@ -65,6 +77,8 @@ def run_split_integrity_checks(adata, split: str) -> list[dict]:
     ]
     if split != "L0":
         checks.append(("no_group_overlap_replicate", *no_group_overlap(adata, "replicate")))
+    if split in {"R-L4-K2R", "R-L4-R2K"}:
+        checks.append(("train_cell_line_not_test_cell_line", *no_cross_context_train_test_mix(adata)))
     return [
         {"check": name, "status": "PASS" if ok else "FAIL", "message": message}
         for name, ok, message in checks

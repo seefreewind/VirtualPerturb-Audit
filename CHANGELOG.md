@@ -2,6 +2,18 @@
 
 ## 2026-08-23
 
+- Froze the completed Norman pilot before Replogle Phase 2A at commit `d10d282`.
+- Started Replogle Phase 2A audit-first workflow: located official/paper-linked Replogle sources, downloaded NCBI SRA BioProject `PRJNA831566` runinfo, and recorded checksum/provenance.
+- Added `reports/REPLOGLE_SOURCE_AUDIT.md`, `reports/replogle_replicate_label_audit.md`, `reports/replogle_replicate_label_audit.tsv`, and `reports/PHASE2A_REPLOGLE_PROGRESS.md`.
+- Added Replogle SRA parsed metadata and summaries in `data/metadata/replogle_sra_runinfo_parsed.tsv` and `data/metadata/replogle_sra_runinfo_summary.tsv`.
+- Registered Phase 2A in `analysis_lock.yaml`, updated Replogle entries in `DATASET_PROVENANCE.md` and `data/metadata/dataset_registry.tsv`, and recorded current Replogle BNS status as `UNVERIFIED`.
+- Added reusable perturbation-label canonicalization plus R-L1/R-L4 split foundations and cross-context integrity tests; test suite now passes 13/13.
+- Recorded complete-data blocker: command-line Figshare+ access to complete processed Replogle h5ad/manifest endpoints returned HTTP 403, so complete-data claims remain blocked.
+- Downloaded GEARS-compatible filtered Replogle essential-screen files from Harvard Dataverse/GEARS source entries, extracted K562/RPE1 `perturb_processed.h5ad`, and recorded zip/h5ad checksums.
+- Completed Replogle filtered-data h5ad QC, target overlap, gene vocabulary audit, split materialization, and split integrity checks for R-L1-K562, R-L1-RPE1, R-L4-K2R, and R-L4-R2K.
+- Completed Replogle filtered-data baseline/falsification audit for B0/B1/B2/B4/B5 and FP1/FP3, writing `reports/REPLOGLE_BASELINE_AUDIT.md`, `results/replogle/replogle_summary.csv`, and `results/replogle/replogle_perturbation_retrieval.csv`.
+- Added `reports/PHASE2A_PREMODEL_GATE.md`, `reports/GEARS_REPLOGLE_COMPATIBILITY.md`, and `reports/CURRENT_OVERALL_STATUS_AND_PROGRESS.md`; current gate is `CONDITIONAL_GO_GEARS_FILTERED` with BNS `UNVERIFIED`.
+- Added `scripts/run_gears_replogle_smoke.py` and completed bounded GEARS Replogle K562 R-L1 smoke run `results/replogle/gears/gears_replogle_k562_smoke_20260823T030844Z/`; earlier failed smoke attempts are preserved with explicit metadata.
 - Completed full GEARS evaluations on this Mac CPU for L1, L2, and L3 (20 epochs, seed 1, `essential` perturbation graph), with per-run `gears_metrics.csv`, `gears_delta_centroids.pt`, `gears_perturbation_retrieval.csv`, and strict `metadata.json`:
   - L1: `results/pilot/gears_20260822T065552Z/` (55 test perturbations, 18,284 s)
   - L2: `results/pilot/gears_20260822T122126Z/` (40 test perturbations, 17,987 s)

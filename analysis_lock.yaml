@@ -66,3 +66,43 @@ revision_log:
     change: GEARS batch-smoke mode added with bounded train batches.
     reason: Full CPU epoch exceeded practical smoke-test runtime; a bounded smoke verifies initialization, dataloading, forward/backward pass, checkpoint save, and metadata without claiming model performance.
     fairness_impact: Batch-smoke outputs are executable-chain evidence only and must not be interpreted as performance results.
+  - date: 2026-08-23
+    change: Phase 2A Replogle external/context audit registered before processed Replogle model evaluation.
+    reason: Extend Norman pilot to an independent CRISPRi system with K562/RPE1 within-context and cross-context evaluation while preserving the audit-first order.
+    fairness_impact: Primary metrics and split definitions are locked before Replogle expression-matrix QC, baselines, or GEARS training; BNS remains unavailable unless biological replicates are explicitly validated.
+phase2a:
+  status: FILTERED_DATA_BASELINE_AUDIT_COMPLETE_CONDITIONAL_GEARS_GATE_K562_SMOKE_COMPLETE
+  primary_question: external_replication_of_metric_divergence
+  datasets:
+    - Replogle_K562
+    - Replogle_RPE1
+  primary_splits:
+    - R-L1-K562
+    - R-L1-RPE1
+    - R-L4-K2R
+    - R-L4-R2K
+  primary_metrics:
+    - pearson_delta
+    - retrieval_mrr
+    - uer50
+  secondary_metrics:
+    - top1
+    - top5
+    - sign_flip_rate
+  statistical_unit: perturbation
+  bootstrap: 2000
+  bns_requires_validated_replicates: true
+  replicate_status_current: NOT_AVAILABLE_FROM_SRA_RUNINFO
+  bns_status_current: UNVERIFIED
+  cross_context_eligibility:
+    min_cells_per_target_per_context: 30
+    require_controls_in_both_contexts: true
+    require_clear_perturbation_label: true
+    require_compatible_gene_vocabulary: true
+    threshold_status: PRE_QC_LOCKED_MINIMUM
+  hypotheses:
+    H2A_1: Global transcriptomic similarity and perturbation-specific retrieval will not be fully concordant in Replogle.
+    H2A_2: Cross-context evaluation will be more difficult than within-context evaluation.
+    H2A_3: Global metrics may be less sensitive to evaluation strictness than perturbation-specific metrics.
+    H2A_4: If reliable biological replicates exist, distance to empirical upper bound can be quantified.
+  current_blocker: Complete Figshare+ processed Replogle objects and manifest downloads still return HTTP 403 by command line on 2026-08-23; GEARS-compatible filtered essential h5ad files are locally available and have completed QC, split integrity, baseline, falsification audit, and K562 bounded GEARS smoke. BNS remains UNVERIFIED because no biological replicate label is available in SRA runinfo or filtered h5ad obs.

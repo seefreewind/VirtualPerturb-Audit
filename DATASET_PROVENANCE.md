@@ -38,11 +38,77 @@ notes: Do not use GEARS-provided splits as final audit splits without independen
 
 ## Replogle K562 CRISPRi
 
-Registered for later phases. Public processed AnnData files are reported through Figshare+ for Replogle et al. 2022, DOI 10.1016/j.cell.2022.05.013. Status: REGISTERED_NOT_STARTED.
+```yaml
+dataset_name: Replogle K562 CRISPRi
+accession: PRJNA831566; 10.25452/figshare.plus.20029387
+source_url: https://www.ncbi.nlm.nih.gov/bioproject/PRJNA831566; https://doi.org/10.25452/figshare.plus.20029387
+publication: Mapping information-rich genotype-phenotype landscapes with genome-scale Perturb-seq
+publication_date: 2022-07-07
+public_release_date: 2022-04-24 BioProject registration; 2022-06 Figshare+ processed/manifest deposits
+organism: Homo sapiens
+cell_type: K562
+cell_line: K562
+perturbation_type: CRISPRi
+CRISPR_mode: CRISPR interference
+n_cells: 162751
+n_genes: 5000
+n_perturbations: 1093 including ctrl; 1092 perturbed targets
+n_controls: 10691
+n_guides: NOT_AVAILABLE_IN_GEARS_FILTERED_H5AD
+replicates: NOT_AVAILABLE_FROM_SRA_RUNINFO; BNS_STATUS_UNVERIFIED
+batch_structure: SRA library/lane/sample-index/pool fields available for raw sequencing provenance only; filtered h5ad obs has no replicate/batch/guide fields
+source: GEARS-compatible Harvard Dataverse filtered essential screen datafile 7458695 used for executable audit; Figshare+ complete processed h5ad/GWPS remains primary complete-data source but command-line download is blocked; NCBI SRA PRJNA831566 selected as secondary validation source
+raw_available: true
+processed_available: true_gears_filtered_essential_downloaded; complete_figshare_processed_download_blocked_by_HTTP_403_on_2026_08_23
+license: CC0 reported by Figshare+ page snippets; verify in downloaded metadata before redistribution
+normalization: inherited from GEARS filtered `perturb_processed.h5ad`; exact upstream normalization not independently reconstructed
+gene_id_type: gene symbols in `var.gene_name`; 5000 expression columns, 4999 unique symbols, 1 duplicate symbol
+control_definition: `condition == ctrl` and `control == 1`
+status: GEARS_FILTERED_H5AD_QC_SPLITS_BASELINES_COMPLETE_BNS_UNVERIFIED
+local_files:
+  zip: data/raw/replogle/replogle_k562_essential.zip
+  h5ad: data/raw/replogle/replogle_k562_essential/perturb_processed.h5ad
+  sha256_zip: e769c89aa876061fdb3ac02a8de274f19a741a4f95decf14a52fd621d1eea319
+  sha256_h5ad: 550fde89ac85c258c9fd517638fe34fb42c0e748c9305fe6355761a2bb754170
+notes: SRA runinfo contains K562_day_6_essential_scale, K562_day_8_genome_scale, K562_day_8_ultima, and RPE1_day_7_essential_scale. The current executable audit uses the filtered K562 essential screen exposed by GEARS/Dataverse, not the complete genome-scale object. Minimum cells per target is 15, so QC is WARNING rather than PASS.
+```
 
 ## Replogle RPE1 CRISPRi
 
-Registered for later phases. Status: REGISTERED_NOT_STARTED.
+```yaml
+dataset_name: Replogle RPE1 CRISPRi
+accession: PRJNA831566; 10.25452/figshare.plus.20029387
+source_url: https://www.ncbi.nlm.nih.gov/bioproject/PRJNA831566; https://doi.org/10.25452/figshare.plus.20029387
+publication: Mapping information-rich genotype-phenotype landscapes with genome-scale Perturb-seq
+publication_date: 2022-07-07
+public_release_date: 2022-04-24 BioProject registration; 2022-06 Figshare+ processed/manifest deposits
+organism: Homo sapiens
+cell_type: RPE1
+cell_line: RPE1
+perturbation_type: CRISPRi
+CRISPR_mode: CRISPR interference
+n_cells: 162733
+n_genes: 5000
+n_perturbations: 1544 including ctrl; 1543 perturbed targets
+n_controls: 11485
+n_guides: NOT_AVAILABLE_IN_GEARS_FILTERED_H5AD
+replicates: NOT_AVAILABLE_FROM_SRA_RUNINFO; BNS_STATUS_UNVERIFIED
+batch_structure: SRA library/lane/sample-index fields available for raw sequencing provenance only; filtered h5ad obs has no replicate/batch/guide fields
+source: GEARS-compatible Harvard Dataverse filtered essential screen datafile 7458694 used for executable audit; Figshare+ complete processed h5ad/GWPS remains primary complete-data source but command-line download is blocked; NCBI SRA PRJNA831566 selected as secondary validation source
+raw_available: true
+processed_available: true_gears_filtered_essential_downloaded; complete_figshare_processed_download_blocked_by_HTTP_403_on_2026_08_23
+license: CC0 reported by Figshare+ page snippets; verify in downloaded metadata before redistribution
+normalization: inherited from GEARS filtered `perturb_processed.h5ad`; exact upstream normalization not independently reconstructed
+gene_id_type: gene symbols in `var.gene_name`; 5000 expression columns, 5000 unique symbols
+control_definition: `condition == ctrl` and `control == 1`
+status: GEARS_FILTERED_H5AD_QC_SPLITS_BASELINES_COMPLETE_BNS_UNVERIFIED
+local_files:
+  zip: data/raw/replogle/replogle_rpe1_essential.zip
+  h5ad: data/raw/replogle/replogle_rpe1_essential/perturb_processed.h5ad
+  sha256_zip: 0b97d50a9be1ecbd8837e8425456605e4ed6121b0c7738938f1318948cb78790
+  sha256_h5ad: cc3e13da13ecd3cf7fb027b8261514a2bdcfab16fe47fc685b2714f79781afba
+notes: SRA runinfo exposes RPE1_day_7_essential_scale. The current executable audit uses the filtered RPE1 essential screen exposed by GEARS/Dataverse, not the complete Figshare+ object. Minimum cells per target is 13, so QC is WARNING rather than PASS.
+```
 
 ## Arc Virtual Cell Challenge H1 hESC
 

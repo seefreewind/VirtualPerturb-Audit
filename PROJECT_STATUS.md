@@ -2,6 +2,21 @@
 
 ## Completed
 
+- Phase 2A Replogle audit started after freezing the Norman pilot at commit `d10d282`.
+- Replogle official/paper-linked sources identified: Cell 2022 publication, GWPS browser, Figshare+ processed h5ad deposit, Figshare+ SRA/GEO manifest, Figshare+ MTX files, and NCBI SRA BioProject `PRJNA831566`.
+- NCBI SRA runinfo downloaded to `data/raw/replogle/PRJNA831566_sra_runinfo.csv` with checksum recorded in `data/metadata/replogle_checksums.tsv`.
+- Replogle source audit generated at `reports/REPLOGLE_SOURCE_AUDIT.md`.
+- Replogle SRA-level replicate audit generated at `reports/replogle_replicate_label_audit.md` and `reports/replogle_replicate_label_audit.tsv`; current status is `REPLICATE_STATUS = NOT_AVAILABLE`, `BNS_STATUS = UNVERIFIED`.
+- Replogle SRA runinfo parsed and summarized in `data/metadata/replogle_sra_runinfo_parsed.tsv` and `data/metadata/replogle_sra_runinfo_summary.tsv`.
+- Replogle entries in `DATASET_PROVENANCE.md`, `data/metadata/dataset_registry.tsv`, and `analysis_lock.yaml` updated.
+- Replogle perturbation-label normalization and R-L1/R-L4 split foundations added; test suite expanded to 13 passing tests.
+- GEARS-compatible filtered Replogle essential h5ad archives downloaded from Harvard Dataverse/GEARS source entries, extracted, and checksum-registered.
+- Replogle K562/RPE1 h5ad schema audit, QC reports, perturbation label map, gene vocabulary audit, target overlap, and cross-context eligibility tables completed.
+- R-L1-K562, R-L1-RPE1, R-L4-K2R, and R-L4-R2K split materialization completed; split integrity report passes 14/14 checks.
+- Replogle baseline-first audit completed for B0/B1/B2/B4/B5 and FP1/FP3 across all four splits, writing `results/replogle/replogle_summary.csv`, `results/replogle/replogle_perturbation_retrieval.csv`, and `reports/REPLOGLE_BASELINE_AUDIT.md`.
+- Phase 2A premodel gate generated at `reports/PHASE2A_PREMODEL_GATE.md` with decision `CONDITIONAL_GO_GEARS_FILTERED`.
+- Current overall progress report generated at `reports/CURRENT_OVERALL_STATUS_AND_PROGRESS.md`.
+- Bounded GEARS Replogle K562 R-L1 smoke completed with 1 train batch, 1 eval batch, checkpoint/metadata export, and report `reports/REPLOGLE_GEARS_SMOKE_REPORT.md`. This is executable-chain evidence only, not performance.
 - Repository scaffold created under `VirtualPerturb-Audit/`.
 - Existing Git repository detected and reused.
 - Environment audit started.
@@ -49,6 +64,7 @@ Norman baseline and falsification-probe audit outputs are available in `results/
 
 ## Failed
 
+- Figshare+ command-line article/API downloads for complete Replogle processed h5ad and manifest endpoints returned HTTP 403 on 2026-08-23. This blocks complete-data claims, but GEARS-compatible filtered essential h5ad files are now local and audited.
 - `python` executable is missing; `python3` is available.
 - The GEARS Dataverse datafile endpoint returned an AWS WAF challenge to a command-line HEAD request.
 - The default GEARS GO graph tarball endpoint also returned an unusable WAF/empty-file response; the current runs use a documented filtered GO tensor generated from local GEARS prior files.
@@ -57,6 +73,10 @@ Norman baseline and falsification-probe audit outputs are available in `results/
 
 ## Risks
 
+- Replogle Phase 2A can proceed to GEARS smoke/full runs only under the `CONDITIONAL_GO_GEARS_FILTERED` gate. The current executable dataset is GEARS-compatible filtered essential-screen data, not the complete Figshare+ processed object.
+- Replogle SRA runinfo exposes technical library/lane/run metadata but no validated biological replicate field; BNS remains `UNVERIFIED` at the current audit stage.
+- Replogle filtered h5ad `obs` also lacks biological replicate, batch, and guide-level fields; BNS remains `UNVERIFIED`.
+- Replogle K562/RPE1 QC is WARNING because some perturbations have fewer than 30 cells.
 - GEARS/PyG dependencies require the isolated `environment/gears-venv` environment on this Mac.
 - GEARS processed Norman data are convenient for pilot but still require preprocessing provenance scrutiny.
 - True replicate fields remain missing; GEO-linked `gemgroup` is available for 97.4% of cells as a batch-like sensitivity field, but it is not a full replicate label. All BNS values remain `UNVERIFIED`.
@@ -73,10 +93,10 @@ See `CHANGELOG.md`. Key generated outputs include `environment/environment_repor
 
 ## GO / NO-GO
 
-Pilot status: PROVISIONAL_GO_FOR_BASELINE_AUDIT; GEARS_FULL_EVALUATION_COMPLETED_PILOT (BNS unverified).
+Pilot status: PROVISIONAL_GO_FOR_BASELINE_AUDIT; GEARS_FULL_EVALUATION_COMPLETED_PILOT (BNS unverified). Replogle Phase 2A status: `CONDITIONAL_GO_GEARS_FILTERED`; K562 bounded smoke complete; full runs allowed only on filtered essential data with BNS unverified.
 
 ## Next 3 actions
 
-1. Carry the L1-retrievable / L2-L3-collapsing retrieval pattern into the manuscript as the headline shortcut-audit finding from completed GEARS rows.
-2. Keep BNS upper bounds unverified; extend gemgroup sensitivity only where the batch-like null is clearly labeled as sensitivity, not performance.
-3. Plan a GPU or prediction-only GEARS replication for any claim that depends on exact GEARS performance numbers.
+1. Optionally run an RPE1 bounded GEARS Replogle smoke test to mirror the completed K562 smoke.
+2. If smoke coverage is sufficient, launch full GEARS filtered-data evaluations for R-L1-K562, R-L1-RPE1, R-L4-K2R, and R-L4-R2K.
+3. Rebuild downstream tables/figures with Replogle filtered-data rows and keep every result marked `BNS_STATUS = UNVERIFIED`.
