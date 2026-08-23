@@ -1,5 +1,14 @@
 # Changelog
 
+## 2026-08-23 (Phase 2A-RL1)
+
+- Fixed custom-split vocabulary mismatch in `scripts/run_gears_replogle_smoke.py` (RPE1 smoke `KeyError: 'AC118549.1+ctrl'`). Original behavior: split dict built from raw `obs.condition`; GEARS `PertData.load` drops cells whose condition is not in the perturbation graph (GO gene set), leaving stale dict entries that crash `get_dataloader`. Modified behavior: after `PertData.load`, the split dict is rebuilt from `pert_data.adata.obs` (GEARS-filtered vocabulary) with the same frozen per-cell assignment; a `_gears_vocabulary.tsv` sidecar records final condition counts. Reason: mirror the frozen Norman custom-split convention (`write_gears_custom_split(adata=pert_data.adata)`); official GEARS package stays unmodified. Fairness impact: GEARS test vocabulary may be smaller than audit vocabulary (targets without GO genes are not evaluable); both counts are recorded.
+- Verified frozen R-L1 split reproducibility on full data: `scripts/verify_replogle_rl1_split.py` recomputes combined-context labels and reproduces frozen split hashes `e9fcaf7afdb972e4` (R-L1-K562) and `288d45dbeb512ce5` (R-L1-RPE1) exactly; counts match (`results/replogle/rl1_split_reproducibility.csv`).
+- Added frozen RL1 full-run configs `configs/replogle/gears_rl1_k562_seed1.yaml` and `configs/replogle/gears_rl1_rpe1_seed1.yaml` mirroring the frozen Norman GEARS pilot (20 epochs, seed 1, batch 16, Adam 1e-3 / 5e-4, hidden 64, essential perturbation graph, filtered GO tensor).
+- Added `reports/PHASE2A_RL1_CONFIG_DEVIATIONS.md` documenting the only deviations vs the Norman pilot (split-dict vocabulary rebuild; 200->2000 bootstrap resamples; dual metric spaces `gears_raw` and `audit_delta`) with rationale and comparability impact.
+- Added `scripts/run_gears_replogle_rl1.py`: full R-L1 GEARS runs on Replogle filtered data with official `GEARS.train()` untouched, captured training telemetry to `training_log.csv`, dual-space metrics (Norman-comparable `gears_raw`; baseline-comparable `audit_delta`), perturbation-level bootstrap 95% CIs (2000 resamples), strict `metadata.json` with filtered-data/BNS-unverified flags.
+- Added `scripts/build_gears_rl1_analysis.py`: builds `results/replogle/gears_rl1_summary.csv`, `results/tables/norman_replogle_rl1_comparison.csv`, `results/tables/metric_divergence_profile.csv`, and main figures `figures/main/norman_replogle_metric_divergence.*` and `figures/main/replogle_gears_vs_probes.*`.
+
 ## 2026-08-23
 
 - Froze the completed Norman pilot before Replogle Phase 2A at commit `d10d282`.

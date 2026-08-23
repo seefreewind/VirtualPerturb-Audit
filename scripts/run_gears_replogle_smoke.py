@@ -119,6 +119,42 @@ def summarize_smoke(pred_mean: dict, truth_mean: dict, metadata: dict, outdir: P
     metadata["n_evaluated_noncontrol_perturbations"] = len(shared)
 
 
+def rebuild_split_dict_gears_vocabulary(pert_data, split_path: Path, cell_line: str, seed: int) -> Path:
+    """Rebuild the custom split dict from GEARS-filtered conditions.
+
+    PertData.load drops cells whose condition is not representable in the
+    perturbation graph (filter_pert_in_go). The raw-obs split dict may contain
+    such conditions, which would raise KeyError inside get_dataloader. Rebuild
+    the dict from pert_data.adata.obs so every split condition exists in the
+    GEARS vocabulary. This mirrors the Norman custom-split convention of
+    writing splits inside the GEARS-run vocabulary.
+    """
+    obs = pert_data.adata.obs
+    set2conditions = {}
+    for split in ["train", "val", "test"]:
+        conditions = sorted(obs.loc[obs["vp_split_group"].eq(split), "condition"].astype(str).unique())
+        if split == "train" and "ctrl" not in conditions:
+            if "ctrl" not in set(obs["condition"].astype(str)):
+                raise ValueError("ctrl condition missing from GEARS-filtered obs")
+            conditions = ["ctrl"] + conditions
+        if not conditions:
+            raise ValueError(f"no GEARS-vocabulary conditions remain for {split} after GO filtering")
+        set2conditions[split] = conditions
+    with split_path.open("wb") as f:
+        pickle.dump(set2conditions, f)
+    pd.DataFrame(
+        [
+            {
+                "split": split,
+                "n_conditions_gears_vocabulary": len(conditions),
+                "conditions_preview": ";".join(conditions[:8]),
+            }
+            for split, conditions in set2conditions.items()
+        ]
+    ).to_csv(split_path.parent / (split_path.stem + "_gears_vocabulary.tsv"), sep="\t", index=False)
+    return split_path
+
+
 class ObsLike:
     def __init__(self, obs: pd.DataFrame):
         self.obs = obs
@@ -186,6 +222,12 @@ def main() -> None:
             default_pert_graph=False,
         )
         pert_data.load(data_path=str(smoke_dataset_dir))
+        split_path = rebuild_split_dict_gears_vocabulary(
+            pert_data,
+            split_path,
+            cfg["cell_line"],
+            args.seed,
+        )
         pert_data.prepare_split(split="custom", seed=args.seed, split_dict_path=str(split_path))
         pert_data.get_dataloader(batch_size=args.batch_size, test_batch_size=args.test_batch_size)
         model = GEARS(pert_data, device=args.device, weight_bias_track=False)
