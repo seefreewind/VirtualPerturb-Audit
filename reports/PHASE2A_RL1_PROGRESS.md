@@ -67,11 +67,18 @@ Cross-context gate:          PENDING
 | 运行目录 | `results/replogle/gears/rl1_k562_20260824T074041Z/` |
 | 数据集 | Replogle_K562_GEARS_filtered（filtered essential-screen data） |
 | Split | R-L1-K562（frozen hash 已验证） |
-| 进度 | Epoch 9/20（20:12 时 Step 3151），约 30 min/epoch |
-| 训练损失趋势 | epoch MSE 0.0089 → 0.0087 → 0.0080（正常下降） |
-| 资源 | ~230% CPU，无 swap 压力 |
-| 预计 K562 完成 | 2026-08-25 约 01:30–03:00 CST |
+| 进度 | Epoch 12/20（22:15 raw telemetry 约 Step 3051），约 35-45 min/epoch |
+| 训练损失趋势 | epoch MSE 0.0089 → 0.0087 → 0.0080 → 0.0083（正常波动） |
+| 资源 | ~180-240% CPU，RSS <1.0 GB，无 swap 压力 |
+| 预计 K562 完成 | 2026-08-25 约 01:30-03:00 CST |
 | 预计 RPE1 完成 | 2026-08-25 上午至中午（自动接力，~8h） |
+
+### 接手后新增记录
+
+- 2026-08-24 20:14 CST 接手：确认 K562 full run PID `6542`、watcher PID `6545`、sequencer PID `6546` 正常；发现并终止旧重复 sequencer PID `4889`，避免 K562 完成后重复启动 RPE1。
+- 2026-08-24 21:22 CST：K562 进入 Epoch 11/20。
+- 2026-08-24 22:15 CST：raw telemetry 确认进入 Epoch 12/20，约 Step 3051；watch log 采样略滞后但训练进程健康。
+- 2026-08-24 22:20 CST：新增 `scripts/write_phase2a_rl1_reports.py`，并将 `scripts/run_rl1_postprocess_when_ready.sh` 扩展为在两 context 完成后依次生成表/图、`PHASE2A_RL1_FULL_REPORT.md` 和 `PHASE2A_CROSS_CONTEXT_GATE.md`。
 
 ### 中断事件记录（已处置）
 
@@ -109,6 +116,8 @@ Cross-context gate:          PENDING
 
 - `e54132e` Checkpoint Replogle premodel audit before RL1 full runs
 - `0a006d8` Fix Replogle RL1 full-run blockers: vocab rebuild, co-expression path, GO-graph trimming
+- `da212c4` Take over Replogle RL1 run monitoring
+- `902a35d` Add RL1 report writer to postprocess pipeline
 - （工作树 clean；run 目录与模型权重按仓库策略 gitignored）
 
 ## 关键文件索引
@@ -122,6 +131,7 @@ Cross-context gate:          PENDING
 | `scripts/run_gears_replogle_rl1.py` | full-run runner |
 | `scripts/build_gears_rl1_analysis.py` | 下游表/图构建 |
 | `scripts/run_rl1_sequencer.sh` | K562→RPE1 自动接力 |
-| `scripts/run_rl1_postprocess_when_ready.sh` | 两个 RL1 full run 完成后自动构建表/图；需从持久终端或下一轮 Codex 启动 |
+| `scripts/run_rl1_postprocess_when_ready.sh` | 两个 RL1 full run 完成后自动构建表/图并写 RL1 full report + cross-context gate；需从持久终端或下一轮 Codex 启动 |
+| `scripts/write_phase2a_rl1_reports.py` | 从 RL1 后处理 CSV 自动写 `PHASE2A_RL1_FULL_REPORT.md` 与 `PHASE2A_CROSS_CONTEXT_GATE.md` |
 | `logs/rl1_watch.log` / `logs/rl1_sequencer.log` | 运行监控 |
 | `logs/rl1_postprocess.log` | RL1 postprocess watcher 日志 |
