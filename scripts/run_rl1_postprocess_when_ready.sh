@@ -40,7 +40,9 @@ while true; do
   if [ "$KS" = "COMPLETED_GEARS" ] && [ "$RS" = "COMPLETED_GEARS" ]; then
     echo "$(date '+%Y-%m-%d %H:%M:%S') both runs complete; building RL1 analysis" >> "$LOG"
     if PYTHONPATH=. python3 scripts/build_gears_rl1_analysis.py >> "$LOG" 2>&1; then
-      echo "$(date '+%Y-%m-%d %H:%M:%S') RL1 analysis complete" >> "$LOG"
+      echo "$(date '+%Y-%m-%d %H:%M:%S') RL1 analysis complete; writing reports" >> "$LOG"
+      PYTHONPATH=. python3 scripts/write_phase2a_rl1_reports.py >> "$LOG" 2>&1 || exit 2
+      echo "$(date '+%Y-%m-%d %H:%M:%S') RL1 reports complete" >> "$LOG"
       exit 0
     else
       echo "$(date '+%Y-%m-%d %H:%M:%S') RL1 analysis failed; leaving watcher stopped for manual inspection" >> "$LOG"
