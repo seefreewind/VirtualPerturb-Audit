@@ -1,6 +1,6 @@
 # Phase 2A-RL1 当前进度报告
 
-更新时间：2026-08-24 20:10 (CST)
+更新时间：2026-08-24 20:14 (CST)
 
 ## 总体状态
 
@@ -14,6 +14,16 @@ R-L1-RPE1 full run:          QUEUED（K562 完成后由 sequencer 自动启动�
 Norman/Replogle comparison:  PENDING（等待两个 full run）
 Cross-context gate:          PENDING
 ```
+
+## 接手记录
+
+2026-08-24 20:14 CST 已接手当前任务。现场核对结果：
+
+- K562 full run 仍在运行：PID `6542`，运行目录 `results/replogle/gears/rl1_k562_20260824T074041Z/`。
+- watcher 正常写入 `logs/rl1_watch.log`，最新记录为 Epoch 9 Step 3151。
+- 发现两个 `run_rl1_sequencer.sh` 实例同时等待 K562 完成；已终止旧实例 PID `4889`，保留 PID `6546`，避免 K562 完成后重复启动 RPE1。
+- 已新增 postprocess 脚本：`scripts/run_rl1_postprocess_when_ready.sh`。当前 Codex 工具会在命令结束后回收新启动的后台 postprocess watcher，因此该 watcher 未保持常驻；K562/RPE1 两个 RL1 full run 都完成后，需要在持久终端或下一轮 Codex 中运行它，或直接运行 `PYTHONPATH=. python3 scripts/build_gears_rl1_analysis.py` 生成下游表和图。
+- GEARS 训练进程未被改动；其他项目的 ContextKO 训练进程也未被干预。
 
 ## 已完成
 
@@ -57,7 +67,7 @@ Cross-context gate:          PENDING
 | 运行目录 | `results/replogle/gears/rl1_k562_20260824T074041Z/` |
 | 数据集 | Replogle_K562_GEARS_filtered（filtered essential-screen data） |
 | Split | R-L1-K562（frozen hash 已验证） |
-| 进度 | Epoch 9/20（20:02 时 Step 1001），约 30 min/epoch |
+| 进度 | Epoch 9/20（20:12 时 Step 3151），约 30 min/epoch |
 | 训练损失趋势 | epoch MSE 0.0089 → 0.0087 → 0.0080（正常下降） |
 | 资源 | ~230% CPU，无 swap 压力 |
 | 预计 K562 完成 | 2026-08-25 约 01:30–03:00 CST |
@@ -112,4 +122,6 @@ Cross-context gate:          PENDING
 | `scripts/run_gears_replogle_rl1.py` | full-run runner |
 | `scripts/build_gears_rl1_analysis.py` | 下游表/图构建 |
 | `scripts/run_rl1_sequencer.sh` | K562→RPE1 自动接力 |
+| `scripts/run_rl1_postprocess_when_ready.sh` | 两个 RL1 full run 完成后自动构建表/图；需从持久终端或下一轮 Codex 启动 |
 | `logs/rl1_watch.log` / `logs/rl1_sequencer.log` | 运行监控 |
+| `logs/rl1_postprocess.log` | RL1 postprocess watcher 日志 |
