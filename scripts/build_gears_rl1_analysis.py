@@ -206,12 +206,19 @@ def fig1(df: pd.DataFrame) -> None:
     fig, axes = plt.subplots(1, 3, figsize=(12, 3.6))
     setting_order = ["Norman L1", "Norman L2", "Norman L3", "Replogle K562 L1", "Replogle RPE1 L1"]
     dat = df.set_index("short") if "short" in df else None
+    def yerr(values: list[tuple[float, float, float]]) -> np.ndarray:
+        return np.array(
+            [
+                [0.0 if np.isnan(lo) else abs(mid - lo) for mid, lo, hi in values],
+                [0.0 if np.isnan(hi) else abs(hi - mid) for mid, lo, hi in values],
+            ]
+        )
     # Panel A: delta-Pearson
     ax = axes[0]
     vals = [df.loc[df["short"] == s, ["pearson", "pearson_ci_low", "pearson_ci_high"]].iloc[0] for s in setting_order]
     ax.errorbar(
         range(len(setting_order)), [v["pearson"] for v in vals],
-        yerr=[np.abs([v["pearson"] - v["pearson_ci_low"], v["pearson_ci_high"] - v["pearson"]]) for v in vals],
+        yerr=yerr([(v["pearson"], v["pearson_ci_low"], v["pearson_ci_high"]) for v in vals]),
         fmt="o", color="#1a509a", capsize=4, ms=6, lw=1.2,
     )
     ax.set_xticks(range(len(setting_order))); ax.set_xticklabels(setting_order, rotation=30, ha="right", fontsize=8)
@@ -223,7 +230,7 @@ def fig1(df: pd.DataFrame) -> None:
     vals = [df.loc[df["short"] == s, ["mrr", "mrr_ci_low", "mrr_ci_high"]].iloc[0] for s in setting_order]
     ax.errorbar(
         range(len(setting_order)), [v["mrr"] for v in vals],
-        yerr=[np.abs([v["mrr"] - v["mrr_ci_low"], v["mrr_ci_high"] - v["mrr"]]) for v in vals],
+        yerr=yerr([(v["mrr"], v["mrr_ci_low"], v["mrr_ci_high"]) for v in vals]),
         fmt="s", color="#c0392b", capsize=4, ms=6, lw=1.2,
     )
     ax.set_xticks(range(len(setting_order))); ax.set_xticklabels(setting_order, rotation=30, ha="right", fontsize=8)
@@ -235,7 +242,7 @@ def fig1(df: pd.DataFrame) -> None:
     vals = [df.loc[df["short"] == s, ["uer50", "uer50_ci_low", "uer50_ci_high"]].iloc[0] for s in setting_order]
     ax.errorbar(
         range(len(setting_order)), [v["uer50"] for v in vals],
-        yerr=[np.abs([np.nan_to_num(v["uer50"]) - np.nan_to_num(v["uer50_ci_low"]), np.nan_to_num(v["uer50_ci_high"]) - np.nan_to_num(v["uer50"])]) for v in vals],
+        yerr=yerr([(v["uer50"], v["uer50_ci_low"], v["uer50_ci_high"]) for v in vals]),
         fmt="^", color="#7f8c8d", capsize=4, ms=6, lw=1.2,
     )
     ax.set_xticks(range(len(setting_order))); ax.set_xticklabels(setting_order, rotation=30, ha="right", fontsize=8)
@@ -413,22 +420,31 @@ def main() -> None:
         "Replogle K562 L1": ("Replogle K562 R-L1 GEARS", raw.get("k562", {})),
         "Replogle RPE1 L1": ("Replogle RPE1 R-L1 GEARS", raw.get("rpe1", {})),
     }
+    def figure_row(short: str, src: dict) -> dict:
+        if "pearson_ci_low" in src:
+            pearson_ci_low = src["pearson_ci_low"]
+            pearson_ci_high = src["pearson_ci_high"]
+        else:
+            pearson_ci_low = src.get("ci_low", np.nan)
+            pearson_ci_high = src.get("ci_high", np.nan)
+        return {
+            "short": short,
+            "pearson": src["pearson"],
+            "pearson_ci_low": pearson_ci_low,
+            "pearson_ci_high": pearson_ci_high,
+            "mrr": src["mrr"],
+            "mrr_ci_low": src.get("mrr_ci_low", np.nan),
+            "mrr_ci_high": src.get("mrr_ci_high", np.nan),
+            "uer50": src["uer50"],
+            "uer50_ci_low": src.get("uer50_ci_low", np.nan),
+            "uer50_ci_high": src.get("uer50_ci_high", np.nan),
+        }
+
     fig_rows = []
     for short, (setting, src) in ordering.items():
-        if setting.startswith("Replogle") and all(k in src for k in ["pearson", "mrr"]):
-            fig_rows.append({"short": short, "pearson": src["pearson"], "pearson_ci_low": src["pearson_ci_low"],
-                             "pearson_ci_high": src["pearson_ci_high"], "mrr": src["mrr"], "mrr_ci_low": src["mrr_ci_low"],
-                             "mrr_ci_high": src["mrr_ci_high"], "uer50": src["uer50"], "uer50_ci_low": src["uer50_ci_low"],
-                             "uer50_ci_high": src["uer50_ci_high"]})
-        elif isinstance(src, dict):
-            fig_rows.append({"short": short, "pearson": src["pearson"], "pearson_ci_low": src["pearson_ci_low"],
-                             "pearson_ci_high": src["pearson_ci_high"], "mrr": src["mrr"], "mrr_ci_low": src["mrr_ci_low"],
-                             "mrr_ci_high": src["mrr_ci_high"], "uer50": src["uer50"], "uer50_ci_low": src["uer50_ci_low"],
-                             "uer50_ci_high": src["uer50_ci_high"]})
-        else:
-            fig_rows.append({"short": short, "pearson": src["pearson"], "pearson_ci_low": src["ci_low"],
-                             "pearson_ci_high": src["ci_high"], "mrr": src["mrr"], "mrr_ci_low": np.nan,
-                             "mrr_ci_high": np.nan, "uer50": src["uer50"], "uer50_ci_low": np.nan, "uer50_ci_high": np.nan})
+        if not src:
+            continue
+        fig_rows.append(figure_row(short, src))
     figdf = pd.DataFrame(fig_rows)
     fig1(figdf)
     build_norman_comparison()

@@ -1,5 +1,23 @@
 # Phase 0-2 Status
 
+## Current Snapshot (2026-08-25 21:35 CST)
+
+Phase 2A Replogle R-L1 is complete for both K562 and RPE1 on GEARS-compatible filtered essential-screen data. The cross-context gate is `CONDITIONAL_GO_RL4`.
+
+Completed R-L1 deliverables:
+
+- `results/replogle/gears_rl1_summary.csv`
+- `results/tables/norman_replogle_rl1_comparison.csv`
+- `results/tables/metric_divergence_profile.csv`
+- `results/tables/replogle_gears_vs_probes.csv`
+- `figures/main/norman_replogle_metric_divergence.{pdf,svg,png}`
+- `figures/main/replogle_gears_vs_probes.{pdf,svg,png}`
+- `reports/PHASE2A_RL1_FULL_REPORT.md`
+- `reports/PHASE2A_CROSS_CONTEXT_GATE.md`
+- `reports/PHASE2A_RL1_PROGRESS.md`
+
+The next executable stage is R-L4 cross-context GEARS evaluation: K562-to-RPE1 and RPE1-to-K562. All Replogle claims remain filtered-data claims; BNS remains `UNVERIFIED`.
+
 ## Completed
 
 - Phase 2A Replogle audit started after freezing the Norman pilot at commit `d10d282`.
@@ -17,6 +35,11 @@
 - Phase 2A premodel gate generated at `reports/PHASE2A_PREMODEL_GATE.md` with decision `CONDITIONAL_GO_GEARS_FILTERED`.
 - Current overall progress report generated at `reports/CURRENT_OVERALL_STATUS_AND_PROGRESS.md`.
 - Bounded GEARS Replogle K562 R-L1 smoke completed with 1 train batch, 1 eval batch, checkpoint/metadata export, and report `reports/REPLOGLE_GEARS_SMOKE_REPORT.md`. This is executable-chain evidence only, not performance.
+- Bounded GEARS Replogle RPE1 R-L1 smoke completed and reported in `reports/REPLOGLE_RPE1_SMOKE_REPORT.md`; this is executable-chain evidence only, not performance.
+- Replogle R-L1 K562 full GEARS run completed at `results/replogle/gears/rl1_k562_20260824T074041Z/`; post-training export was recovered from the trained checkpoint after fixing the `ctrl_adata=None` fallback.
+- Replogle R-L1 RPE1 full GEARS run completed at `results/replogle/gears/rl1_rpe1_20260825T000548Z/`.
+- Replogle R-L1 postprocess completed, writing RL1 summary, Norman/Replogle comparison, metric-divergence profile, GEARS-vs-probe table, and two main figure families.
+- Phase 2A R-L1 full report and cross-context gate generated with decision `CONDITIONAL_GO_RL4`.
 - Repository scaffold created under `VirtualPerturb-Audit/`.
 - Existing Git repository detected and reused.
 - Environment audit started.
@@ -60,7 +83,9 @@
 
 ## Key results
 
-Norman baseline and falsification-probe audit outputs are available in `results/pilot/pilot_summary.csv`. B3/FP-2 shows how much signal can be recovered from perturbation identity and seen single-component deltas without individual cell-state modeling. B4 PCA/Ridge is now included as a perturbation-to-effect mapping baseline. B1/B2 match B5 in this pilot when no stronger biological context is available beyond the current metadata. HGNC family-confusion outputs show whether retrieval mistakes remain within related gene groups, and L3 now tests gene-family holdout behavior directly. Completed GEARS full rows (L1/L2/L3) show delta-Pearson 0.9887/0.9838/0.9843 with perturbation-level bootstrap CIs, UER@50 and sign-flip rate at 0 under the provisional threshold, and retrieval top-1 accuracy 0.20/0.075/0.08 and MRR 0.328/0.147/0.207. The retrieval collapse under stricter holdouts with stable correlation is the key shortcut/leakage signal from the GEARS pilot rows. All GEARS rows keep `bns_status: UNVERIFIED` because replicate/control null envelopes are not yet verified; the gemgroup null-envelope sensitivity (UER 0.172/0.262/0.235 for L1/L2/L3) is a batch-like sensitivity check only.
+Norman baseline and falsification-probe audit outputs are available in `results/pilot/pilot_summary.csv`. B3/FP-2 shows how much signal can be recovered from perturbation identity and seen single-component deltas without individual cell-state modeling. B4 PCA/Ridge is included as a perturbation-to-effect mapping baseline. Completed Norman GEARS full rows (L1/L2/L3) show delta-Pearson 0.9887/0.9838/0.9843 with perturbation-level bootstrap CIs, UER@50 and sign-flip rate at 0 under the provisional threshold, and retrieval top-1 accuracy 0.20/0.075/0.08 and MRR 0.328/0.147/0.207. The retrieval collapse under stricter holdouts with stable correlation is the key shortcut/leakage signal from the Norman GEARS pilot rows.
+
+Replogle R-L1 externally reproduces the same warning pattern under filtered-data scope. In `gears_raw` space, K562/RPE1 Pearson delta is 0.9851/0.9709, while top-1 retrieval is 0.0139/0.0000 and MRR is 0.0445/0.0209. In audit-delta space, GEARS does not dominate simple mean-effect baselines on Pearson, although retrieval is slightly higher than the strongest baseline family. All GEARS rows keep `bns_status: UNVERIFIED`; Replogle UER values are sensitivity checks only.
 
 ## Failed
 
@@ -85,7 +110,7 @@ Norman baseline and falsification-probe audit outputs are available in `results/
 
 ## Scientific interpretation
 
-GEARS rows marked `COMPLETED_GEARS_EVALUATION` are eligible for model-pilot interpretation inside the GEARS-run vocabulary, always alongside `bns_status: UNVERIFIED`. Bounded smoke rows verify software integration only; baseline and falsification metrics are descriptive audit checks. The dissociation between stable delta-Pearson (≈0.98 across splits) and collapsing retrieval (0.20/0.075/0.08 top-1) is the main shortcut/leakage signal to carry into the manuscript.
+GEARS rows marked as completed are eligible for model-pilot interpretation inside the GEARS-run vocabulary, always alongside `bns_status: UNVERIFIED`. Bounded smoke rows verify software integration only; baseline and falsification metrics are descriptive audit checks. The dissociation between stable global fit and weak perturbation-specific retrieval is the main shortcut/leakage signal to carry into the manuscript and into Replogle R-L4.
 
 ## Files generated
 
@@ -93,10 +118,10 @@ See `CHANGELOG.md`. Key generated outputs include `environment/environment_repor
 
 ## GO / NO-GO
 
-Pilot status: PROVISIONAL_GO_FOR_BASELINE_AUDIT; GEARS_FULL_EVALUATION_COMPLETED_PILOT (BNS unverified). Replogle Phase 2A status: `CONDITIONAL_GO_GEARS_FILTERED`; K562 bounded smoke complete; full runs allowed only on filtered essential data with BNS unverified.
+Pilot status: PROVISIONAL_GO_FOR_BASELINE_AUDIT; GEARS_FULL_EVALUATION_COMPLETED_PILOT (BNS unverified). Replogle Phase 2A R-L1 status: `COMPLETED_FILTERED_DATA_RL1`; cross-context gate: `CONDITIONAL_GO_RL4`.
 
 ## Next 3 actions
 
-1. Optionally run an RPE1 bounded GEARS Replogle smoke test to mirror the completed K562 smoke.
-2. If smoke coverage is sufficient, launch full GEARS filtered-data evaluations for R-L1-K562, R-L1-RPE1, R-L4-K2R, and R-L4-R2K.
-3. Rebuild downstream tables/figures with Replogle filtered-data rows and keep every result marked `BNS_STATUS = UNVERIFIED`.
+1. Commit the completed R-L1 report package.
+2. Launch R-L4-K2R and R-L4-R2K full GEARS evaluations on filtered essential data.
+3. Rebuild R-L4 downstream tables/figures and compare cross-context results against the completed R-L1 references.

@@ -1,5 +1,22 @@
 # Changelog
 
+## 2026-08-25 (Phase 2A-RL1 completion)
+
+- Completed Replogle R-L1 K562 full GEARS run at `results/replogle/gears/rl1_k562_20260824T074041Z/` on GEARS-compatible filtered essential-screen data. The model trained for 20 epochs and testing completed; export was recovered from the trained checkpoint after fixing the `ctrl_adata=None` fallback.
+- Added `scripts/recover_gears_replogle_rl1_export.py` to rebuild PertData/split/dataloaders, load a saved GEARS checkpoint, evaluate predictions, export dual-space metrics/retrieval/centroids, and mark metadata complete without retraining.
+- Fixed `scripts/run_gears_replogle_rl1.py` control-audit export logic so control mean/count fall back to `adata.obs.condition == "ctrl"` when `pert_data.ctrl_adata` is unavailable.
+- Completed Replogle R-L1 RPE1 full GEARS run at `results/replogle/gears/rl1_rpe1_20260825T000548Z/` with 20 epochs, 308 evaluated test perturbations, and direct export.
+- Rebuilt R-L1 downstream outputs with `scripts/build_gears_rl1_analysis.py`, including `results/replogle/gears_rl1_summary.csv`, `results/tables/norman_replogle_rl1_comparison.csv`, `results/tables/metric_divergence_profile.csv`, `results/tables/replogle_gears_vs_probes.csv`, and main figures in `figures/main/`.
+- Hardened `scripts/build_gears_rl1_analysis.py` for mixed Norman/Replogle confidence-interval column names and matplotlib error-bar shape handling.
+- Generated `reports/PHASE2A_RL1_FULL_REPORT.md` and `reports/PHASE2A_CROSS_CONTEXT_GATE.md`. Gate decision is `CONDITIONAL_GO_RL4`; all Replogle claims remain scoped to GEARS-compatible filtered essential-screen data with `BNS_STATUS = UNVERIFIED` and `uer_null_status = sensitivity_only`.
+- Refreshed `reports/PHASE2A_RL1_PROGRESS.md`, `PROJECT_STATUS.md`, `NEXT_ACTIONS.md`, and `analysis_lock.yaml` for R-L1 completion and R-L4 handoff.
+
+## 2026-08-24 (Phase 2A-RL1 monitoring)
+
+- Took over R-L1 full-run monitoring, removed a duplicate sequencer instance, and preserved the active K562 training process.
+- Added `scripts/write_phase2a_rl1_reports.py` and extended `scripts/run_rl1_postprocess_when_ready.sh` so completed R-L1 runs produce the full report and cross-context gate after table/figure construction.
+- Checkpointed K562 and RPE1 training progress in `reports/PHASE2A_RL1_PROGRESS.md` while preserving failed/interrupted runs as provenance only.
+
 ## 2026-08-23 (Phase 2A-RL1)
 
 - Fixed custom-split vocabulary mismatch in `scripts/run_gears_replogle_smoke.py` (RPE1 smoke `KeyError: 'AC118549.1+ctrl'`). Original behavior: split dict built from raw `obs.condition`; GEARS `PertData.load` drops cells whose condition is not in the perturbation graph (GO gene set), leaving stale dict entries that crash `get_dataloader`. Modified behavior: after `PertData.load`, the split dict is rebuilt from `pert_data.adata.obs` (GEARS-filtered vocabulary) with the same frozen per-cell assignment; a `_gears_vocabulary.tsv` sidecar records final condition counts. Reason: mirror the frozen Norman custom-split convention (`write_gears_custom_split(adata=pert_data.adata)`); official GEARS package stays unmodified. Fairness impact: GEARS test vocabulary may be smaller than audit vocabulary (targets without GO genes are not evaluable); both counts are recorded.

@@ -75,17 +75,24 @@ def metric_table(rows: list[pd.Series]) -> str:
 
 def probe_table(df: pd.DataFrame, context: str) -> str:
     sub = df[df["context"].eq(context)].copy()
-    order = [
+    prefixes = [
         "B0_no_change",
         "B1_global_perturbed_mean",
         "B2_context_matched_perturbed_mean",
         "B4_pca_ridge",
         "B5_mean_effect",
-        "FP1_perturbation_blind_mean",
-        "FP3_label_shuffled_mean_effect",
-        "GEARS_cell_gears_0.1.2",
+        "FP1_perturbation_blind",
+        "FP3_label_shuffled",
+        "GEARS_",
     ]
-    sub["order"] = sub["model"].map({m: i for i, m in enumerate(order)}).fillna(99)
+
+    def order_key(model: str) -> int:
+        for idx, prefix in enumerate(prefixes):
+            if str(model).startswith(prefix):
+                return idx
+        return 99
+
+    sub["order"] = sub["model"].map(order_key)
     sub = sub.sort_values(["order", "model"])
     lines = [
         "| Model/probe | Pearson delta | Top-1 | Top-5 | MRR | UER@50 |",
@@ -247,6 +254,8 @@ Proceed to R-L4 cross-context GEARS runs only with filtered-data and BNS-unverif
 
 def write_gate_report(k_label: str, r_label: str) -> None:
     rl1 = pd.read_csv(REPL / "gears_rl1_summary.csv")
+    _, k_meta = latest_completed_run("k562")
+    _, r_meta = latest_completed_run("rpe1")
     k_raw = row(rl1, cell_line="K562", metric_space="gears_raw")
     r_raw = row(rl1, cell_line="RPE1", metric_space="gears_raw")
 
@@ -266,8 +275,8 @@ The within-context Replogle R-L1 full GEARS audit is complete for both K562 and 
 
 | Check | Status | Evidence |
 |---|---|---|
-| K562 R-L1 GEARS full run | PASS | `run_status = COMPLETED_GEARS_EVALUATION`; gears_raw Pearson {ci(k_raw['pearson_delta'], k_raw['pearson_ci_low'], k_raw['pearson_ci_high'])}; MRR {ci(k_raw['mrr'], k_raw['mrr_ci_low'], k_raw['mrr_ci_high'])}. |
-| RPE1 R-L1 GEARS full run | PASS | `run_status = COMPLETED_GEARS_EVALUATION`; gears_raw Pearson {ci(r_raw['pearson_delta'], r_raw['pearson_ci_low'], r_raw['pearson_ci_high'])}; MRR {ci(r_raw['mrr'], r_raw['mrr_ci_low'], r_raw['mrr_ci_high'])}. |
+| K562 R-L1 GEARS full run | PASS | `run_status = {k_meta.get('run_status', 'NA')}`; gears_raw Pearson {ci(k_raw['pearson_delta'], k_raw['pearson_ci_low'], k_raw['pearson_ci_high'])}; MRR {ci(k_raw['mrr'], k_raw['mrr_ci_low'], k_raw['mrr_ci_high'])}. |
+| RPE1 R-L1 GEARS full run | PASS | `run_status = {r_meta.get('run_status', 'NA')}`; gears_raw Pearson {ci(r_raw['pearson_delta'], r_raw['pearson_ci_low'], r_raw['pearson_ci_high'])}; MRR {ci(r_raw['mrr'], r_raw['mrr_ci_low'], r_raw['mrr_ci_high'])}. |
 | External metric-divergence signal | PASS | K562 `{k_label}`; RPE1 `{r_label}`. |
 | Filtered-data scope | PASS_WITH_SCOPE_LIMIT | Outputs use `Replogle_GEARS_filtered`; complete Figshare+ processed objects remain unavailable by command-line access. |
 | BNS/replicate status | FAIL_FOR_BNS_ONLY | No validated biological replicate label; keep `BNS_STATUS = UNVERIFIED`. |

@@ -1,18 +1,19 @@
 # Current Overall Status and Progress
 
-Date: 2026-08-23
+Date: 2026-08-25
 
 ## Executive Status
 
-The Norman pilot is frozen and complete. Replogle Phase 2A has completed the audit-first premodel gate on GEARS-compatible filtered essential-screen data.
+The Norman pilot is frozen and complete. Replogle Phase 2A has completed the within-context R-L1 GEARS audit for K562 and RPE1 on GEARS-compatible filtered essential-screen data.
 
 Current decision:
 
 ```text
 Norman pilot: COMPLETE_AND_FROZEN
-Replogle Phase 2A: CONDITIONAL_GO_GEARS_FILTERED
+Replogle Phase 2A R-L1: COMPLETED_FILTERED_DATA_RL1
+Cross-context gate: CONDITIONAL_GO_RL4
 BNS status: UNVERIFIED for Norman and Replogle
-Next work: optional RPE1 smoke, then possible full filtered-data runs
+Next work: R-L4-K2R and R-L4-R2K full GEARS runs
 ```
 
 ## Norman Pilot
@@ -26,7 +27,7 @@ Completed:
 
 Main result:
 
-GEARS kept high delta-Pearson across stricter holdouts but retrieval top-1 collapsed under L1/L2/L3. This remains the strongest shortcut/leakage-audit signal from the pilot.
+GEARS kept high delta-Pearson across stricter holdouts but retrieval top-1 collapsed under L1/L2/L3. This remains the strongest shortcut/leakage-audit signal from the Norman pilot.
 
 ## Replogle Phase 2A
 
@@ -37,52 +38,56 @@ Completed:
 - h5ad schema audit, QC, gene vocabulary audit, target overlap, cross-context eligibility.
 - R-L1-K562, R-L1-RPE1, R-L4-K2R, and R-L4-R2K split materialization.
 - Split integrity report: PASS.
-- Baseline and falsification audit: completed for 28 summary rows.
+- Baseline and falsification audit: completed for B0/B1/B2/B4/B5 and FP1/FP3.
 - Premodel gate: `CONDITIONAL_GO_GEARS_FILTERED`.
-- GEARS bounded K562 R-L1 smoke: completed as executable-chain evidence, not performance.
+- GEARS bounded K562 and RPE1 R-L1 smoke tests: executable-chain evidence only, not performance.
+- R-L1-K562 full GEARS run: `COMPLETED_GEARS`, 216 evaluated test perturbations.
+- R-L1-RPE1 full GEARS run: `COMPLETED_GEARS`, 308 evaluated test perturbations.
+- R-L1 postprocess tables and figures completed.
+- R-L1 full report and cross-context gate completed.
 
-Key Replogle numbers:
+Key R-L1 results:
 
-| Item | K562 | RPE1 |
-|---|---:|---:|
-| Cells | 162,751 | 162,733 |
-| Genes | 5,000 | 5,000 |
-| Perturbed targets | 1,092 | 1,543 |
-| Controls | 10,691 | 11,485 |
-| QC status | WARNING | WARNING |
+| Context | Metric space | Pearson delta | Top-1 | Top-5 | MRR | UER@50 |
+|---|---|---:|---:|---:|---:|---:|
+| K562 | gears_raw | 0.9851 [0.9836, 0.9864] | 0.0139 | 0.0417 | 0.0445 [0.0290, 0.0624] | 0.0000 |
+| RPE1 | gears_raw | 0.9709 [0.9690, 0.9727] | 0.0000 | 0.0162 | 0.0209 [0.0158, 0.0263] | 0.0000 |
+| K562 | audit_delta | 0.2840 [0.2558, 0.3107] | 0.0139 | 0.0556 | 0.0497 [0.0332, 0.0689] | 0.1580 |
+| RPE1 | audit_delta | 0.4616 [0.4345, 0.4878] | 0.0097 | 0.0195 | 0.0262 [0.0166, 0.0385] | 0.0940 |
 
-Cross-context:
+Interpretation:
 
-- Shared targets: 848.
-- Eligible R-L4 targets with >=30 cells in both contexts: 737.
-- Split integrity checks: 14/14 PASS.
+Replogle externally reproduces the metric-divergence pattern under filtered-data scope: global `gears_raw` fit remains high, while perturbation-specific retrieval is weak. The audit-delta baseline comparison is conservative and does not support an unconditional GEARS-wins claim. The correct downstream decision is `CONDITIONAL_GO_RL4`.
 
 ## Current Caveats
 
 - Complete Figshare+ processed Replogle objects and manifests still return HTTP 403 via command-line access.
 - The current Replogle audit uses GEARS-compatible filtered essential-screen data, not the complete Figshare+ data.
 - No biological replicate label is available in SRA runinfo or filtered h5ad `obs`; BNS remains `UNVERIFIED`.
+- UER uses a per-perturbation median absolute audit-delta null and remains `sensitivity_only`.
 - K562 and RPE1 QC are WARNING because at least one perturbation has fewer than 30 cells.
 
 ## Current Deliverables
 
-- `reports/PHASE2A_REPLOGLE_PROGRESS.md`
+- `reports/PHASE2A_RL1_PROGRESS.md`
+- `reports/PHASE2A_RL1_FULL_REPORT.md`
+- `reports/PHASE2A_CROSS_CONTEXT_GATE.md`
 - `reports/PHASE2A_PREMODEL_GATE.md`
 - `reports/GEARS_REPLOGLE_COMPATIBILITY.md`
 - `reports/REPLOGLE_GEARS_SMOKE_REPORT.md`
+- `reports/REPLOGLE_RPE1_SMOKE_REPORT.md`
 - `reports/REPLOGLE_BASELINE_AUDIT.md`
-- `reports/replogle_split_integrity_report.md`
-- `reports/replogle_k562_qc.md`
-- `reports/replogle_rpe1_qc.md`
-- `reports/replogle_gene_vocabulary_audit.md`
-- `results/replogle/replogle_summary.csv`
-- `results/replogle/replogle_perturbation_retrieval.csv`
-- `data/metadata/replogle_checksums.tsv`
-- `data/metadata/replogle_split_assignments.tsv`
+- `results/replogle/gears_rl1_summary.csv`
+- `results/tables/norman_replogle_rl1_comparison.csv`
+- `results/tables/metric_divergence_profile.csv`
+- `results/tables/replogle_gears_vs_probes.csv`
+- `figures/main/norman_replogle_metric_divergence.{pdf,svg,png}`
+- `figures/main/replogle_gears_vs_probes.{pdf,svg,png}`
 
 ## Next Tasks
 
-1. Optionally run a bounded RPE1 GEARS Replogle smoke test to mirror the completed K562 smoke.
-2. If smoke coverage is sufficient, run full GEARS Replogle filtered-data evaluations for R-L1 and R-L4 under the conditional gate.
-3. Rebuild downstream tables/figures with Replogle rows clearly labeled as filtered-data and BNS-unverified.
+1. Commit the completed R-L1 package.
+2. Launch R-L4-K2R and R-L4-R2K full GEARS runs under the filtered-data conditional gate.
+3. Rebuild R-L4 downstream tables/figures and compare cross-context results against R-L1.
 4. If complete Figshare+ data become accessible, repeat the Replogle audit chain on the complete objects before making complete-data claims.
+

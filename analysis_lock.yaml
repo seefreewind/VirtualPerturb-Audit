@@ -70,8 +70,12 @@ revision_log:
     change: Phase 2A Replogle external/context audit registered before processed Replogle model evaluation.
     reason: Extend Norman pilot to an independent CRISPRi system with K562/RPE1 within-context and cross-context evaluation while preserving the audit-first order.
     fairness_impact: Primary metrics and split definitions are locked before Replogle expression-matrix QC, baselines, or GEARS training; BNS remains unavailable unless biological replicates are explicitly validated.
+  - date: 2026-08-25
+    change: Phase 2A Replogle R-L1 within-context GEARS full audit completed for K562 and RPE1 on GEARS-compatible filtered essential-screen data.
+    reason: Both R-L1 full runs, postprocess tables, figures, RL1 full report, and cross-context gate are now available.
+    fairness_impact: External metric-divergence evidence can be interpreted only under filtered-data scope; BNS remains UNVERIFIED and UER remains sensitivity_only.
 phase2a:
-  status: FILTERED_DATA_BASELINE_AUDIT_COMPLETE_CONDITIONAL_GEARS_GATE_K562_SMOKE_COMPLETE
+  status: FILTERED_DATA_RL1_GEARS_COMPLETE_CONDITIONAL_GO_RL4
   primary_question: external_replication_of_metric_divergence
   datasets:
     - Replogle_K562
@@ -105,4 +109,11 @@ phase2a:
     H2A_2: Cross-context evaluation will be more difficult than within-context evaluation.
     H2A_3: Global metrics may be less sensitive to evaluation strictness than perturbation-specific metrics.
     H2A_4: If reliable biological replicates exist, distance to empirical upper bound can be quantified.
-  current_blocker: Complete Figshare+ processed Replogle objects and manifest downloads still return HTTP 403 by command line on 2026-08-23; GEARS-compatible filtered essential h5ad files are locally available and have completed QC, split integrity, baseline, falsification audit, and K562 bounded GEARS smoke. BNS remains UNVERIFIED because no biological replicate label is available in SRA runinfo or filtered h5ad obs.
+  rl1_status:
+    R-L1-K562: COMPLETED_GEARS
+    R-L1-RPE1: COMPLETED_GEARS
+    postprocess: COMPLETED
+    report: reports/PHASE2A_RL1_FULL_REPORT.md
+    cross_context_gate: reports/PHASE2A_CROSS_CONTEXT_GATE.md
+    gate_decision: CONDITIONAL_GO_RL4
+  current_blocker: Complete Figshare+ processed Replogle objects and manifest downloads still return HTTP 403 by command line on 2026-08-23; GEARS-compatible filtered essential h5ad files are locally available and have completed QC, split integrity, baseline, falsification audit, RPE1 smoke, and R-L1 K562/RPE1 full GEARS audits. BNS remains UNVERIFIED because no biological replicate label is available in SRA runinfo or filtered h5ad obs.
