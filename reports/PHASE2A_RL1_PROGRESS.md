@@ -1,6 +1,6 @@
 # Phase 2A-RL1 当前进度报告
 
-更新时间：2026-08-24 20:14 (CST)
+更新时间：2026-08-25 09:05 (CST)
 
 ## 总体状态
 
@@ -9,8 +9,8 @@ Norman pilot:                COMPLETE_AND_FROZEN（不重算）
 Replogle Phase 2A:           CONDITIONAL_GO_GEARS_FILTERED
 BNS:                         UNVERIFIED（本阶段不变）
 RPE1 bounded smoke:          PASS（executable chain 证据，非性能）
-R-L1-K562 full run:          RUNNING（Epoch 9/20，约 30 分钟/epoch）
-R-L1-RPE1 full run:          QUEUED（K562 完成后由 sequencer 自动启动）
+R-L1-K562 full run:          COMPLETED_GEARS（训练完成；导出阶段 ctrl_adata fallback 后已 recovery 完成）
+R-L1-RPE1 full run:          RUNNING（foreground full run；Epoch 2/20 已开始）
 Norman/Replogle comparison:  PENDING（等待两个 full run）
 Cross-context gate:          PENDING
 ```
@@ -64,14 +64,24 @@ Cross-context gate:          PENDING
 
 | 项目 | 值 |
 |---|---|
-| 运行目录 | `results/replogle/gears/rl1_k562_20260824T074041Z/` |
-| 数据集 | Replogle_K562_GEARS_filtered（filtered essential-screen data） |
-| Split | R-L1-K562（frozen hash 已验证） |
-| 进度 | Epoch 12/20（22:15 raw telemetry 约 Step 3051），约 35-45 min/epoch |
-| 训练损失趋势 | epoch MSE 0.0089 → 0.0087 → 0.0080 → 0.0083（正常波动） |
-| 资源 | ~180-240% CPU，RSS <1.0 GB，无 swap 压力 |
-| 预计 K562 完成 | 2026-08-25 约 01:30-03:00 CST |
-| 预计 RPE1 完成 | 2026-08-25 上午至中午（自动接力，~8h） |
+| 运行目录 | `results/replogle/gears/rl1_rpe1_20260825T000548Z/` |
+| 数据集 | Replogle_RPE1_GEARS_filtered（filtered essential-screen data） |
+| Split | R-L1-RPE1（frozen hash 已验证） |
+| 进度 | Epoch 2/20（09:03 raw telemetry 已进入 Step 651） |
+| Epoch 1 验证 | Train Overall MSE 0.0224；Validation Overall MSE 0.0227；Validation Top 20 DE MSE 0.1604 |
+| 资源 | foreground Python PID `74735`，约 200-270% CPU；训练阶段 RSS 约 2-8 GB 波动 |
+| 预计 RPE1 完成 | 2026-08-25 晚间（首轮约 30 分钟/epoch，完整 20 epoch 约 10-12 小时级） |
+
+### K562 full-run 完成记录
+
+- 运行目录：`results/replogle/gears/rl1_k562_20260824T074041Z/`
+- 训练状态：20/20 epochs 完成；GEARS testing 完成。
+- 原始 runner 在导出阶段触发 `AttributeError: 'NoneType' object has no attribute 'X'`，原因是 `pert_data.ctrl_adata` 为空。
+- 已修复 `scripts/run_gears_replogle_rl1.py` 的 control fallback，并用 `scripts/recover_gears_replogle_rl1_export.py` 从已训练模型恢复导出，不重训。
+- metadata：`status=COMPLETED`，`run_status=COMPLETED_GEARS`，`eval_predicted_perturbations=216`，`eval_truth_perturbations=216`，`n_ctrl_cells_audit=10691`。
+- K562 summary：
+  - `gears_raw`: Pearson 0.9851，top1 0.0139，top5 0.0417，MRR 0.0445，UER50 0，sign_flip 0。
+  - `audit_delta`: Pearson 0.2840，top1 0.0139，top5 0.0556，MRR 0.0497，UER50 0.1580，sign_flip 0.2691。
 
 ### 接手后新增记录
 
@@ -79,6 +89,10 @@ Cross-context gate:          PENDING
 - 2026-08-24 21:22 CST：K562 进入 Epoch 11/20。
 - 2026-08-24 22:15 CST：raw telemetry 确认进入 Epoch 12/20，约 Step 3051；watch log 采样略滞后但训练进程健康。
 - 2026-08-24 22:20 CST：新增 `scripts/write_phase2a_rl1_reports.py`，并将 `scripts/run_rl1_postprocess_when_ready.sh` 扩展为在两 context 完成后依次生成表/图、`PHASE2A_RL1_FULL_REPORT.md` 和 `PHASE2A_CROSS_CONTEXT_GATE.md`。
+- 2026-08-25 05:52 CST：K562 training/testing 已完成，但原始 run 在导出阶段因 `ctrl_adata=None` fallback 缺失失败；sequencer 因此未自动启动 RPE1。
+- 2026-08-25 07:40 CST：新增并运行 `scripts/recover_gears_replogle_rl1_export.py`，K562 导出恢复完成，metadata 显式标记 `COMPLETED_GEARS`。
+- 2026-08-25 08:05 CST：手动以前台方式启动 RPE1 full run，运行目录 `results/replogle/gears/rl1_rpe1_20260825T000548Z/`。
+- 2026-08-25 09:03 CST：RPE1 Epoch 1 完成并通过 validation，Epoch 2 已开始；当前无需用户介入。
 
 ### 中断事件记录（已处置）
 
@@ -89,8 +103,8 @@ Cross-context gate:          PENDING
 
 ## 待办（按序）
 
-1. 等 K562 full run 完成（自动）→ 校验 metadata/metrics 输出
-2. sequencer 自动启动 R-L1-RPE1 full run → 完成校验
+1. 等 RPE1 full run 完成 → 校验 metadata/metrics 输出
+2. 如 RPE1 在导出阶段遇到已知 post-train 问题，使用 `scripts/recover_gears_replogle_rl1_export.py --dataset rpe1 --run-dir <run_dir>` 从已训练模型恢复导出，不重训
 3. 运行 `build_gears_rl1_analysis.py`：
    - `results/replogle/gears_rl1_summary.csv`（STEP 20 schema）
    - `results/tables/norman_replogle_rl1_comparison.csv`（STEP 21）
@@ -118,7 +132,9 @@ Cross-context gate:          PENDING
 - `0a006d8` Fix Replogle RL1 full-run blockers: vocab rebuild, co-expression path, GO-graph trimming
 - `da212c4` Take over Replogle RL1 run monitoring
 - `902a35d` Add RL1 report writer to postprocess pipeline
-- （工作树 clean；run 目录与模型权重按仓库策略 gitignored）
+- `2278bb0` Update RL1 progress during K562 full run
+- `862ef0e` Recover RL1 export after GEARS ctrl_adata fallback
+- （当前还有 RPE1 running progress 文档待提交；run 目录与模型权重按仓库策略 gitignored）
 
 ## 关键文件索引
 
