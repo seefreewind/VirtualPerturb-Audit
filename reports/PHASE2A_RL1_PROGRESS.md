@@ -1,6 +1,6 @@
 # Phase 2A-RL1 当前进度报告
 
-更新时间：2026-08-25 09:05 (CST)
+更新时间：2026-08-25 10:52 (CST)
 
 ## 总体状态
 
@@ -10,7 +10,7 @@ Replogle Phase 2A:           CONDITIONAL_GO_GEARS_FILTERED
 BNS:                         UNVERIFIED（本阶段不变）
 RPE1 bounded smoke:          PASS（executable chain 证据，非性能）
 R-L1-K562 full run:          COMPLETED_GEARS（训练完成；导出阶段 ctrl_adata fallback 后已 recovery 完成）
-R-L1-RPE1 full run:          RUNNING（foreground full run；Epoch 2/20 已开始）
+R-L1-RPE1 full run:          RUNNING（foreground full run；Epoch 5/20 已开始）
 Norman/Replogle comparison:  PENDING（等待两个 full run）
 Cross-context gate:          PENDING
 ```
@@ -67,10 +67,10 @@ Cross-context gate:          PENDING
 | 运行目录 | `results/replogle/gears/rl1_rpe1_20260825T000548Z/` |
 | 数据集 | Replogle_RPE1_GEARS_filtered（filtered essential-screen data） |
 | Split | R-L1-RPE1（frozen hash 已验证） |
-| 进度 | Epoch 2/20（09:03 raw telemetry 已进入 Step 651） |
-| Epoch 1 验证 | Train Overall MSE 0.0224；Validation Overall MSE 0.0227；Validation Top 20 DE MSE 0.1604 |
+| 进度 | Epoch 5/20（10:52 raw telemetry 已进入 Step 101） |
+| 已完成验证 | Epoch 1 Validation Overall MSE 0.0227 / Top 20 DE MSE 0.1604；Epoch 2 0.0166 / 0.1275；Epoch 3 0.0186 / 0.1399；Epoch 4 0.0167 / 0.1275 |
 | 资源 | foreground Python PID `74735`，约 200-270% CPU；训练阶段 RSS 约 2-8 GB 波动 |
-| 预计 RPE1 完成 | 2026-08-25 晚间（首轮约 30 分钟/epoch，完整 20 epoch 约 10-12 小时级） |
+| 预计 RPE1 完成 | 2026-08-25 晚间至夜间（前 4 轮约 35-45 分钟/epoch，完整 20 epoch 约 12-15 小时级） |
 
 ### K562 full-run 完成记录
 
@@ -93,6 +93,7 @@ Cross-context gate:          PENDING
 - 2026-08-25 07:40 CST：新增并运行 `scripts/recover_gears_replogle_rl1_export.py`，K562 导出恢复完成，metadata 显式标记 `COMPLETED_GEARS`。
 - 2026-08-25 08:05 CST：手动以前台方式启动 RPE1 full run，运行目录 `results/replogle/gears/rl1_rpe1_20260825T000548Z/`。
 - 2026-08-25 09:03 CST：RPE1 Epoch 1 完成并通过 validation，Epoch 2 已开始；当前无需用户介入。
+- 2026-08-25 10:52 CST：RPE1 Epoch 4 完成并通过 validation，Epoch 5 已开始；约完成 25% 训练轮次。
 
 ### 中断事件记录（已处置）
 
@@ -134,7 +135,8 @@ Cross-context gate:          PENDING
 - `902a35d` Add RL1 report writer to postprocess pipeline
 - `2278bb0` Update RL1 progress during K562 full run
 - `862ef0e` Recover RL1 export after GEARS ctrl_adata fallback
-- （当前还有 RPE1 running progress 文档待提交；run 目录与模型权重按仓库策略 gitignored）
+- `d9d8431` Checkpoint RPE1 RL1 training progress
+- （当前 RPE1 full run 仍在运行；run 目录与模型权重按仓库策略 gitignored）
 
 ## 关键文件索引
 
