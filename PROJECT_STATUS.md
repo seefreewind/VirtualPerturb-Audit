@@ -16,7 +16,7 @@ Completed R-L1 deliverables:
 - `reports/PHASE2A_CROSS_CONTEXT_GATE.md`
 - `reports/PHASE2A_RL1_PROGRESS.md`
 
-The next executable stage is R-L4 cross-context GEARS evaluation: K562-to-RPE1 and RPE1-to-K562. All Replogle claims remain filtered-data claims; BNS remains `UNVERIFIED`.
+R-L4 cross-context GEARS configs and a dedicated source-context-train/target-control-basal-prediction runner are ready. Bounded K2R and R2K smoke tests passed as executable-chain evidence only. The next executable stage is the K2R full run, followed by R2K. All Replogle claims remain filtered-data claims; BNS remains `UNVERIFIED`.
 
 ## Completed
 
@@ -40,6 +40,7 @@ The next executable stage is R-L4 cross-context GEARS evaluation: K562-to-RPE1 a
 - Replogle R-L1 RPE1 full GEARS run completed at `results/replogle/gears/rl1_rpe1_20260825T000548Z/`.
 - Replogle R-L1 postprocess completed, writing RL1 summary, Norman/Replogle comparison, metric-divergence profile, GEARS-vs-probe table, and two main figure families.
 - Phase 2A R-L1 full report and cross-context gate generated with decision `CONDITIONAL_GO_RL4`.
+- R-L4 cross-context GEARS runner/configs added and bounded K2R/R2K smoke tests passed; see `reports/PHASE2A_RL4_PROGRESS.md`.
 - Repository scaffold created under `VirtualPerturb-Audit/`.
 - Existing Git repository detected and reused.
 - Environment audit started.
@@ -122,6 +123,6 @@ Pilot status: PROVISIONAL_GO_FOR_BASELINE_AUDIT; GEARS_FULL_EVALUATION_COMPLETED
 
 ## Next 3 actions
 
-1. Commit the completed R-L1 report package.
-2. Launch R-L4-K2R and R-L4-R2K full GEARS evaluations on filtered essential data.
+1. Launch R-L4-K2R full GEARS evaluation on filtered essential data.
+2. After K2R completes, launch R-L4-R2K full GEARS evaluation.
 3. Rebuild R-L4 downstream tables/figures and compare cross-context results against the completed R-L1 references.

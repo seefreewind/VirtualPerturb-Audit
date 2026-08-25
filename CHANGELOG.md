@@ -10,6 +10,10 @@
 - Hardened `scripts/build_gears_rl1_analysis.py` for mixed Norman/Replogle confidence-interval column names and matplotlib error-bar shape handling.
 - Generated `reports/PHASE2A_RL1_FULL_REPORT.md` and `reports/PHASE2A_CROSS_CONTEXT_GATE.md`. Gate decision is `CONDITIONAL_GO_RL4`; all Replogle claims remain scoped to GEARS-compatible filtered essential-screen data with `BNS_STATUS = UNVERIFIED` and `uer_null_status = sensitivity_only`.
 - Refreshed `reports/PHASE2A_RL1_PROGRESS.md`, `PROJECT_STATUS.md`, `NEXT_ACTIONS.md`, and `analysis_lock.yaml` for R-L1 completion and R-L4 handoff.
+- Added R-L4 cross-context GEARS configs `configs/replogle/gears_rl4_k2r_seed1.yaml` and `configs/replogle/gears_rl4_r2k_seed1.yaml`.
+- Added `scripts/run_gears_replogle_rl4.py`, a source-context-train/target-control-basal-prediction adapter for R-L4. This is required because official GEARS custom splits are condition-level and cannot natively split the same perturbation condition by cell-line context.
+- Completed bounded R-L4 smoke tests for both directions: `rl4_k2r_20260825T133904Z` and `rl4_r2k_20260825T133952Z`, each with 1 train batch and 5 evaluation targets. These are executable-chain evidence only, not performance.
+- Added `reports/PHASE2A_RL4_PROGRESS.md` documenting the R-L4 adapter, smoke status, launch commands, and interpretation guardrails.
 
 ## 2026-08-24 (Phase 2A-RL1 monitoring)
 

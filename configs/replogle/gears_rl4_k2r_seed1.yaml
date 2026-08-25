@@ -1,0 +1,65 @@
+dataset:
+  name: Replogle_K562_to_RPE1_filtered
+  label: Replogle_GEARS_filtered
+  train_source_h5ad: data/raw/replogle/replogle_k562_essential/perturb_processed.h5ad
+  test_target_h5ad: data/raw/replogle/replogle_rpe1_essential/perturb_processed.h5ad
+  filtered_data: true
+model:
+  name: gears
+  version: 0.1.2
+  mode: source_context_train_target_control_basal_prediction
+  pert_graph: essential
+  gene_set_path: data/raw/essential_all_data_pert_genes.pkl
+  hidden_size: 64
+  num_go_gnn_layers: 3
+  num_gene_gnn_layers: 3
+  decoder_hidden_size: 128
+  num_similar_genes_go_graph: 20
+  num_similar_genes_co_express_graph: 20
+  coexpress_threshold: 0.4
+  learning_rate: 0.001
+  weight_decay: 0.0005
+  optimizer: Adam
+  scheduler: StepLR_step1_gamma0.5
+split:
+  level: R-L4-K2R
+  train_cell_line: K562
+  test_cell_line: RPE1
+  splitter: assign_replogle_l4_cross_context
+  split_hash: 1e5e924e3f4542b4
+  frozen: true
+seed: 1
+training:
+  epochs: 20
+  batch_size: 16
+  test_batch_size: 16
+  device: cpu
+evaluation:
+  scope: target_context_controls_prediction_vs_target_truth
+  primary_metrics:
+    - pearson_delta
+    - retrieval_mrr
+    - uer50
+  secondary_metrics:
+    - retrieval_top1
+    - retrieval_top5
+    - sign_flip_rate
+    - spearman_delta
+    - rmse_delta
+    - cosine_delta
+    - uer20
+    - uer100
+  statistical_unit: perturbation
+  bootstrap_resamples: 2000
+  ci: 95
+bns:
+  status: UNVERIFIED
+  role: sensitivity_only
+output_dir: results/replogle/gears
+reporting:
+  dataset_label: Replogle GEARS-compatible filtered essential-screen data
+  performance_eligible: true
+  hard_rules:
+    - do_not_call_full_replogle_dataset
+    - bns_status_must_remain_UNVERIFIED
+
