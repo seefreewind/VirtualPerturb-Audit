@@ -195,10 +195,24 @@ def audit_control_mean(pert_data) -> np.ndarray:
         ctrl_adata = pert_data.ctrl_adata
     except Exception:
         ctrl_adata = pert_data.adata[pert_data.adata.obs["condition"].astype(str).eq("ctrl")]
+    if ctrl_adata is None:
+        ctrl_adata = pert_data.adata[pert_data.adata.obs["condition"].astype(str).eq("ctrl")]
+    if ctrl_adata is None or ctrl_adata.n_obs == 0:
+        raise ValueError("No control cells available for audit-delta control mean")
     x = ctrl_adata.X
     if hasattr(x, "mean"):
         return np.asarray(x.mean(axis=0)).ravel()
     return np.asarray(np.array(x).mean(axis=0)).ravel()
+
+
+def audit_control_count(pert_data) -> int:
+    try:
+        ctrl_adata = pert_data.ctrl_adata
+    except Exception:
+        ctrl_adata = None
+    if ctrl_adata is None:
+        ctrl_adata = pert_data.adata[pert_data.adata.obs["condition"].astype(str).eq("ctrl")]
+    return int(ctrl_adata.n_obs)
 
 
 def compute_space_metrics(
@@ -492,7 +506,7 @@ def main() -> None:
         metadata["eval_truth_perturbations"] = int(len(truth_mean))
 
         control = audit_control_mean(pert_data)
-        metadata["n_ctrl_cells_audit"] = int(pert_data.ctrl_adata.n_obs)
+        metadata["n_ctrl_cells_audit"] = audit_control_count(pert_data)
 
         all_metric_rows = []
         all_retrieval_rows = []
