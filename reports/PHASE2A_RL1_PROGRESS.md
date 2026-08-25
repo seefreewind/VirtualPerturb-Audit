@@ -1,6 +1,6 @@
 # Phase 2A-RL1 当前进度报告
 
-更新时间：2026-08-25 10:52 (CST)
+更新时间：2026-08-25 14:15 (CST)
 
 ## 总体状态
 
@@ -10,7 +10,7 @@ Replogle Phase 2A:           CONDITIONAL_GO_GEARS_FILTERED
 BNS:                         UNVERIFIED（本阶段不变）
 RPE1 bounded smoke:          PASS（executable chain 证据，非性能）
 R-L1-K562 full run:          COMPLETED_GEARS（训练完成；导出阶段 ctrl_adata fallback 后已 recovery 完成）
-R-L1-RPE1 full run:          RUNNING（foreground full run；Epoch 5/20 已开始）
+R-L1-RPE1 full run:          RUNNING（foreground full run；Epoch 10/20 已开始）
 Norman/Replogle comparison:  PENDING（等待两个 full run）
 Cross-context gate:          PENDING
 ```
@@ -67,10 +67,10 @@ Cross-context gate:          PENDING
 | 运行目录 | `results/replogle/gears/rl1_rpe1_20260825T000548Z/` |
 | 数据集 | Replogle_RPE1_GEARS_filtered（filtered essential-screen data） |
 | Split | R-L1-RPE1（frozen hash 已验证） |
-| 进度 | Epoch 5/20（10:52 raw telemetry 已进入 Step 101） |
-| 已完成验证 | Epoch 1 Validation Overall MSE 0.0227 / Top 20 DE MSE 0.1604；Epoch 2 0.0166 / 0.1275；Epoch 3 0.0186 / 0.1399；Epoch 4 0.0167 / 0.1275 |
+| 进度 | Epoch 10/20（14:14 raw telemetry 已进入 Step 101） |
+| 已完成验证 | Epoch 1 Validation Overall MSE 0.0227 / Top 20 DE MSE 0.1604；Epoch 2 0.0166 / 0.1275；Epoch 3 0.0186 / 0.1399；Epoch 4 0.0167 / 0.1275；Epoch 5 0.0154 / 0.1165；Epoch 6 0.0151 / 0.1135；Epoch 7 0.0153 / 0.1153；Epoch 8 0.0149 / 0.1103；Epoch 9 0.0151 / 0.1140 |
 | 资源 | foreground Python PID `74735`，约 200-270% CPU；训练阶段 RSS 约 2-8 GB 波动 |
-| 预计 RPE1 完成 | 2026-08-25 晚间至夜间（前 4 轮约 35-45 分钟/epoch，完整 20 epoch 约 12-15 小时级） |
+| 预计 RPE1 完成 | 2026-08-25 晚间至夜间（前 9 轮约 35-45 分钟/epoch，完整 20 epoch 约 12-15 小时级） |
 
 ### K562 full-run 完成记录
 
@@ -94,6 +94,7 @@ Cross-context gate:          PENDING
 - 2026-08-25 08:05 CST：手动以前台方式启动 RPE1 full run，运行目录 `results/replogle/gears/rl1_rpe1_20260825T000548Z/`。
 - 2026-08-25 09:03 CST：RPE1 Epoch 1 完成并通过 validation，Epoch 2 已开始；当前无需用户介入。
 - 2026-08-25 10:52 CST：RPE1 Epoch 4 完成并通过 validation，Epoch 5 已开始；约完成 25% 训练轮次。
+- 2026-08-25 14:14 CST：RPE1 Epoch 9 完成并通过 validation，Epoch 10 已开始；约完成 50% 训练轮次。
 
 ### 中断事件记录（已处置）
 
@@ -136,6 +137,7 @@ Cross-context gate:          PENDING
 - `2278bb0` Update RL1 progress during K562 full run
 - `862ef0e` Recover RL1 export after GEARS ctrl_adata fallback
 - `d9d8431` Checkpoint RPE1 RL1 training progress
+- `5943297` Update RPE1 RL1 epoch five checkpoint
 - （当前 RPE1 full run 仍在运行；run 目录与模型权重按仓库策略 gitignored）
 
 ## 关键文件索引
