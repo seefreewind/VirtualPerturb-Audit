@@ -246,6 +246,7 @@ def main() -> None:
     except Exception:
         pass
     started = time.perf_counter()
+    (outdir / "metadata.json").write_text(json.dumps(json_safe(metadata), indent=2) + "\n")
 
     try:
         import scanpy as sc

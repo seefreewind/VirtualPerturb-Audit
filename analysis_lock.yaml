@@ -78,8 +78,12 @@ revision_log:
     change: Phase 2A R-L4 GEARS cross-context adapter and configs added, with bounded K2R/R2K smoke tests passing.
     reason: Official GEARS custom splits are condition-level and cannot directly encode same-perturbation cross-context train/test splits, so source-context training plus target-control-basal prediction is used for R-L4.
     fairness_impact: R-L4 remains target-context held out for training and model selection, but results must be labeled as a GEARS-compatible cross-context inference adapter rather than native cell-line-aware GEARS splitting.
+  - date: 2026-08-29
+    change: Phase 2A Replogle R-L4 full GEARS cross-context audit completed for K2R and R2K on GEARS-compatible filtered essential-screen data.
+    reason: Both R-L4 full runs, postprocess tables, transfer figure, full report, and progress handoff are now available.
+    fairness_impact: R-L4 can be interpreted as filtered-data cross-context stress-test evidence only; BNS remains UNVERIFIED and UER remains sensitivity_only.
 phase2a:
-  status: FILTERED_DATA_RL1_GEARS_COMPLETE_CONDITIONAL_GO_RL4
+  status: FILTERED_DATA_RL1_RL4_GEARS_COMPLETE
   primary_question: external_replication_of_metric_divergence
   datasets:
     - Replogle_K562
@@ -128,5 +132,10 @@ phase2a:
     smoke:
       R-L4-K2R: COMPLETED_GEARS_BATCH_SMOKE_NOT_PERFORMANCE
       R-L4-R2K: COMPLETED_GEARS_BATCH_SMOKE_NOT_PERFORMANCE
-    full_runs: READY_TO_LAUNCH
+    full_runs:
+      R-L4-K2R: COMPLETED_GEARS_EVALUATION
+      R-L4-R2K: COMPLETED_GEARS_EVALUATION
+    postprocess: COMPLETED
+    report: reports/PHASE2A_RL4_FULL_REPORT.md
+    gate_decision: PHASE2A_RL4_COMPLETE_FILTERED_DATA
   current_blocker: Complete Figshare+ processed Replogle objects and manifest downloads still return HTTP 403 by command line on 2026-08-23; GEARS-compatible filtered essential h5ad files are locally available and have completed QC, split integrity, baseline, falsification audit, RPE1 smoke, and R-L1 K562/RPE1 full GEARS audits. BNS remains UNVERIFIED because no biological replicate label is available in SRA runinfo or filtered h5ad obs.

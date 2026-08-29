@@ -1,22 +1,29 @@
 # Phase 0-2 Status
 
-## Current Snapshot (2026-08-25 21:35 CST)
+## Current Snapshot (2026-08-29 00:35 CST)
 
-Phase 2A Replogle R-L1 is complete for both K562 and RPE1 on GEARS-compatible filtered essential-screen data. The cross-context gate is `CONDITIONAL_GO_RL4`.
+Phase 2A Replogle R-L1 and R-L4 are complete for both K562 and RPE1 on GEARS-compatible filtered essential-screen data. The R-L4 full-run result is `PHASE2A_RL4_COMPLETE_FILTERED_DATA`.
 
-Completed R-L1 deliverables:
+Completed R-L1/R-L4 deliverables:
 
 - `results/replogle/gears_rl1_summary.csv`
+- `results/replogle/gears_rl4_summary.csv`
 - `results/tables/norman_replogle_rl1_comparison.csv`
 - `results/tables/metric_divergence_profile.csv`
 - `results/tables/replogle_gears_vs_probes.csv`
+- `results/tables/replogle_rl4_gears_cross_context.csv`
+- `results/tables/replogle_rl4_gears_vs_baselines.csv`
+- `results/tables/replogle_rl1_rl4_gears_comparison.csv`
 - `figures/main/norman_replogle_metric_divergence.{pdf,svg,png}`
 - `figures/main/replogle_gears_vs_probes.{pdf,svg,png}`
+- `figures/main/replogle_rl1_rl4_gears_transfer.{png,svg,pdf}`
 - `reports/PHASE2A_RL1_FULL_REPORT.md`
+- `reports/PHASE2A_RL4_FULL_REPORT.md`
 - `reports/PHASE2A_CROSS_CONTEXT_GATE.md`
 - `reports/PHASE2A_RL1_PROGRESS.md`
+- `reports/PHASE2A_RL4_PROGRESS.md`
 
-R-L4 cross-context GEARS configs and a dedicated source-context-train/target-control-basal-prediction runner are ready. Bounded K2R and R2K smoke tests passed as executable-chain evidence only. The next executable stage is the K2R full run, followed by R2K. All Replogle claims remain filtered-data claims; BNS remains `UNVERIFIED`.
+R-L4 cross-context GEARS used a dedicated source-context-train/target-control-basal-prediction adapter because GEARS custom splits are condition-level. K2R and R2K full runs both completed. Cross-context audit-delta Pearson is near zero and perturbation retrieval is near random in both directions, supporting a stress-test interpretation rather than cross-context validation. All Replogle claims remain filtered-data claims; BNS remains `UNVERIFIED`.
 
 ## Completed
 
@@ -40,7 +47,7 @@ R-L4 cross-context GEARS configs and a dedicated source-context-train/target-con
 - Replogle R-L1 RPE1 full GEARS run completed at `results/replogle/gears/rl1_rpe1_20260825T000548Z/`.
 - Replogle R-L1 postprocess completed, writing RL1 summary, Norman/Replogle comparison, metric-divergence profile, GEARS-vs-probe table, and two main figure families.
 - Phase 2A R-L1 full report and cross-context gate generated with decision `CONDITIONAL_GO_RL4`.
-- R-L4 cross-context GEARS runner/configs added and bounded K2R/R2K smoke tests passed; see `reports/PHASE2A_RL4_PROGRESS.md`.
+- R-L4 cross-context GEARS runner/configs added; bounded K2R/R2K smoke tests passed; K2R/R2K full runs completed and were postprocessed into `reports/PHASE2A_RL4_FULL_REPORT.md`.
 - Repository scaffold created under `VirtualPerturb-Audit/`.
 - Existing Git repository detected and reused.
 - Environment audit started.
@@ -86,7 +93,9 @@ R-L4 cross-context GEARS configs and a dedicated source-context-train/target-con
 
 Norman baseline and falsification-probe audit outputs are available in `results/pilot/pilot_summary.csv`. B3/FP-2 shows how much signal can be recovered from perturbation identity and seen single-component deltas without individual cell-state modeling. B4 PCA/Ridge is included as a perturbation-to-effect mapping baseline. Completed Norman GEARS full rows (L1/L2/L3) show delta-Pearson 0.9887/0.9838/0.9843 with perturbation-level bootstrap CIs, UER@50 and sign-flip rate at 0 under the provisional threshold, and retrieval top-1 accuracy 0.20/0.075/0.08 and MRR 0.328/0.147/0.207. The retrieval collapse under stricter holdouts with stable correlation is the key shortcut/leakage signal from the Norman GEARS pilot rows.
 
-Replogle R-L1 externally reproduces the same warning pattern under filtered-data scope. In `gears_raw` space, K562/RPE1 Pearson delta is 0.9851/0.9709, while top-1 retrieval is 0.0139/0.0000 and MRR is 0.0445/0.0209. In audit-delta space, GEARS does not dominate simple mean-effect baselines on Pearson, although retrieval is slightly higher than the strongest baseline family. All GEARS rows keep `bns_status: UNVERIFIED`; Replogle UER values are sensitivity checks only.
+Replogle R-L1 externally reproduces the same warning pattern under filtered-data scope. In `gears_raw` space, K562/RPE1 Pearson delta is 0.9851/0.9709, while top-1 retrieval is 0.0139/0.0000 and MRR is 0.0445/0.0209. In audit-delta space, GEARS does not dominate simple mean-effect baselines on Pearson, although retrieval is slightly higher than the strongest baseline family.
+
+Replogle R-L4 cross-context results are substantially weaker. K562 -> RPE1 and RPE1 -> K562 audit-delta Pearson are 0.0063 and 0.0022, top-1 retrieval is 0.0027 and 0.0000, and MRR is 0.0126 and 0.0089. This supports the conclusion that context transfer collapses toward near-random perturbation retrieval under the R-L4 stress test. All GEARS rows keep `bns_status: UNVERIFIED`; Replogle UER values are sensitivity checks only.
 
 ## Failed
 
@@ -119,10 +128,10 @@ See `CHANGELOG.md`. Key generated outputs include `environment/environment_repor
 
 ## GO / NO-GO
 
-Pilot status: PROVISIONAL_GO_FOR_BASELINE_AUDIT; GEARS_FULL_EVALUATION_COMPLETED_PILOT (BNS unverified). Replogle Phase 2A R-L1 status: `COMPLETED_FILTERED_DATA_RL1`; cross-context gate: `CONDITIONAL_GO_RL4`.
+Pilot status: PROVISIONAL_GO_FOR_BASELINE_AUDIT; GEARS_FULL_EVALUATION_COMPLETED_PILOT (BNS unverified). Replogle Phase 2A R-L1 status: `COMPLETED_FILTERED_DATA_RL1`; Replogle Phase 2A R-L4 status: `PHASE2A_RL4_COMPLETE_FILTERED_DATA`.
 
 ## Next 3 actions
 
-1. Launch R-L4-K2R full GEARS evaluation on filtered essential data.
-2. After K2R completes, launch R-L4-R2K full GEARS evaluation.
-3. Rebuild R-L4 downstream tables/figures and compare cross-context results against the completed R-L1 references.
+1. Carry the completed R-L1/R-L4 Replogle result into manuscript/result synthesis.
+2. Write the filtered-data stress-test result with explicit BNS and UER guardrails.
+3. Keep complete-data replication blocked until official/paper-linked Figshare+ processed objects become command-line accessible.

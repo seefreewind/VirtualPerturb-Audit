@@ -1,5 +1,14 @@
 # Changelog
 
+## 2026-08-29 (Phase 2A-RL4 completion)
+
+- Completed Replogle R-L4 K562 -> RPE1 full GEARS run at `results/replogle/gears/rl4_k2r_20260827T020001Z/` on GEARS-compatible filtered essential-screen data.
+- Completed Replogle R-L4 RPE1 -> K562 full GEARS run at `results/replogle/gears/rl4_r2k_20260828T090923Z/`.
+- Added `scripts/build_gears_rl4_analysis.py` to consolidate completed R-L4 GEARS outputs, compare R-L4 against R-L1 and baseline/probe rows, generate a transfer summary figure, and write the full R-L4 report.
+- Generated `results/replogle/gears_rl4_summary.csv`, `results/tables/replogle_rl4_gears_cross_context.csv`, `results/tables/replogle_rl4_gears_vs_baselines.csv`, `results/tables/replogle_rl1_rl4_gears_comparison.csv`, and `figures/main/replogle_rl1_rl4_gears_transfer.{png,svg,pdf}`.
+- Added `reports/PHASE2A_RL4_FULL_REPORT.md` and refreshed `reports/PHASE2A_RL4_PROGRESS.md`, `reports/CURRENT_OVERALL_STATUS_AND_PROGRESS.md`, and `NEXT_ACTIONS.md`.
+- R-L4 cross-context results show near-zero audit-delta Pearson and near-random perturbation retrieval in both directions. The result is stress-test evidence under filtered-data scope, with `BNS_STATUS = UNVERIFIED` and `uer_null_status = sensitivity_only`.
+
 ## 2026-08-25 (Phase 2A-RL1 completion)
 
 - Completed Replogle R-L1 K562 full GEARS run at `results/replogle/gears/rl1_k562_20260824T074041Z/` on GEARS-compatible filtered essential-screen data. The model trained for 20 epochs and testing completed; export was recovered from the trained checkpoint after fixing the `ctrl_adata=None` fallback.
