@@ -1,0 +1,2 @@
+task,mode,h5ad,toml,n_cells,n_genes,n_conditions,n_train_conditions,n_val_labels,n_test_labels,max_cells_per_condition
+norman_l1,smoke,data/processed/state_phase2b/smoke/norman_l1/h5ad/norman_l1.h5ad,data/processed/state_phase2b/smoke/norman_l1/norman_l1.toml,180,5045,9,194,2,2,20
