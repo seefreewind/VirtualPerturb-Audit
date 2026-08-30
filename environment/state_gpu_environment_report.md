@@ -1,49 +1,78 @@
 # STATE GPU Environment Report
 
-更新时间：2026-08-29 15:45 CST
+Generated: 2026-08-29T12:29:18Z
 
-## Command Audit
+## Host
 
-| Check | Result |
-|---|---|
-| `hostname` | `zhangyudeMacBook-Air.local` |
-| `uname -a` | `Darwin zhangyudeMacBook-Air.local 25.4.0 Darwin Kernel Version 25.4.0: Thu Mar 19 19:33:43 PDT 2026; root:xnu-12377.101.15~1/RELEASE_ARM64_T8142 arm64` |
-| `sw_vers` | macOS 26.4, build 25E246 |
-| `nvidia-smi` | command not found |
-| `nvcc --version` | command not found |
-| `python3 --version` | Python 3.9.6 |
-| `state --help` | pass |
-| workspace disk | `/dev/disk6s1`, 1.8 TiB total, 866 GiB used, 997 GiB available |
-| system RAM | 17,179,869,184 bytes |
-| `free -h` | command not found on macOS |
+- hostname: autodl-container-99ee42b29a-a7121b90
+- workspace: /root/autodl-tmp/vpa-work-slim/VirtualPerturb-Audit
+- git_commit: ff1caa457463209b103e169871ad5a63284720a2
 
-## CUDA Sanity Test
+## OS
 
 ```text
-python3_torch_version 2.8.0
-python3_cuda_available False
-python3_cuda_device NO_GPU
-
-state_python_torch_version 2.13.0
-state_python_cuda_available False
-state_python_cuda_device NO_GPU
-arc_state_version 0.11.1
+Linux autodl-container-99ee42b29a-a7121b90 5.15.0-97-generic #107-Ubuntu SMP Wed Feb 7 13:26:48 UTC 2024 x86_64 x86_64 x86_64 GNU/Linux
 ```
 
-## STATE Environment
-
-```yaml
-state_executable: /Users/zy/.local/bin/state
-state_tool_python: /Users/zy/.local/share/uv/tools/arc-state/bin/python
-arc_state_version: 0.11.1
-pip_freeze_record: environment/state_gpu_pip_freeze.txt
-state_repository_commit_checked: 9bbfe78a434a55205e4de834e1ea99f85f7a3add
-```
-
-## Gate Decision
+## GPU / Driver
 
 ```text
-GPU_ENVIRONMENT_STATUS = NO_GO_GPU_ENVIRONMENT
+Sat Aug 29 20:29:16 2026       
++-----------------------------------------------------------------------------------------+
+| NVIDIA-SMI 580.76.05              Driver Version: 580.76.05      CUDA Version: 13.0     |
++-----------------------------------------+------------------------+----------------------+
+| GPU  Name                 Persistence-M | Bus-Id          Disp.A | Volatile Uncorr. ECC |
+| Fan  Temp   Perf          Pwr:Usage/Cap |           Memory-Usage | GPU-Util  Compute M. |
+|                                         |                        |               MIG M. |
+|=========================================+========================+======================|
+|   0  NVIDIA GeForce RTX 4090        On  |   00000000:27:00.0 Off |                  Off |
+| 30%   28C    P8             21W /  450W |       0MiB /  24564MiB |      0%      Default |
+|                                         |                        |                  N/A |
++-----------------------------------------+------------------------+----------------------+
+
++-----------------------------------------------------------------------------------------+
+| Processes:                                                                              |
+|  GPU   GI   CI              PID   Type   Process name                        GPU Memory |
+|        ID   ID                                                               Usage      |
+|=========================================================================================|
+|  No running processes found                                                             |
++-----------------------------------------------------------------------------------------+
 ```
 
-This machine does not provide an NVIDIA CUDA environment. Per Phase 2C instructions, full STATE confirmatory runs must not fall back to CPU.
+## CUDA Toolkit
+
+```text
+/bin/sh: 1: nvcc: not found
+```
+
+## Python / PyTorch / STATE
+
+```text
+Python 3.12.3
+torch 2.8.0+cu128
+cuda_available True
+device NVIDIA GeForce RTX 4090
+torch_cuda_runtime 12.8
+arc-state 0.11.1
+state_file /root/miniconda3/lib/python3.12/site-packages/state/__init__.py
+```
+
+## Memory
+
+```text
+total        used        free      shared  buff/cache   available
+Mem:           1.0Ti        43Gi       103Gi       3.4Gi       860Gi       954Gi
+Swap:             0B          0B          0B
+```
+
+## Disk
+
+```text
+Filesystem      Size  Used Avail Use% Mounted on
+overlay          30G  1.8G   29G   6% /
+/dev/md0        146G   12G  135G   9% /root/autodl-tmp
+```
+
+## Gate
+
+GO_GPU_ENVIRONMENT: PyTorch reports CUDA availability on NVIDIA GeForce RTX 4090.

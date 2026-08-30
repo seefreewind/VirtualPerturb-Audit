@@ -1,0 +1,2 @@
+run_id,run_dir,return_code,duration_seconds_50_steps,seconds_per_step,peak_gpu_mem_mb,mean_gpu_util_pct,checkpoint_mb
+S1_norman_l1,results/state/benchmark_phase2c_S1_norman_l1_20260829T124735Z/S1_norman_l1,0,102,2.04,3853,6.8,3473.1

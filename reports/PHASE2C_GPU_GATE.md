@@ -1,35 +1,32 @@
 # Phase 2C GPU Gate
 
-更新时间：2026-08-29 15:45 CST
+## Final Gate Status
 
-## Decision
+`GO_GPU_ENVIRONMENT` was achieved on the remote Linux GPU server and used for the Phase 2C STATE full run.
 
-```text
-PHASE2C_GPU_GATE = NO_GO_GPU_ENVIRONMENT
-```
+## Local Mac Gate
 
-## Evidence
+The local Mac environment remained a valid `NO_GO_GPU_ENVIRONMENT` for full STATE training:
 
-| Requirement | Observed | Status |
-|---|---|---|
-| Linux host | macOS / Darwin arm64 | fail |
-| NVIDIA GPU | `nvidia-smi` not found | fail |
-| CUDA compiler/runtime | `nvcc` not found | fail |
-| PyTorch CUDA in system env | `torch.cuda.is_available() == False` | fail |
-| PyTorch CUDA in STATE env | `torch.cuda.is_available() == False` | fail |
-| STATE CLI | `state --help` passes | pass |
+- Host: `zhangyudeMacBook-Air.local`
+- OS: macOS / Darwin arm64
+- `nvidia-smi`: not available
+- PyTorch CUDA: `False`
+- STATE CLI: available
 
-## Required Stop
+The project therefore did not launch CPU fallback full runs locally.
 
-Phase 2C specifies that if `torch.cuda.is_available() == False`, the workflow must not fall back to CPU full runs. The correct action is to stop after generating this gate report.
+## Remote GPU Gate
 
-## Not Performed
+The remote Linux environment passed the GPU gate:
 
-- STATE bounded GPU compute benchmark
-- STATE Norman/Replogle smoke on GPU
-- STATE Replogle K562 R-L1 full run
-- STATE K562-to-RPE1 R-L4 full run
-- Cross-architecture performance comparison
-- Phase 2C manuscript v0.2 update
+- Host: `autodl-container-99ee42b29a-a7121b90`
+- Workspace: `/root/autodl-tmp/vpa-work-slim/VirtualPerturb-Audit`
+- GPU: NVIDIA GeForce RTX 4090
+- Driver: 580.76.05
+- CUDA reported by `nvidia-smi`: 13.0
+- PyTorch: 2.8.0+cu128
+- `torch.cuda.is_available()`: `True`
+- STATE: arc-state 0.11.1
 
-These remain blocked until the project is run on a CUDA-capable GPU/Linux environment.
+This environment was accepted for STATE adapter audit, split alignment, smoke runs, bounded compute benchmarking, and the full four-task Phase 2C STATE execution.

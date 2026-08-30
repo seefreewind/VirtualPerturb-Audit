@@ -1,0 +1,8 @@
+# STATE Smoke Report
+
+| run_id               | run_dir                                                                                | trained   | predicted   | performance_eligible   |
+|:---------------------|:---------------------------------------------------------------------------------------|:----------|:------------|:-----------------------|
+| S1_norman_l1         | results/state/smoke_phase2c_S1_norman_l1_20260829T124315Z/S1_norman_l1                 | True      | True        | False                  |
+| S3_replogle_k562_rl1 | results/state/smoke_phase2c_S3_replogle_k562_rl1_20260829T124315Z/S3_replogle_k562_rl1 | True      | True        | False                  |
+
+Smoke runs validate load/train/predict/save only and are not performance-eligible.

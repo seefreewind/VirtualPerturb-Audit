@@ -1,0 +1,5 @@
+probe_dir,batch_size,return_code,duration_seconds_20_steps,seconds_per_step,peak_gpu_mem_mb,mean_gpu_util_pct,oom,run_dir
+results/state/batch_probe_phase2c_20260829T125730Z,8,0,109,5.45,5701,2.6,False,results/state/batch_probe_phase2c_20260829T125730Z/batch_8
+results/state/batch_probe_phase2c_20260829T130012Z,16,0,142,7.1,8941,6.8,False,results/state/batch_probe_phase2c_20260829T130012Z/batch_16
+results/state/batch_probe_phase2c_20260829T130012Z,32,0,210,10.5,15887,4.4,False,results/state/batch_probe_phase2c_20260829T130012Z/batch_32
+results/state/batch_probe_phase2c_20260829T130012Z,48,0,314,15.7,22975,2.9,False,results/state/batch_probe_phase2c_20260829T130012Z/batch_48
