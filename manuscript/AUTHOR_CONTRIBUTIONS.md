@@ -1,17 +1,11 @@
 # Author Contributions
 
-Author order, affiliations, and CRediT roles require final author input.
+Draft CRediT statement based on the supplied author list.
 
-Suggested CRediT placeholders:
+Da Lin: Methodology, software, formal analysis, investigation, data curation, visualization, writing - original draft.
 
-- Conceptualization: [Name(s)]
-- Methodology: [Name(s)]
-- Software: [Name(s)]
-- Formal analysis: [Name(s)]
-- Investigation: [Name(s)]
-- Data curation: [Name(s)]
-- Visualization: [Name(s)]
-- Writing - original draft: [Name(s)]
-- Writing - review and editing: [Name(s)]
-- Supervision: [Name(s)]
-- Project administration: [Name(s)]
+Ying Chen: Data curation, validation, investigation, writing - review and editing.
+
+Yue Liu: Data curation, validation, visualization, writing - review and editing.
+
+Yu Zhang: Conceptualization, methodology, supervision, project administration, resources, writing - review and editing.

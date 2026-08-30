@@ -34,6 +34,13 @@ TABLES = ROOT / "results" / "tables"
 FINAL = SUBMISSION / "cell_reports_methods" / "final"
 QA = ROOT / "qa" / "docx_render_crm_v11"
 GENERATED = datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M:%S UTC")
+AUTHORS = "Da Lin1, Ying Chen2, Yue Liu2, Yu Zhang1"
+AFFILIATIONS = (
+    "1 Department of Ophthalmology, The Second Affiliated Hospital of Wenzhou Medical University, "
+    "No. 109 Xueyuan West Road, Lucheng District, Wenzhou, Zhejiang Province, China\n\n"
+    "2 Wenzhou Medical University, Wenzhou, Zhejiang Province, China"
+)
+CORRESPONDENCE = "Yu Zhang, zhangyu1@wzhealth.com; ORCID: 0000-0001-8579-3692"
 
 INK = "#1F2933"
 MUTED = "#667085"
@@ -181,11 +188,11 @@ Generated: {GENERATED}
 
 ## Author Information
 
-Authors: [To be completed]
+Authors: {AUTHORS}
 
-Affiliations: [To be completed]
+Affiliations: {AFFILIATIONS}
 
-Correspondence: [To be completed]
+Correspondence: {CORRESPONDENCE}
 
 ## Summary
 
@@ -419,21 +426,15 @@ Avoid the phrase "AI hallucination exposed." The graphic should present a reusab
 
     write(MANUSCRIPT / "AUTHOR_CONTRIBUTIONS.md", """# Author Contributions
 
-Author order, affiliations, and CRediT roles require final author input.
+Draft CRediT statement based on the supplied author list.
 
-Suggested CRediT placeholders:
+Da Lin: Methodology, software, formal analysis, investigation, data curation, visualization, writing - original draft.
 
-- Conceptualization: [Name(s)]
-- Methodology: [Name(s)]
-- Software: [Name(s)]
-- Formal analysis: [Name(s)]
-- Investigation: [Name(s)]
-- Data curation: [Name(s)]
-- Visualization: [Name(s)]
-- Writing - original draft: [Name(s)]
-- Writing - review and editing: [Name(s)]
-- Supervision: [Name(s)]
-- Project administration: [Name(s)]
+Ying Chen: Data curation, validation, investigation, writing - review and editing.
+
+Yue Liu: Data curation, validation, visualization, writing - review and editing.
+
+Yu Zhang: Conceptualization, methodology, supervision, project administration, resources, writing - review and editing.
 """)
 
     write(MANUSCRIPT / "DECLARATION_OF_INTERESTS.md", """# Declaration of Interests
@@ -496,7 +497,7 @@ The authors declare no competing interests. This work received no specific fundi
 
 Sincerely,
 
-[Corresponding author name]
+Yu Zhang
 """
     write(SUBMISSION / "COVER_LETTER_CELL_REPORTS_METHODS_v1.0.md", cover)
     markdown_to_docx(SUBMISSION / "COVER_LETTER_CELL_REPORTS_METHODS_v1.0.md", SUBMISSION / "COVER_LETTER_CELL_REPORTS_METHODS_v1.0.docx")
@@ -592,18 +593,18 @@ Rationale: the submission presents a reusable computational method and reporting
 
     write(REPORTS / "MANUAL_AUTHOR_ITEMS.md", """# Manual Author Items
 
-- Author order
-- Degrees if required by journal system
-- Affiliations
-- Corresponding author name
-- Corresponding author email
-- ORCID identifiers if required
-- Final CRediT roles
 - Acknowledgments
 - Repository URL and archive DOI
+- Degrees if required by journal system
+- ORCID identifiers for Da Lin, Ying Chen, and Yue Liu if required by the journal system
+- Final author approval of the drafted CRediT roles
 
 Confirmed by user:
 
+- Authors: Da Lin, Ying Chen, Yue Liu, Yu Zhang
+- Affiliations: supplied and inserted
+- Correspondence: Yu Zhang, zhangyu1@wzhealth.com
+- Corresponding author ORCID: 0000-0001-8579-3692
 - Funding: no specific funding
 - Competing interests: none
 - License: MIT selected for repository release
@@ -735,7 +736,7 @@ Largest desk-reject risk: overlap with recent perturbation benchmarks if the man
 
 Largest reviewer risk: filtered Replogle scope and partial STATE support limit breadth. These are addressed as limitations, not solved by new experiments in this phase.
 
-Remaining manual tasks: author metadata, ORCID if required, corresponding author email, repository URL, archive DOI, final STATE citation/source, and upload-system format confirmation.
+Remaining manual tasks: repository URL, archive DOI, final STATE citation/source, upload-system format confirmation, acknowledgments if any, and ORCIDs for non-corresponding authors if required.
 """)
 
 
@@ -955,9 +956,9 @@ def build_final_package():
 | Item | Status |
 |---|---|
 | Title | DONE |
-| Authors | MANUAL_REQUIRED |
-| Affiliations | MANUAL_REQUIRED |
-| Correspondence | MANUAL_REQUIRED |
+| Authors | DONE |
+| Affiliations | DONE |
+| Correspondence | DONE |
 | Summary | DONE |
 | Main text | DONE |
 | Figures | DONE |
@@ -971,10 +972,10 @@ def build_final_package():
 | Graphical abstract | MANUAL_REQUIRED |
 | Data statement | MANUAL_REQUIRED |
 | Code statement | MANUAL_REQUIRED |
-| CRediT | MANUAL_REQUIRED |
+| CRediT | DONE |
 | Funding | DONE |
 | COI | DONE |
-| ORCID | MANUAL_REQUIRED |
+| ORCID | DONE_FOR_CORRESPONDING_AUTHOR |
 | Repository accessibility | MANUAL_REQUIRED |
 """)
     shutil.copy2(SUBMISSION / "cell_reports_methods" / "FINAL_SUBMISSION_CHECKLIST.md", FINAL / "FINAL_SUBMISSION_CHECKLIST.md")

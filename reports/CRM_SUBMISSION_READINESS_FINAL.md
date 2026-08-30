@@ -18,4 +18,4 @@ Largest desk-reject risk: overlap with recent perturbation benchmarks if the man
 
 Largest reviewer risk: filtered Replogle scope and partial STATE support limit breadth. These are addressed as limitations, not solved by new experiments in this phase.
 
-Remaining manual tasks: author metadata, ORCID if required, corresponding author email, repository URL, archive DOI, final STATE citation/source, and upload-system format confirmation.
+Remaining manual tasks: repository URL, archive DOI, final STATE citation/source, upload-system format confirmation, acknowledgments if any, and ORCIDs for non-corresponding authors if required.

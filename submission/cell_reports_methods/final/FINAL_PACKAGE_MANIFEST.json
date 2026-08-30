@@ -1,7 +1,7 @@
 [
   {
     "path": "FINAL_SUBMISSION_CHECKLIST.md",
-    "bytes": 660
+    "bytes": 630
   },
   {
     "path": "audits/ARTICLE_TYPE_FINAL_DECISION.md",
@@ -21,7 +21,7 @@
   },
   {
     "path": "audits/CRM_SUBMISSION_READINESS_FINAL.md",
-    "bytes": 1419
+    "bytes": 1429
   },
   {
     "path": "audits/NUMERICAL_AUDIT_FINAL.md",
@@ -45,15 +45,15 @@
   },
   {
     "path": "author_manual_items/MANUAL_AUTHOR_ITEMS.md",
-    "bytes": 381
+    "bytes": 568
   },
   {
     "path": "cover_letter/COVER_LETTER_CELL_REPORTS_METHODS_v1.0.docx",
-    "bytes": 37670
+    "bytes": 37663
   },
   {
     "path": "cover_letter/COVER_LETTER_CELL_REPORTS_METHODS_v1.0.md",
-    "bytes": 2036
+    "bytes": 2017
   },
   {
     "path": "data_code_availability/CODE_RELEASE_FINAL_AUDIT.md",
@@ -145,11 +145,11 @@
   },
   {
     "path": "main_manuscript/CRM_MANUSCRIPT_v1.1.docx",
-    "bytes": 42703
+    "bytes": 42875
   },
   {
     "path": "main_manuscript/CRM_MANUSCRIPT_v1.1.md",
-    "bytes": 16504
+    "bytes": 16788
   },
   {
     "path": "reproducibility/REPRODUCIBILITY.md",

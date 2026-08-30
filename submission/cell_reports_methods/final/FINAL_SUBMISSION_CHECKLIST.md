@@ -3,9 +3,9 @@
 | Item | Status |
 |---|---|
 | Title | DONE |
-| Authors | MANUAL_REQUIRED |
-| Affiliations | MANUAL_REQUIRED |
-| Correspondence | MANUAL_REQUIRED |
+| Authors | DONE |
+| Affiliations | DONE |
+| Correspondence | DONE |
 | Summary | DONE |
 | Main text | DONE |
 | Figures | DONE |
@@ -19,8 +19,8 @@
 | Graphical abstract | MANUAL_REQUIRED |
 | Data statement | MANUAL_REQUIRED |
 | Code statement | MANUAL_REQUIRED |
-| CRediT | MANUAL_REQUIRED |
+| CRediT | DONE |
 | Funding | DONE |
 | COI | DONE |
-| ORCID | MANUAL_REQUIRED |
+| ORCID | DONE_FOR_CORRESPONDING_AUTHOR |
 | Repository accessibility | MANUAL_REQUIRED |

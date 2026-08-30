@@ -1,6 +1,6 @@
 # Cover Letter to Cell Reports Methods
 
-Generated: 2026-08-30 14:00:36 UTC
+Generated: 2026-08-30 14:05:25 UTC
 
 Dear Editors,
 
@@ -16,4 +16,4 @@ The authors declare no competing interests. This work received no specific fundi
 
 Sincerely,
 
-[Corresponding author name]
+Yu Zhang

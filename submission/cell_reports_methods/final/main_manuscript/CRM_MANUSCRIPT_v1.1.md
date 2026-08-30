@@ -2,15 +2,17 @@
 
 Draft version: CRM_MANUSCRIPT_v1.1
 
-Generated: 2026-08-30 14:00:36 UTC
+Generated: 2026-08-30 14:05:25 UTC
 
 ## Author Information
 
-Authors: [To be completed]
+Authors: Da Lin1, Ying Chen2, Yue Liu2, Yu Zhang1
 
-Affiliations: [To be completed]
+Affiliations: 1 Department of Ophthalmology, The Second Affiliated Hospital of Wenzhou Medical University, No. 109 Xueyuan West Road, Lucheng District, Wenzhou, Zhejiang Province, China
 
-Correspondence: [To be completed]
+2 Wenzhou Medical University, Wenzhou, Zhejiang Province, China
+
+Correspondence: Yu Zhang, zhangyu1@wzhealth.com; ORCID: 0000-0001-8579-3692
 
 ## Summary
 
