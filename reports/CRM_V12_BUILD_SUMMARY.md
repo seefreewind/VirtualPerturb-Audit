@@ -1,0 +1,6 @@
+- word_count: 4076
+- reference_count: 25
+- internal_terms_remaining: []
+- state_reference: MANUAL_REVIEW_REQUIRED
+- readiness: READY_AFTER_MINOR_TEXT_FIXES
+- generated: 2026-08-30 23:38:59 UTC

@@ -1,0 +1,4 @@
+perturbation,audit_delta_pearson,retrieval_rank,mrr_contribution,uer_at_2,sign_flip_rate
+P1,0.9495474563727557,1,1.0,0.0,0.0
+P2,0.9846689526472974,1,1.0,0.0,0.0
+P3,0.9584491620474599,1,1.0,0.5,0.0
