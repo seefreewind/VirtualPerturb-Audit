@@ -1,0 +1,170 @@
+[
+  {
+    "path": "01_main_manuscript/CRM_MANUSCRIPT_v1.0.md",
+    "bytes": 14701
+  },
+  {
+    "path": "02_figures/crm_figure1_audit_framework.pdf",
+    "bytes": 22707
+  },
+  {
+    "path": "02_figures/crm_figure1_audit_framework.png",
+    "bytes": 133652
+  },
+  {
+    "path": "02_figures/crm_figure1_audit_framework.svg",
+    "bytes": 58958
+  },
+  {
+    "path": "02_figures/crm_figure2_norman_metric_divergence.pdf",
+    "bytes": 18393
+  },
+  {
+    "path": "02_figures/crm_figure2_norman_metric_divergence.png",
+    "bytes": 153617
+  },
+  {
+    "path": "02_figures/crm_figure2_norman_metric_divergence.svg",
+    "bytes": 48584
+  },
+  {
+    "path": "02_figures/crm_figure3_replogle_within_context.pdf",
+    "bytes": 18213
+  },
+  {
+    "path": "02_figures/crm_figure3_replogle_within_context.png",
+    "bytes": 169083
+  },
+  {
+    "path": "02_figures/crm_figure3_replogle_within_context.svg",
+    "bytes": 55654
+  },
+  {
+    "path": "02_figures/crm_figure4_matched_gears_transfer.pdf",
+    "bytes": 16884
+  },
+  {
+    "path": "02_figures/crm_figure4_matched_gears_transfer.png",
+    "bytes": 112960
+  },
+  {
+    "path": "02_figures/crm_figure4_matched_gears_transfer.svg",
+    "bytes": 40352
+  },
+  {
+    "path": "02_figures/crm_figure5_state_partial_confirmation.pdf",
+    "bytes": 14890
+  },
+  {
+    "path": "02_figures/crm_figure5_state_partial_confirmation.png",
+    "bytes": 115618
+  },
+  {
+    "path": "02_figures/crm_figure5_state_partial_confirmation.svg",
+    "bytes": 36510
+  },
+  {
+    "path": "03_supplement/CRM_SUPPLEMENT_v1.0.md",
+    "bytes": 5944
+  },
+  {
+    "path": "03_supplement/phase2c_endpoint_heatmap.pdf",
+    "bytes": 45583
+  },
+  {
+    "path": "03_supplement/phase2c_endpoint_heatmap.png",
+    "bytes": 261330
+  },
+  {
+    "path": "03_supplement/phase2c_endpoint_heatmap.svg",
+    "bytes": 43841
+  },
+  {
+    "path": "03_supplement/phase2c_retrieval_rank_distribution.pdf",
+    "bytes": 40117
+  },
+  {
+    "path": "03_supplement/phase2c_retrieval_rank_distribution.png",
+    "bytes": 200443
+  },
+  {
+    "path": "03_supplement/phase2c_retrieval_rank_distribution.svg",
+    "bytes": 54796
+  },
+  {
+    "path": "04_cover_letter/COVER_LETTER_CELL_REPORTS_METHODS.docx",
+    "bytes": 37625
+  },
+  {
+    "path": "04_cover_letter/COVER_LETTER_CELL_REPORTS_METHODS.md",
+    "bytes": 2002
+  },
+  {
+    "path": "05_graphical_abstract/GRAPHICAL_ABSTRACT_BRIEF.md",
+    "bytes": 561
+  },
+  {
+    "path": "06_highlights_in_brief/HIGHLIGHTS.md",
+    "bytes": 291
+  },
+  {
+    "path": "06_highlights_in_brief/IN_BRIEF.md",
+    "bytes": 371
+  },
+  {
+    "path": "07_key_resources/KEY_RESOURCES_TABLE.md",
+    "bytes": 1391
+  },
+  {
+    "path": "07_key_resources/KEY_RESOURCES_TABLE.xlsx",
+    "bytes": 5775
+  },
+  {
+    "path": "08_code_data_statements/CODE_RELEASE_GATE.md",
+    "bytes": 510
+  },
+  {
+    "path": "08_code_data_statements/CRM_CODE_RELEASE_AUDIT.md",
+    "bytes": 1144
+  },
+  {
+    "path": "08_code_data_statements/REPRODUCIBILITY.md",
+    "bytes": 1305
+  },
+  {
+    "path": "09_editorial_audits/ARTICLE_TYPE_AUDIT.md",
+    "bytes": 1031
+  },
+  {
+    "path": "09_editorial_audits/CELL_REPORTS_METHODS_REQUIREMENTS.md",
+    "bytes": 3041
+  },
+  {
+    "path": "09_editorial_audits/CLAIM_EVIDENCE_MATRIX.md",
+    "bytes": 1247
+  },
+  {
+    "path": "09_editorial_audits/CRM_EDITORIAL_AUDIT.md",
+    "bytes": 1171
+  },
+  {
+    "path": "09_editorial_audits/CRM_NOVELTY_MATRIX.md",
+    "bytes": 1838
+  },
+  {
+    "path": "09_editorial_audits/CRM_REVIEWER_SIMULATION.md",
+    "bytes": 1364
+  },
+  {
+    "path": "09_editorial_audits/CRM_SUBMISSION_READINESS.md",
+    "bytes": 1567
+  },
+  {
+    "path": "09_editorial_audits/REFERENCE_AUDIT.md",
+    "bytes": 2529
+  },
+  {
+    "path": "README_SUBMISSION_PACKAGE.md",
+    "bytes": 857
+  }
+]
