@@ -2,7 +2,7 @@
 
 Draft version: CRM_MANUSCRIPT_v1.6_FULL
 
-Generated: 2026-09-01 14:07:50 UTC
+Generated: 2026-09-01 14:18:05 UTC
 
 ## Author Information
 
@@ -102,7 +102,7 @@ This computational study did not generate new physical reagents.
 
 #### Data and code availability
 
-Norman perturbation data were used through a GEARS-compatible processed mirror [1,3]. Replogle analyses used GEARS-compatible filtered essential-screen K562 and RPE1 objects; complete Figshare+ processed objects were not part of the frozen analyses [2,10,11]. Derived result tables are stored under `results/tables/`, and manuscript figures are stored under `figures/main/` and `figures/supplementary/`. Public repository URL and archived code/result DOI remain to be completed before journal submission. Working metadata use `[ZENODO_DOI_PENDING]` only as a placeholder.
+Norman perturbation data were used through a GEARS-compatible processed mirror [1,3]. Replogle analyses used GEARS-compatible filtered essential-screen K562 and RPE1 objects; complete Figshare+ processed objects were not part of the frozen analyses [2,10,11]. Derived result tables are stored under `results/tables/`, and manuscript figures are stored under `figures/main/` and `figures/supplementary/`. Code and derived manuscript-facing data are available at https://github.com/seefreewind/VirtualPerturb-Audit. The archived code/result DOI remains to be completed before journal submission. Working metadata use `[ZENODO_DOI_PENDING]` only as a placeholder.
 
 ### Method details
 

@@ -42,10 +42,14 @@ python scripts/build_crm_v13_final_hardening.py
 
 No model training is performed by the v1.3 script.
 
+## Public Repository
+
+The public code and derived-data repository is available at https://github.com/seefreewind/VirtualPerturb-Audit.
+
 ## Known Limitations
 
 The Replogle demonstration uses GEARS-compatible filtered essential-screen data. UER is an internal sensitivity endpoint. A replicate-derived empirical performance bound was not established. GEARS R-L4 is a cross-context inference adapter. STATE matched transfer uses 15 shared targets and is interpreted as partial, endpoint-heterogeneous support.
 
 ## Citation
 
-Use `CITATION.cff` after the public repository and archive DOI are finalized.
+Use `CITATION.cff` with the public repository. Archive DOI metadata should be updated after Zenodo or another code archive issues a DOI.

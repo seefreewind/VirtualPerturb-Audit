@@ -39,6 +39,12 @@ Key packages include pandas, matplotlib, python-docx, openpyxl, PyTorch, Scanpy,
 - `results/tables/state_transfer_drop.csv`
 - `results/tables/gears_state_primary_comparison.csv`
 
+## Public Release
+
+- GitHub repository: https://github.com/seefreewind/VirtualPerturb-Audit
+- The repository includes source code, manuscript-facing derived result tables, figure scripts, generated figures, reports, and manuscript drafts.
+- Raw downloaded datasets, large model outputs, external dependency checkouts, and local runtime environments are intentionally excluded.
+
 ## Figure Regeneration
 
 ```bash
@@ -50,4 +56,4 @@ environment/state-postprocess-venv/bin/python scripts/finalize_crm_submission_v1
 - Complete Replogle Figshare+ command-line access was blocked by HTTP 403 in the frozen project state.
 - Full GEARS training is slow and terminal-lifetime sensitive on CPU.
 - STATE execution depends on a CUDA-capable Linux server and local adapter paths.
-- Public repository URL, archive DOI, and final environment export remain manual release tasks.
+- Archive DOI and final environment export remain manual release tasks.
