@@ -1,0 +1,29 @@
+{
+  "selected_layout": "OPTION A",
+  "dual_y_axis_removed": "YES",
+  "plot_type": "DOT",
+  "norman_replogle_visually_separated": "YES",
+  "pearson_axis": "0.94-1.00",
+  "retrieval_candidate_counts": {
+    "Norman L1": 55,
+    "Norman L2": 40,
+    "Norman L3": 25,
+    "K562": 216,
+    "RPE1": 308
+  },
+  "random_ranking_mrr": "SHOWN",
+  "direct_numeric_labels": "YES",
+  "candidate_universe_caveat_in_legend": "YES",
+  "half_size_readability": "PASS",
+  "editor_test": "PASS",
+  "biggest_remaining_weakness": "Candidate-universe details are necessarily compact in the main panel and fully documented in the registry table.",
+  "final_figure_files": [
+    "figures/main/Figure2.svg",
+    "figures/main/Figure2.pdf",
+    "figures/main/Figure2.png",
+    "figures/main/Figure2_v2.svg",
+    "figures/main/Figure2_v2.pdf",
+    "figures/main/Figure2_v2.png"
+  ],
+  "source_script": "scripts/build_figure2_v2.py"
+}

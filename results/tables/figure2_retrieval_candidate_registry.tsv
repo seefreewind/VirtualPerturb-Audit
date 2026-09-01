@@ -1,0 +1,6 @@
+dataset	task	n_queries	n_candidates	observed_mrr	candidate_definition	control_included	metric_space
+Norman2019_GEARS_processed_mirror	L1	55	55	0.3277465970003773	sorted intersection of predicted and true non-control perturbation centroids	NO	gears_raw
+Norman2019_GEARS_processed_mirror	L2	40	40	0.14706997980863354	sorted intersection of predicted and true non-control perturbation centroids	NO	gears_raw
+Norman2019_GEARS_processed_mirror	L3	25	25	0.20669363613757208	sorted intersection of predicted and true non-control perturbation centroids	NO	gears_raw
+Replogle_GEARS_filtered	K562 R-L1	216	216	0.044496683433654385	sorted intersection of predicted and true non-control perturbation centroids	NO	gears_raw
+Replogle_GEARS_filtered	RPE1 R-L1	308	308	0.02089636814878126	sorted intersection of predicted and true non-control perturbation centroids	NO	gears_raw
