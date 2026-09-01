@@ -1,0 +1,112 @@
+{
+  "selected_layout": "OPTION A",
+  "bar_chart_removed": true,
+  "direction_aligned_visualization": true,
+  "positive_value_meaning": "worse cross-context performance",
+  "effects": [
+    {
+      "endpoint": "Audit-delta Pearson",
+      "endpoint_family": "Response agreement",
+      "higher_is_better": true,
+      "raw_difference_definition": "within minus cross",
+      "raw_difference": 0.116286772613724,
+      "display_difference": 0.116286772613724,
+      "ci_low_display": 0.0683661952335387,
+      "ci_high_display": 0.1599067568499594,
+      "interpretation": "positive display value indicates worse cross-context prediction",
+      "primary_or_sensitivity": "primary",
+      "source_mean": 0.29547668757538,
+      "cross_context_mean": 0.1791899149616559,
+      "n_matched_targets": 15,
+      "uncertainty_status": "BOOTSTRAP_PERTURBATION_LEVEL"
+    },
+    {
+      "endpoint": "Spearman agreement",
+      "endpoint_family": "Response agreement",
+      "higher_is_better": true,
+      "raw_difference_definition": "within minus cross",
+      "raw_difference": 0.0708752537725595,
+      "display_difference": 0.0708752537725595,
+      "ci_low_display": 0.0260521506652615,
+      "ci_high_display": 0.1110276470539594,
+      "interpretation": "positive display value indicates worse cross-context prediction",
+      "primary_or_sensitivity": "primary",
+      "source_mean": 0.2240120260815004,
+      "cross_context_mean": 0.1531367723089408,
+      "n_matched_targets": 15,
+      "uncertainty_status": "BOOTSTRAP_PERTURBATION_LEVEL"
+    },
+    {
+      "endpoint": "Cosine agreement",
+      "endpoint_family": "Response agreement",
+      "higher_is_better": true,
+      "raw_difference_definition": "within minus cross",
+      "raw_difference": 0.104785668849945,
+      "display_difference": 0.104785668849945,
+      "ci_low_display": 0.0528661267956097,
+      "ci_high_display": 0.1532933694124222,
+      "interpretation": "positive display value indicates worse cross-context prediction",
+      "primary_or_sensitivity": "primary",
+      "source_mean": 0.3024650931358337,
+      "cross_context_mean": 0.1976794242858886,
+      "n_matched_targets": 15,
+      "uncertainty_status": "BOOTSTRAP_PERTURBATION_LEVEL"
+    },
+    {
+      "endpoint": "Sign-flip rate",
+      "endpoint_family": "Directional / unsupported-effect behavior",
+      "higher_is_better": false,
+      "raw_difference_definition": "source minus cross in frozen table; display uses cross minus within",
+      "raw_difference": -0.0557333333333333,
+      "display_difference": 0.0557333333333333,
+      "ci_low_display": 0.0103933333333333,
+      "ci_high_display": 0.1,
+      "interpretation": "positive display value indicates worse cross-context prediction",
+      "primary_or_sensitivity": "sensitivity",
+      "source_mean": 0.2581333333333334,
+      "cross_context_mean": 0.3138666666666667,
+      "n_matched_targets": 15,
+      "uncertainty_status": "BOOTSTRAP_PERTURBATION_LEVEL"
+    },
+    {
+      "endpoint": "UER50\u2020",
+      "endpoint_family": "Directional / unsupported-effect behavior",
+      "higher_is_better": false,
+      "raw_difference_definition": "source minus cross in frozen table; display uses cross minus within",
+      "raw_difference": -0.028,
+      "display_difference": 0.028,
+      "ci_low_display": -0.0106666666666666,
+      "ci_high_display": 0.064,
+      "interpretation": "positive display value indicates worse cross-context prediction",
+      "primary_or_sensitivity": "sensitivity",
+      "source_mean": 0.1386666666666667,
+      "cross_context_mean": 0.1666666666666666,
+      "n_matched_targets": 15,
+      "uncertainty_status": "BOOTSTRAP_PERTURBATION_LEVEL"
+    }
+  ],
+  "mrr": [
+    {
+      "run_id": "S3_replogle_k562_rl1",
+      "n_targets": 15,
+      "top1": 0.1333333333333333,
+      "top5": 0.3333333333333333,
+      "mrr": 0.2594179894179894
+    },
+    {
+      "run_id": "S4_replogle_k562_to_rpe1_rl4",
+      "n_targets": 15,
+      "top1": 0.0666666666666666,
+      "top5": 0.3333333333333333,
+      "mrr": 0.2212152662152662
+    }
+  ],
+  "random_mrr_reference": 0.22121526621526624,
+  "loo_positive": {
+    "pearson": 15,
+    "spearman": 15,
+    "cosine": 15
+  },
+  "editor_test": "PASS",
+  "reviewer_attack": "MINOR_RISK"
+}
