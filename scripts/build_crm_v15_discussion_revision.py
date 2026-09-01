@@ -198,6 +198,14 @@ def main() -> None:
     )
     text = replace_discussion(text, PRIMARY_DISCUSSION)
     text = ensure_reference_28(text)
+    text = text.replace(
+        "Within-context Replogle analyses compared GEARS against simple baselines and falsification probes (Figure 3). Mean-effect probes achieved substantial audit-delta Pearson in both K562 and RPE1, while retrieval remained low. GEARS showed modest improvements on some retrieval endpoints, but absolute retrieval remained limited.",
+        "Within-context Replogle analyses compared GEARS against target-information-restricted probes in the K562 and RPE1 R-L1 tasks (Figure 3). Mean-effect probes achieved substantial audit-delta Pearson in both contexts, and label-shuffled probes retained non-zero response agreement after perturbation labels were scrambled. GEARS showed higher retrieval within each context, but absolute retrieval remained limited.",
+    )
+    text = text.replace(
+        "**Figure 3. Probe controls for within-context Replogle evaluation.** GEARS, baselines, and falsification probes are compared on GEARS-compatible filtered Replogle K562 and RPE1 R-L1 tasks. Bars report audit-delta Pearson and retrieval MRR from frozen result tables. Probe performance narrows the supported interpretation of endpoints that can be approached without perturbation-specific information.",
+        "**Figure 3. Falsification probes separate shared response agreement from perturbation-specific retrieval.** Audit-delta Pearson (A) and perturbation retrieval by MRR (B) are shown for GEARS and target-information-restricted probes in GEARS-compatible filtered Replogle K562 and RPE1 within-context tasks. The mean-effect probe does not use perturbation-specific target identity at prediction time, and the label-shuffled probe disrupts that identity by scrambling perturbation labels. These probes retain non-zero or substantial response agreement, whereas GEARS shows higher retrieval within each context. The comparisons are diagnostic rather than a model leaderboard: survival of an endpoint after perturbation information is removed narrows its interpretation toward shared response structure rather than perturbation identity. Gray reference markers denote the theoretical expectation under random ranking for the corresponding candidate universe.",
+    )
     write(MANUSCRIPT / "CRM_MANUSCRIPT_v1.5.md", text)
 
     write(MANUSCRIPT / "DISCUSSION_V15_PRIMARY.md", "# Discussion v1.5 PRIMARY\n\n" + PRIMARY_DISCUSSION)

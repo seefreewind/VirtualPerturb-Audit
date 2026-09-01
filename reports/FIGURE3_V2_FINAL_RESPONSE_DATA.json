@@ -1,0 +1,22 @@
+{
+  "selected_layout": "OPTION A",
+  "plot_type": "DOT",
+  "panel_a_title": "Response agreement / Audit-delta Pearson",
+  "panel_b_title": "Perturbation-specific retrieval / Mean reciprocal rank (MRR)",
+  "candidate_counts": {
+    "K562_Mean-effect": 218,
+    "K562_Label-shuffled": 218,
+    "K562_GEARS": 216,
+    "RPE1_Mean-effect": 309,
+    "RPE1_Label-shuffled": 309,
+    "RPE1_GEARS": 308
+  },
+  "random_mrr": {
+    "K562_Mean-effect": 0.02735780987236687,
+    "K562_Label-shuffled": 0.02735780987236687,
+    "K562_GEARS": 0.027568551394823147,
+    "RPE1_Mean-effect": 0.020427748194186232,
+    "RPE1_Label-shuffled": 0.020427748194186232,
+    "RPE1_GEARS": 0.020483564759898876
+  }
+}
