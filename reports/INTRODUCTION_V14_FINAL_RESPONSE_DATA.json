@@ -1,0 +1,8 @@
+{
+  "word_count": 588,
+  "paragraphs": 4,
+  "old_gap": "Evaluation has not kept pace with this ambition.",
+  "new_gap": "Existing benchmarks primarily ask how models should be scored and compared; less explicit is how a specific performance claim should be challenged before it is promoted to a stronger biological interpretation.",
+  "novelty": "Existing benchmarks increasingly standardize model comparison, strong baselines, biological signal, and generalization testing. VirtualPerturb-Audit complements these efforts by organizing evaluation around falsification of specific performance claims: information-removal probes, matched-target context transfer, frozen provenance, and explicit endpoint-specific claim boundaries.",
+  "objective": "We hypothesized that conclusions based on aggregate transcriptomic agreement would narrow when predictions were evaluated for perturbation specificity and matched-target context transfer, and we further asked whether an independent model architecture would reproduce the same audit phenotype."
+}
