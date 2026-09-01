@@ -1,0 +1,29 @@
+{
+  "discussion_word_count": 1034,
+  "discussion_paragraphs": 6,
+  "shared_control_sensitivity": "NOT_FEASIBLE",
+  "shared_control_literature_included": "YES",
+  "main_interpretation_sentence": "Perturbation-model performance is endpoint-specific, and the frozen evidence supports bounded claim assignment with strong GEARS matched-transfer degradation and partial, endpoint-heterogeneous STATE support.",
+  "main_novelty_sentence": "VirtualPerturb-Audit adds a falsification layer between benchmark performance and scientific interpretation by combining information-removal probes, matched-target transfer controls, and endpoint-specific claim assignment under frozen provenance.",
+  "largest_limitation": "The package cannot run a statistically valid all-endpoint shared-control split sensitivity without changing the frozen analysis state.",
+  "reviewer_audit_decision": "PASS",
+  "discussion_readiness": "DISCUSSION_READY",
+  "files_generated": [
+    "manuscript/CRM_MANUSCRIPT_v1.5.md",
+    "manuscript/CRM_MANUSCRIPT_v1.5.docx",
+    "manuscript/DISCUSSION_V15_PRIMARY.md",
+    "manuscript/DISCUSSION_V15_CONSERVATIVE.md",
+    "manuscript/DISCUSSION_V15_HIGH_IMPACT.md",
+    "reports/DISCUSSION_V15_DEFICIENCY_MAP.md",
+    "reports/DISCUSSION_LITERATURE_AUDIT_V15.md",
+    "reports/SHARED_CONTROL_SENSITIVITY_FEASIBILITY.md",
+    "reports/DISCUSSION_LITERATURE_POSITIONING_MATRIX.md",
+    "reports/DISCUSSION_INNOVATION_AUDIT.md",
+    "reports/DISCUSSION_IMPLICATIONS_AUDIT.md",
+    "reports/LIMITATION_IMPACT_MATRIX.md",
+    "reports/INTRO_DISCUSSION_CONSISTENCY_V15.md",
+    "reports/DISCUSSION_V15_REVIEWER_AUDIT.md",
+    "reports/DISCUSSION_V15_READINESS.md",
+    "reports/DOCX_QC_V15.md"
+  ]
+}
