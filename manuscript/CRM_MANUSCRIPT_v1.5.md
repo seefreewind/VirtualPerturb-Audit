@@ -32,7 +32,7 @@ Here we present VirtualPerturb-Audit as a model-agnostic audit protocol for boun
 
 ### VirtualPerturb-Audit defines five auditable stages
 
-VirtualPerturb-Audit evaluates perturbation-response predictions through five stages: input freeze, global-fit audit, perturbation-specific audit, falsification audit, and transfer/unsupported-effect audit (Figure 1; Table 1). Stage 1 freezes the dataset version, target universe, gene universe, model checkpoint, split assignments, preprocessing, and evaluation code. Stage 2 reports global-fit metrics, explicitly separating raw-space Pearson from audit-delta Pearson. Stage 3 asks whether the true perturbation is retrieved from a candidate universe. Stage 4 applies baselines and probe controls that remove or scramble target-specific information. Stage 5 evaluates matched-target context transfer, unsupported-effect rate (UER@K), and sign-flip rate.
+VirtualPerturb-Audit evaluates perturbation-response predictions through five linked components: input and provenance freeze, global-fit audit, perturbation-specific audit, falsification audit, and transfer and error-burden audit (Figure 1; Table 1). The input and provenance freeze locks the dataset version, target universe, gene universe, model checkpoint, split assignments, preprocessing, and evaluation code. The global-fit audit reports raw-space and audit-delta agreement as noninterchangeable metric spaces. The perturbation-specific audit asks whether the true perturbation is retrieved from a candidate universe. The falsification audit applies baselines and probe controls that remove or scramble target-specific information. The transfer and error-burden audit evaluates matched-target context transfer, unsupported-effect rate (UER@K), and sign-flip rate.
 
 This staged design prevents one endpoint from carrying claims that it cannot support. Raw-space Pearson can support global transcriptomic agreement. Audit-delta Pearson can support agreement in control-subtracted response direction and magnitude. Retrieval can support perturbation identity recovery within the declared candidate universe. UER@K and sign-flip rate can flag large prediction effects that lack observed support or oppose observed direction under the chosen null and support thresholds. Context-transfer tests can support or narrow claims about portability across cellular contexts.
 
@@ -40,11 +40,11 @@ This staged design prevents one endpoint from carrying claims that it cannot sup
 
 | Audit component | Input | Metric/test | Question | Diagnostic signal | Supported interpretation |
 | --- | --- | --- | --- | --- | --- |
-| Input freeze | Expression matrices, labels, predictions, splits | Dataset/checkpoint/split/preprocessing/code freeze | What exactly is evaluated? | Mutable inputs change results | Reproducible audit for declared state |
+| Input and provenance freeze | Expression matrices, labels, predictions, splits | Dataset/checkpoint/split/preprocessing/code freeze | What exactly is evaluated? | Mutable inputs change results | Reproducible audit for declared state |
 | Global-fit audit | Observed and predicted profiles | Raw-space Pearson, audit-delta Pearson, Spearman, RMSE, cosine | Does broad expression structure agree? | High raw-space with weak delta | Global expression agreement |
 | Perturbation-specific audit | Predicted and true deltas | Top1, Top5, MRR | Is the correct perturbation recoverable? | Low correct-target rank | Perturbation identity within candidate universe |
 | Falsification audit | B0-B5 and FP1-FP3 | Endpoint survival after information removal | Does signal survive target removal? | Probe approaches model | Endpoint partly reflects shared structure |
-| Transfer and unsupported-effect audit | Context holdouts, matched targets, top-K genes | Matched transfer drop, UER@K, sign-flip | Which claims survive context shift? | Large drop or high burden | Bounded transfer and error-burden interpretation |
+| Transfer and error-burden audit | Context holdouts, matched targets, top-K genes | Matched transfer drop, UER@K, sign-flip | Which claims survive context shift? | Large drop or high burden | Bounded transfer and error-burden interpretation |
 
 ### Global agreement and perturbation retrieval diverge across datasets
 
@@ -108,7 +108,7 @@ Norman perturbation data were used through a GEARS-compatible processed mirror [
 
 #### VirtualPerturb-Audit protocol
 
-VirtualPerturb-Audit contains five stages. Stage 1 freezes expression data, perturbation labels, control labels, context labels, model predictions, split assignments, dataset version, target universe, gene universe, model checkpoint, preprocessing, and evaluation code. Stage 2 computes global-fit endpoints, including raw-space Pearson, audit-delta Pearson, Spearman, RMSE, MAE, and cosine. Stage 3 computes perturbation-specific retrieval using Top1, Top5, and MRR. Stage 4 applies baselines and falsification probes B0-B5 and FP1-FP3. Stage 5 evaluates context holdout, matched-target transfer, UER@K, and sign-flip rate.
+VirtualPerturb-Audit contains five linked components. Input and provenance freeze records expression data, perturbation labels, control labels, context labels, model predictions, split assignments, dataset version, target universe, gene universe, model checkpoint, preprocessing, and evaluation code. The global-fit audit computes raw-space Pearson, audit-delta Pearson, Spearman, RMSE, MAE, and cosine. The perturbation-specific audit computes retrieval using Top1, Top5, and MRR. The falsification audit applies baselines and falsification probes B0-B5 and FP1-FP3. The transfer and error-burden audit evaluates context holdout, matched-target transfer, UER@K, and sign-flip rate.
 
 #### Dataset acquisition and provenance
 
@@ -207,7 +207,7 @@ All uncertainty intervals were computed at the perturbation-target level. GEARS 
 
 ## Figure Legends
 
-**Figure 1. VirtualPerturb-Audit protocol.** Frozen datasets, predictions, split assignments, and preprocessing enter a five-stage audit that separates input freeze, global fit, perturbation-specific retrieval, falsification probes, and matched transfer/unsupported-effect testing. The figure emphasizes method identity and claim boundaries rather than model ranking.
+**Figure 1. VirtualPerturb-Audit protocol.** VirtualPerturb-Audit accepts observed perturbation responses, model predictions, controls, perturbation and context labels, and frozen analysis provenance. The framework separately evaluates global expression agreement, perturbation-specific retrieval, falsification probes, matched-target context transfer, and unsupported or directional effects. Results are translated into endpoint-specific claim boundaries rather than a single model score. The schematic depicts the general framework and does not represent a direct GEARS-versus-STATE ranking.
 
 **Figure 2. Global expression agreement and perturbation retrieval diverge.** GEARS raw-space Pearson and retrieval MRR are shown for frozen Norman and GEARS-compatible filtered Replogle within-context tasks. Pearson is raw expression Pearson in the GEARS output space. MRR measures perturbation-specific retrieval from the declared candidate universe.
 

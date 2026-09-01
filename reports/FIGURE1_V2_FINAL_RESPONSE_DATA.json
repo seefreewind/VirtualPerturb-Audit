@@ -1,0 +1,22 @@
+{
+  "selected_layout": "OPTION A",
+  "final_structure": "A Inputs and freeze; B four audit modules; C endpoint-specific claim profile",
+  "audit_modules": 4,
+  "model_agnostic_input_explicit": "YES",
+  "claim_profile_explicit": "YES",
+  "metric_stress_claim_logic_visible": "YES",
+  "bottom_text_reduced": "YES",
+  "terminology_consistent": "YES",
+  "half_size_readability": "PASS",
+  "editor_test": "PASS",
+  "biggest_remaining_visual_weakness": "The transfer/error-burden module remains the densest box because it must contain both matched-target transfer and unsupported/directional endpoints.",
+  "final_files": [
+    "figures/main/Figure1.pdf",
+    "figures/main/Figure1.svg",
+    "figures/main/Figure1.png",
+    "figures/main/figure1_virtualperturb_audit_v2.pdf",
+    "figures/main/figure1_virtualperturb_audit_v2.svg",
+    "figures/main/figure1_virtualperturb_audit_v2.png"
+  ],
+  "source_script": "scripts/build_figure1_v2.py"
+}

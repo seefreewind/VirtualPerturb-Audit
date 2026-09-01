@@ -1,0 +1,10 @@
+{
+  "pdf": "figures/main/Figure1.pdf",
+  "auditable": true,
+  "minimum_required_pt": 5.0,
+  "minimum_found_pt": 6.15,
+  "text_run_count": 49,
+  "below_minimum_count": 0,
+  "below_minimum": [],
+  "warnings": []
+}
