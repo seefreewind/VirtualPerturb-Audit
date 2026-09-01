@@ -1,0 +1,25 @@
+{
+  "title": "VirtualPerturb-Audit: a reproducible framework for stress-testing perturbation-response models",
+  "upload_type": "software",
+  "publication_date": "2026-09-01",
+  "creators": [
+    {
+      "name": "Lin, Da"
+    },
+    {
+      "name": "Chen, Ying"
+    },
+    {
+      "name": "Liu, Yue"
+    },
+    {
+      "name": "Zhang, Yu",
+      "orcid": "0000-0001-8579-3692"
+    }
+  ],
+  "description": "VirtualPerturb-Audit is a reproducible framework for stress-testing perturbation-response model outputs.",
+  "license": "MIT",
+  "version": "1.0.0",
+  "doi": "[ZENODO_DOI_PENDING]",
+  "related_identifiers": []
+}

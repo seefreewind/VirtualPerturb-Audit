@@ -100,3 +100,10 @@
 - Added GEARS bounded-smoke export for delta centroids and perturbation retrieval/confusion rows, and verified it with a one-batch CPU smoke run.
 - Added runtime and evaluated-perturbation metadata to GEARS bounded-smoke runs and verified a 5-train-batch/3-eval-batch CPU smoke.
 - Added `scripts/run_gears_full_audit.sh` and `reports/GEARS_FULL_RUN_HANDOFF.md` for GPU/CPU full-run handoff.
+
+## v1.0.0 submission release
+
+- Prepared CRM_MANUSCRIPT_v1.3 and supplementary information.
+- Added implementation source map, retrieval/UER/sign-flip/split audits, input/output contracts, baseline/probe registries, and reporting checklist.
+- Added STATE leave-one-target-out and common-candidate retrieval sensitivity analyses from frozen outputs.
+- Prepared deposition plan, release notes, Zenodo metadata placeholder, and reviewer/editor gate reports.
