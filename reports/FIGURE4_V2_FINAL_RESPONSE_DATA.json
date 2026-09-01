@@ -1,0 +1,25 @@
+{
+  "selected_layout": "OPTION B",
+  "bar_chart_removed": true,
+  "target_level_frozen_data_available": true,
+  "plot_type": "DISTRIBUTION+FOREST",
+  "metric_label": "Audit-delta Pearson",
+  "directions": {
+    "K562 -> RPE1": {
+      "n": 150,
+      "within": 0.2812200460551927,
+      "cross": -0.0070488299134497,
+      "drop": 0.2882688759686425,
+      "ci_low": 0.2559492271093574,
+      "ci_high": 0.3205873177755857
+    },
+    "RPE1 -> K562": {
+      "n": 148,
+      "within": 0.5500999078110514,
+      "cross": 0.0020838260534219,
+      "drop": 0.5480160817576295,
+      "ci_low": 0.5145753995529958,
+      "ci_high": 0.5801839071596544
+    }
+  }
+}
