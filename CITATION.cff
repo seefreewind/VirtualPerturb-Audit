@@ -1,0 +1,22 @@
+cff-version: 1.2.0
+title: "VirtualPerturb-Audit: a reproducible framework for stress-testing perturbation-response models"
+message: "If you use this software, please cite the archived release and associated manuscript."
+type: software
+authors:
+  - family-names: Zha
+    given-names: Yi
+  - family-names: Lin
+    given-names: Da
+  - family-names: Chen
+    given-names: Ying
+  - family-names: Liu
+    given-names: Yue
+  - family-names: Zhang
+    given-names: Yu
+    orcid: "https://orcid.org/0000-0001-8579-3692"
+version: 1.0.0
+doi: "10.5281/zenodo.22232963"
+date-released: 2026-09-01
+license: MIT
+repository-code: "https://github.com/seefreewind/VirtualPerturb-Audit"
+url: "https://doi.org/10.5281/zenodo.22232963"

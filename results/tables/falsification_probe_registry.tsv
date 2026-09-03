@@ -1,0 +1,4 @@
+probe_id	name	operational_definition	source_file	implementation_status	interpretation
+FP1	Perturbation-blind mean-effect probe	Use the B5 mean-effect construction as a perturbation-blind information-removal probe	scripts/run_replogle_baseline_audit.py	Same `mean_pred` estimator as B5; different interpretive role	If FP1 approaches model performance, global response structure rather than target identity may explain the endpoint
+FP2	Cell-state-blind probe	Remove cell-state/context information when component/context implementation exists	scripts/run_baseline_pilot.py	Not implemented for Replogle essential-screen audit	Marked unavailable when required component/context information is absent
+FP3	Label-shuffled diagnostic probe	Shuffle or reuse training deltas under mismatched target labels	scripts/run_replogle_baseline_audit.py	shuffled_preds from train_deltas	If FP3 remains strong, endpoint is sensitive to label-agnostic structure or candidate composition

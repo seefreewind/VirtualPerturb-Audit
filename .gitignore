@@ -1,0 +1,27 @@
+.pytest_cache/
+__pycache__/
+*.pyc
+.clean_env_v17/
+
+environment/gears-venv/
+data/raw/
+data/interim/
+data/processed/
+data/go_essential_*.csv
+logs/
+results/pilot/gears_*/model/
+results/pilot/
+results/replogle/
+results/**/*.pt
+
+# Local manuscript/submission artifacts are retained on disk but not pushed to GitHub.
+manuscript/
+submission/*
+!submission/SOURCE_DATA_MANIFEST.tsv
+reports/
+release/
+figures/
+
+*.aria2
+.DS_Store
+._*

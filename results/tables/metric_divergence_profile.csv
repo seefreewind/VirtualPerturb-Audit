@@ -1,0 +1,6 @@
+setting,pearson,mrr,uer50,rank_by_global_fit,rank_by_specificity,rank_by_hallucination,global_minus_specificity_rank
+Norman L1 GEARS,0.988748,0.327747,0.0,1,1,1,0
+Norman L2 GEARS,0.983792,0.14707,0.0,4,3,1,1
+Norman L3 GEARS,0.984334,0.206694,0.0,3,2,1,1
+Replogle K562 R-L1 GEARS,0.9850755113142508,0.044496683433654385,0.0,2,4,1,-2
+Replogle RPE1 R-L1 GEARS,0.9709049790323555,0.02089636814878126,0.0,5,5,1,0

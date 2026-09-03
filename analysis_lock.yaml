@@ -1,0 +1,141 @@
+version: 0.1.0
+lock_date: 2026-08-12
+status: PRE_DATA_LOCK
+scope: Norman_GEARS_baseline_pilot
+primary_endpoint:
+  name: bound_normalized_perturbation_specific_agreement
+  splits: [L1, L2]
+  unit: perturbation_context_pair
+co_primary_audit_endpoint:
+  name: UER@50
+  definition: predicted_top_50_effect_genes_with_true_effect_inside_replicate_or_control_null_envelope
+secondary_endpoints:
+  - perturbation_retrieval_MRR
+  - sign_flip_rate
+  - Pearson_delta
+  - RMSE_delta
+  - pathway_fidelity
+hypotheses:
+  H1_leakage_sensitivity:
+    statement: BNS_L0 will exceed BNS under stricter perturbation/context/dataset holdout in at least some models.
+    interpretation_limit: Performance drop is interpreted as performance inflation opportunity, not causal proof of leakage.
+  H2_metric_optimism:
+    statement: Global expression metrics may rate models more favorably than perturbation-specific metrics.
+  H3_hallucination_independence:
+    statement: High global fit does not necessarily imply low unsupported effect burden.
+    tests: [corr_global_fit_UER, corr_global_fit_pathway_hallucination]
+  H4_contamination_association:
+    statement: Model-dataset pairs with documented or probable overlap may show higher apparent performance.
+    interpretation_limit: Association only, not causal contamination claim.
+splits:
+  L0: random_cell_split_optimistic_reference_only
+  L1: perturbation_held_out
+  L2: component_held_out_for_combinatorial_perturbations
+  L3: functional_family_held_out_exploratory
+  L4: context_held_out
+  L5: dataset_held_out
+  L6: temporal_clean_evidence_based
+falsification_probes:
+  FP1: perturbation_blind_predictor
+  FP2: cell_state_blind_predictor
+  FP3:
+    name: label_shuffled_control
+    pilot_permutations: 20
+    main_permutations: 100
+uncertainty:
+  bootstrap_unit: perturbation_context_pair
+  main_bootstrap_resamples: 2000
+  pilot_bootstrap_resamples: 200
+multiplicity:
+  method: Benjamini-Hochberg FDR
+  applies_to: [gene, pathway, model_pair]
+revision_log:
+  - date: 2026-08-12
+    change: Initial pre-data analysis lock.
+    reason: Required before pilot execution.
+    fairness_impact: None.
+  - date: 2026-08-12
+    change: GEARS runner restricted custom audit splits to L1/L2 because GEARS custom split API is condition-level.
+    reason: Avoid modifying official GEARS dataloader for L0 random-cell behavior.
+    fairness_impact: L0 GEARS requires either official simulation reference or a documented adapter; L1/L2 remain condition-level and compatible with GEARS custom splits.
+  - date: 2026-08-12
+    change: GEARS runner added filtered GO tensor injection for non-default perturbation graph modes after Dataverse default GO graph tarball failed and cached dynamic GO edges exceeded the active perturbation node map.
+    reason: Keep the official GEARS package unmodified while making the local smoke path reproducible under command-line Dataverse access limitations.
+    fairness_impact: GEARS prior graph may differ from the official precomputed default graph; all GEARS results must record `pert_graph`, filtered edge count, filtered node count, and whether training was batch-smoke or full evaluation.
+  - date: 2026-08-12
+    change: GEARS batch-smoke mode added with bounded train batches.
+    reason: Full CPU epoch exceeded practical smoke-test runtime; a bounded smoke verifies initialization, dataloading, forward/backward pass, checkpoint save, and metadata without claiming model performance.
+    fairness_impact: Batch-smoke outputs are executable-chain evidence only and must not be interpreted as performance results.
+  - date: 2026-08-23
+    change: Phase 2A Replogle external/context audit registered before processed Replogle model evaluation.
+    reason: Extend Norman pilot to an independent CRISPRi system with K562/RPE1 within-context and cross-context evaluation while preserving the audit-first order.
+    fairness_impact: Primary metrics and split definitions are locked before Replogle expression-matrix QC, baselines, or GEARS training; BNS remains unavailable unless biological replicates are explicitly validated.
+  - date: 2026-08-25
+    change: Phase 2A Replogle R-L1 within-context GEARS full audit completed for K562 and RPE1 on GEARS-compatible filtered essential-screen data.
+    reason: Both R-L1 full runs, postprocess tables, figures, RL1 full report, and cross-context gate are now available.
+    fairness_impact: External metric-divergence evidence can be interpreted only under filtered-data scope; BNS remains UNVERIFIED and UER remains sensitivity_only.
+  - date: 2026-08-25
+    change: Phase 2A R-L4 GEARS cross-context adapter and configs added, with bounded K2R/R2K smoke tests passing.
+    reason: Official GEARS custom splits are condition-level and cannot directly encode same-perturbation cross-context train/test splits, so source-context training plus target-control-basal prediction is used for R-L4.
+    fairness_impact: R-L4 remains target-context held out for training and model selection, but results must be labeled as a GEARS-compatible cross-context inference adapter rather than native cell-line-aware GEARS splitting.
+  - date: 2026-08-29
+    change: Phase 2A Replogle R-L4 full GEARS cross-context audit completed for K2R and R2K on GEARS-compatible filtered essential-screen data.
+    reason: Both R-L4 full runs, postprocess tables, transfer figure, full report, and progress handoff are now available.
+    fairness_impact: R-L4 can be interpreted as filtered-data cross-context stress-test evidence only; BNS remains UNVERIFIED and UER remains sensitivity_only.
+phase2a:
+  status: FILTERED_DATA_RL1_RL4_GEARS_COMPLETE
+  primary_question: external_replication_of_metric_divergence
+  datasets:
+    - Replogle_K562
+    - Replogle_RPE1
+  primary_splits:
+    - R-L1-K562
+    - R-L1-RPE1
+    - R-L4-K2R
+    - R-L4-R2K
+  primary_metrics:
+    - pearson_delta
+    - retrieval_mrr
+    - uer50
+  secondary_metrics:
+    - top1
+    - top5
+    - sign_flip_rate
+  statistical_unit: perturbation
+  bootstrap: 2000
+  bns_requires_validated_replicates: true
+  replicate_status_current: NOT_AVAILABLE_FROM_SRA_RUNINFO
+  bns_status_current: UNVERIFIED
+  cross_context_eligibility:
+    min_cells_per_target_per_context: 30
+    require_controls_in_both_contexts: true
+    require_clear_perturbation_label: true
+    require_compatible_gene_vocabulary: true
+    threshold_status: PRE_QC_LOCKED_MINIMUM
+  hypotheses:
+    H2A_1: Global transcriptomic similarity and perturbation-specific retrieval will not be fully concordant in Replogle.
+    H2A_2: Cross-context evaluation will be more difficult than within-context evaluation.
+    H2A_3: Global metrics may be less sensitive to evaluation strictness than perturbation-specific metrics.
+    H2A_4: If reliable biological replicates exist, distance to empirical upper bound can be quantified.
+  rl1_status:
+    R-L1-K562: COMPLETED_GEARS
+    R-L1-RPE1: COMPLETED_GEARS
+    postprocess: COMPLETED
+    report: reports/PHASE2A_RL1_FULL_REPORT.md
+    cross_context_gate: reports/PHASE2A_CROSS_CONTEXT_GATE.md
+    gate_decision: CONDITIONAL_GO_RL4
+  rl4_status:
+    adapter: source_context_train_target_context_control_basal_prediction
+    configs:
+      R-L4-K2R: configs/replogle/gears_rl4_k2r_seed1.yaml
+      R-L4-R2K: configs/replogle/gears_rl4_r2k_seed1.yaml
+    smoke:
+      R-L4-K2R: COMPLETED_GEARS_BATCH_SMOKE_NOT_PERFORMANCE
+      R-L4-R2K: COMPLETED_GEARS_BATCH_SMOKE_NOT_PERFORMANCE
+    full_runs:
+      R-L4-K2R: COMPLETED_GEARS_EVALUATION
+      R-L4-R2K: COMPLETED_GEARS_EVALUATION
+    postprocess: COMPLETED
+    report: reports/PHASE2A_RL4_FULL_REPORT.md
+    gate_decision: PHASE2A_RL4_COMPLETE_FILTERED_DATA
+  current_blocker: Complete Figshare+ processed Replogle objects and manifest downloads still return HTTP 403 by command line on 2026-08-23; GEARS-compatible filtered essential h5ad files are locally available and have completed QC, split integrity, baseline, falsification audit, RPE1 smoke, and R-L1 K562/RPE1 full GEARS audits. BNS remains UNVERIFIED because no biological replicate label is available in SRA runinfo or filtered h5ad obs.

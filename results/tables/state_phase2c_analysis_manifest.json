@@ -1,0 +1,10 @@
+{
+  "generated_at_utc": "2026-08-30T00:24:12.782645+00:00",
+  "state_run": "/Volumes/EMPTY2TB/VirtualPerturb-Audit \u65b9\u6848\u8bbe\u8ba1/VirtualPerturb-Audit/results/state/full_phase2c_20260829T131235Z",
+  "primary_metrics": "/Volumes/EMPTY2TB/VirtualPerturb-Audit \u65b9\u6848\u8bbe\u8ba1/VirtualPerturb-Audit/results/tables/state_phase2c_primary_metrics.csv",
+  "comparison": "/Volumes/EMPTY2TB/VirtualPerturb-Audit \u65b9\u6848\u8bbe\u8ba1/VirtualPerturb-Audit/results/tables/gears_state_primary_comparison.csv",
+  "transfer": "/Volumes/EMPTY2TB/VirtualPerturb-Audit \u65b9\u6848\u8bbe\u8ba1/VirtualPerturb-Audit/results/tables/state_transfer_drop.csv",
+  "performance_eligible": true,
+  "bns_status": "UNVERIFIED",
+  "uer_status": "sensitivity_only"
+}

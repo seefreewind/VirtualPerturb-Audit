@@ -1,0 +1,98 @@
+{
+  "timestamp": "2026-08-14T07:31:32.386023+00:00",
+  "dataset_path": "data/raw/norman/perturb_processed.h5ad",
+  "dataset_sha256": "23ffb0fac6a847ff927cf7509d80d85052bfefbfb97610786a2dafaaefa0b6a0",
+  "n_cells": 91205,
+  "n_genes": 5045,
+  "qc": {
+    "status": "PASS",
+    "n_cells": 91205,
+    "n_genes": 5045,
+    "n_perturbations": 284,
+    "n_controls": 7353,
+    "min_cells_per_perturbation": 49,
+    "median_cells_per_perturbation": 272.0,
+    "batch_perturbation_rows": 284,
+    "warnings": [],
+    "schema_problems": []
+  },
+  "split_checks": [
+    {
+      "split": "L0",
+      "check": "no_exact_cell_overlap",
+      "status": "PASS",
+      "message": "obs_names are unique.",
+      "split_hash": "c23715b8e21fd38f"
+    },
+    {
+      "split": "L0",
+      "check": "no_forbidden_perturbation_overlap",
+      "status": "PASS",
+      "message": "L0 has no perturbation-forbidden rule implemented.",
+      "split_hash": "c23715b8e21fd38f"
+    },
+    {
+      "split": "L1",
+      "check": "no_exact_cell_overlap",
+      "status": "PASS",
+      "message": "obs_names are unique.",
+      "split_hash": "684138a59131ff4b"
+    },
+    {
+      "split": "L1",
+      "check": "no_forbidden_perturbation_overlap",
+      "status": "PASS",
+      "message": "L1 exact perturbation overlap: []",
+      "split_hash": "684138a59131ff4b"
+    },
+    {
+      "split": "L1",
+      "check": "no_group_overlap_replicate",
+      "status": "PASS",
+      "message": "replicate unavailable or uninformative; group overlap check skipped.",
+      "split_hash": "684138a59131ff4b"
+    },
+    {
+      "split": "L2",
+      "check": "no_exact_cell_overlap",
+      "status": "PASS",
+      "message": "obs_names are unique.",
+      "split_hash": "842eb5562637cd90"
+    },
+    {
+      "split": "L2",
+      "check": "no_forbidden_perturbation_overlap",
+      "status": "PASS",
+      "message": "L2 component overlap: []",
+      "split_hash": "842eb5562637cd90"
+    },
+    {
+      "split": "L2",
+      "check": "no_group_overlap_replicate",
+      "status": "PASS",
+      "message": "replicate unavailable or uninformative; group overlap check skipped.",
+      "split_hash": "842eb5562637cd90"
+    },
+    {
+      "split": "L3",
+      "check": "no_exact_cell_overlap",
+      "status": "PASS",
+      "message": "obs_names are unique.",
+      "split_hash": "2f51c764d2446d95"
+    },
+    {
+      "split": "L3",
+      "check": "no_forbidden_perturbation_overlap",
+      "status": "PASS",
+      "message": "L3 gene-family overlap: []",
+      "split_hash": "2f51c764d2446d95"
+    },
+    {
+      "split": "L3",
+      "check": "no_group_overlap_replicate",
+      "status": "PASS",
+      "message": "replicate unavailable or uninformative; group overlap check skipped.",
+      "split_hash": "2f51c764d2446d95"
+    }
+  ]
+}

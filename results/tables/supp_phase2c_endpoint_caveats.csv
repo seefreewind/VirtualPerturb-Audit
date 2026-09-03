@@ -1,0 +1,6 @@
+issue,status,handling
+Metric space,GEARS Norman frozen rows are raw GEARS-space; STATE primary rows are audit-delta.,Do not make absolute GEARS-vs-STATE performance claims from raw side-by-side values.
+Normalized targets,"STATE collapses explicit control partners, e.g. ctrl+X and X.",Report both frozen condition counts and normalized target counts.
+R-L4 target set,STATE R-L4 has 73 normalized targets; Replogle K562 R-L1 has 216.,Use matched-target contrast for the strongest context-transfer interpretation.
+BNS,Bound-normalized score remains unverified.,Keep BNS out of confirmatory claims until replicate-bound nulls are verified.
+UER null,UER uses median absolute observed delta as an internal null.,Label UER as sensitivity-only.

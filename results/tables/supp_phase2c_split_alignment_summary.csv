@@ -1,0 +1,6 @@
+dataset,split,alignment_status,n_conditions
+norman_l1,L1_seed1,ALIGNED,249
+norman_l2,L2_seed1,ALIGNED,200
+replogle_k562_rl1,R-L1-K562_seed1,ALIGNED,979
+replogle_k562_rl4_source,R-L4-K2R_seed1_source,ALIGNED,733
+replogle_rpe1_rl4_target,R-L4-K2R_seed1_target,ALIGNED,733

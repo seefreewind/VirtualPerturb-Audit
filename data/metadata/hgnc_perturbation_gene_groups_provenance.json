@@ -1,0 +1,8 @@
+{
+  "timestamp": "2026-08-14T07:34:25.105365+00:00",
+  "source": "HGNC complete approved dataset",
+  "source_url": "https://storage.googleapis.com/public-download-files/hgnc/tsv/tsv/hgnc_complete_set.txt",
+  "local_interim_file": "data/interim/hgnc_complete_set.txt",
+  "derived_mapping": "data/metadata/hgnc_perturbation_gene_groups.csv",
+  "notes": "MSigDB pathway annotations were not used because direct downloads require registration; HGNC gene_group is public and reproducible."
+}
